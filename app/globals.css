@@ -1,0 +1,174 @@
+@import "tailwindcss";
+
+:root {
+  /* Premium Color Palette */
+  --primary-bg: #0A0E1A;
+  --secondary-bg: #141824;
+  --accent-primary: #FF6B9D;
+  --accent-secondary: #C084FC;
+  --accent-gold: #FCD34D;
+  --text-primary: #F9FAFB;
+  --text-secondary: #9CA3AF;
+  --background: #0A0E1A;
+  --foreground: #F9FAFB;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: 'Clash Display', var(--font-geist-sans), sans-serif;
+  --font-mono: var(--font-geist-mono);
+  --color-royal-blue: #1E2A5A;
+  --color-soft-blush: #E8A6B8;
+  --color-light-blush: #F5D3DD;
+}
+
+body {
+  background: var(--primary-bg);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Shimmer Animation for CTA */
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 3s linear infinite;
+}
+
+/* Scroll Animation */
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-100% - 1rem));
+  }
+}
+
+.animate-scroll {
+  animation: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
+}
+
+/* Radial Gradient Utility */
+.bg-gradient-radial {
+  background: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--primary-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-primary);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-secondary);
+}
+
+/* Selection Color */
+::selection {
+  background-color: rgba(255, 107, 157, 0.3);
+  color: var(--text-primary);
+}
+
+/* Smooth Scroll - Removed to prevent conflict with Lenis */
+/* html {
+  scroll-behavior: smooth;
+} */
+
+/* Focus Visible */
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Spin Animation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Ping Animation */
+@keyframes ping {
+
+  75%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.animate-ping {
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Fade In */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Lenis Smooth Scrolling */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}

@@ -1,0 +1,1099 @@
+"use client";
+
+import { motion, useInView } from "framer-motion";
+import Image from "next/image";
+import { useRef, useEffect, useState, useCallback } from "react";
+import { ContainerScroll } from "@/components/ui/container-scroll-animation";
+import { BackgroundBeams } from "@/components/ui/background-beams";
+import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
+import AnoAI from "@/components/ui/animated-shader-background";
+import { LampContainer } from "@/components/ui/lamp";
+import { Marquee } from "@/components/ui/marquee";
+import { Navbar } from "@/components/ui/navbar";
+import { JellyButton } from "@/components/ui/jelly-button";
+import { FAQAccordion } from "@/components/ui/faq-accordion";
+import {
+  Search,
+  PenLine,
+  BarChart3,
+  Send,
+  RotateCcw,
+  FileText,
+} from "lucide-react";
+
+// Re-trigger build
+
+// ============================================================================
+// CONSTANTS & TYPES
+// ============================================================================
+
+const premiumEase: [number, number, number, number] = [0.23, 1, 0.32, 1];
+
+// ============================================================================
+// ANIMATION VARIANTS
+// ============================================================================
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (delay: number = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: premiumEase, delay },
+  }),
+};
+
+const stagger = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+  },
+};
+
+const staggerItem = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: premiumEase },
+  },
+};
+
+// ============================================================================
+// OPTIMIZED HOOKS
+// ============================================================================
+
+/**
+ * Optimized counter hook - only updates state when displayed integer changes
+ */
+
+
+// ============================================================================
+// ANALYTICS
+// ============================================================================
+
+function trackCTA(label: string) {
+  if (typeof window !== "undefined" && typeof window.gtag === "function") {
+    window.gtag("event", "click", {
+      event_category: "CTA",
+      event_label: label,
+    });
+  }
+}
+
+// ============================================================================
+// COMPONENTS
+// ============================================================================
+
+function Badge({ children }: { children: React.ReactNode }) {
+  return (
+    <motion.div
+      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-[#FF6B9D]/30 backdrop-blur-sm"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5, ease: premiumEase }}
+    >
+      <span className="relative flex h-2 w-2" aria-label="Live status">
+        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF6B9D] opacity-75"></span>
+        <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FF6B9D]"></span>
+      </span>
+      <span className="text-sm font-medium text-[#F9FAFB] tracking-wide uppercase">
+        {children}
+      </span>
+    </motion.div>
+  );
+}
+
+function PremiumCTA({
+  href,
+  children,
+  variant = "primary",
+  size = "lg",
+  trackingLabel,
+  target,
+}: {
+  href: string;
+  children: React.ReactNode;
+  variant?: "primary" | "secondary";
+  size?: "md" | "lg";
+  trackingLabel?: string;
+  target?: string;
+}) {
+  const baseStyles =
+    size === "lg" ? "px-10 py-5 text-lg" : "px-8 py-4 text-base";
+
+  const handleClick = useCallback(() => {
+    if (trackingLabel) {
+      trackCTA(trackingLabel);
+    }
+  }, [trackingLabel]);
+
+  if (variant === "primary") {
+    return (
+      <motion.a
+        href={href}
+        target={target}
+        rel={target === "_blank" ? "noopener noreferrer" : undefined}
+        onClick={handleClick}
+        className={`group relative ${baseStyles} font-bold rounded-full overflow-hidden inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6B9D] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0E1A]`}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        transition={{ duration: 0.2 }}
+      >
+        {/* Shimmer gradient */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#FF6B9D] via-[#C084FC] to-[#FF6B9D] bg-[length:200%_100%] animate-shimmer" />
+
+        {/* Glow effect */}
+        <div
+          className="absolute -inset-1 bg-gradient-to-r from-[#FF6B9D] to-[#C084FC] opacity-0 group-hover:opacity-70 blur-xl transition-opacity duration-300"
+          aria-hidden="true"
+        />
+
+        <span className="relative z-10 text-white uppercase tracking-wide font-sans flex items-center gap-2">
+          {children}
+          <motion.span
+            initial={{ x: 0 }}
+            whileHover={{ x: 4 }}
+            transition={{ duration: 0.2, ease: premiumEase }}
+            aria-hidden="true"
+          >
+            →
+          </motion.span>
+        </span>
+      </motion.a>
+    );
+  }
+
+  return (
+    <motion.a
+      href={href}
+      target={target}
+      rel={target === "_blank" ? "noopener noreferrer" : undefined}
+      onClick={handleClick}
+      className={`group relative ${baseStyles} font-semibold rounded-full border-2 border-white/20 text-white overflow-hidden z-10 inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6B9D] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0E1A]`}
+      whileHover={{
+        borderColor: "rgba(255, 255, 255, 0.4)",
+        backgroundColor: "rgba(255, 255, 255, 0.05)",
+      }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ duration: 0.25 }}
+    >
+      <span className="uppercase tracking-wide font-sans flex items-center gap-2">
+        {children}
+        <motion.span
+          initial={{ x: 0 }}
+          whileHover={{ x: 4 }}
+          transition={{ duration: 0.2 }}
+          aria-hidden="true"
+        >
+          →
+        </motion.span>
+      </span>
+    </motion.a>
+  );
+}
+
+function SectionHeader({
+  badge,
+  title,
+  subtitle,
+  center = true,
+}: {
+  badge?: string;
+  title: React.ReactNode;
+  subtitle?: string;
+  center?: boolean;
+}) {
+  return (
+    <div className={`max-w-4xl ${center ? "mx-auto text-center" : ""} mb-20`}>
+      {badge && (
+        <motion.div
+          className="mb-6"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          custom={0}
+        >
+          <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase bg-[#FF6B9D]/10 text-[#FF6B9D] border border-[#FF6B9D]/20">
+            {badge}
+          </span>
+        </motion.div>
+      )}
+      <motion.h2
+        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] text-white mb-8 tracking-tight font-sans"
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        custom={0.1}
+      >
+        {title}
+      </motion.h2>
+      {subtitle && (
+        <motion.p
+          className="text-lg md:text-xl text-[#9CA3AF] leading-relaxed font-light max-w-2xl mx-auto"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          custom={0.2}
+        >
+          {subtitle}
+        </motion.p>
+      )}
+    </div>
+  );
+}
+
+
+
+function LoadingScreen() {
+  return (
+    <div className="min-h-screen bg-[#0A0E1A] flex items-center justify-center">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+        className="text-center"
+      >
+        <div
+          className="w-16 h-16 border-4 border-[#FF6B9D] border-t-transparent rounded-full animate-spin mx-auto mb-4"
+          role="status"
+          aria-label="Loading"
+        ></div>
+        <p className="text-[#9CA3AF] text-sm">Loading experience...</p>
+      </motion.div>
+    </div>
+  );
+}
+
+
+function BloomingLogo() {
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Premium Fluid Spring Settings - and even smoother "bloom"
+  const logoSpring = { type: "spring", stiffness: 100, damping: 22, mass: 1 } as const;
+  const textSpring = { type: "spring", stiffness: 140, damping: 24, mass: 0.8 } as const;
+
+  return (
+    <div className="flex flex-col items-center pt-20 md:pt-24 pb-2 relative z-[200]">
+      <motion.div
+        className="relative group cursor-pointer"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: premiumEase }}
+        onHoverStart={() => setIsHovered(true)}
+        onHoverEnd={() => setIsHovered(false)}
+      >
+        {/* Transparent Hit Area to prevent flickering during animation */}
+        <div className="absolute inset-[-40px] z-30 rounded-full" />
+
+        <motion.div
+          className="relative"
+          animate={{ scale: isHovered ? 1.05 : 1 }}
+          transition={logoSpring}
+        >
+          <div
+            className="absolute inset-0 bg-[#FF6B9D] blur-3xl opacity-30 rounded-full scale-150 transition-all duration-700"
+            style={{
+              opacity: isHovered ? 0.6 : 0.3,
+              transform: `scale(${isHovered ? 1.8 : 1.5})`
+            }}
+            aria-hidden="true"
+          />
+
+          {/* Hidden Reveal Text */}
+          <motion.div
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center justify-center text-center pointer-events-none whitespace-nowrap"
+            initial={{ opacity: 0, scale: 0.8, y: 0, filter: "blur(10px)" }}
+            animate={
+              isHovered
+                ? { opacity: 1, scale: 1, y: -95, filter: "blur(0px)" }
+                : { opacity: 0, scale: 0.8, y: 0, filter: "blur(10px)" }
+            }
+            transition={textSpring}
+          >
+            <div className="text-3xl md:text-4xl font-bold text-white drop-shadow-[0_0_15px_rgba(255,107,157,0.5)]">
+              $50
+            </div>
+            <div className="text-[10px] font-bold bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent uppercase tracking-[0.2em] mt-2">
+              If Our Systems Suck
+            </div>
+          </motion.div>
+
+          {/* Glowing Gradient Ring Wrapper */}
+          <div className="rounded-full p-[3px] bg-gradient-to-r from-[#FF6B9D] via-[#C084FC] to-[#FF6B9D] relative shadow-[0_0_20px_rgba(255,107,157,0.3)] animate-shimmer bg-[length:200%_100%] z-20">
+            <div className="rounded-full overflow-hidden h-20 w-20 md:h-24 md:w-24 border-4 border-[#0A0E1A] relative bg-[#0A0E1A]">
+              {/* Left Half */}
+              <motion.div
+                className="absolute inset-0 w-full h-full origin-bottom"
+                animate={{ rotate: isHovered ? -18 : 0 }}
+                transition={logoSpring}
+              >
+                <div
+                  className="w-full h-full relative"
+                  style={{ clipPath: "inset(0 50% 0 0)" }}
+                >
+                  <Image
+                    src="/logo.jpg"
+                    alt="OUTLIO Logo Left"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+              </motion.div>
+
+              {/* Right Half */}
+              <motion.div
+                className="absolute inset-0 w-full h-full origin-bottom"
+                animate={{ rotate: isHovered ? 18 : 0 }}
+                transition={logoSpring}
+              >
+                <div
+                  className="w-full h-full relative"
+                  style={{ clipPath: "inset(0 0 0 50%)" }}
+                >
+                  <Image
+                    src="/logo.jpg"
+                    alt="OUTLIO Logo Right"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+    </div>
+  );
+}
+
+// ============================================================================
+// MAIN PAGE
+// ============================================================================
+
+export default function Home() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
+  const features = [
+    {
+      Icon: Search,
+      title: "ICP Deep Research",
+      description: "We identify your ideal customers so you never waste time on unqualified leads.",
+      color: "#FF6B9D",
+    },
+    {
+      Icon: PenLine,
+      title: "Custom Copy Creation",
+      description: "Your voice, their language—messages that actually convert.",
+      color: "#C084FC",
+    },
+    {
+      Icon: BarChart3,
+      title: "Multi-Angle Testing",
+      description: "5+ approaches tested to find the message that resonates.",
+      color: "#FCD34D",
+    },
+    {
+      Icon: Send,
+      title: "200+ DMs/Day",
+      description: "Maximum reach without the spam feel—targeted, personal outreach.",
+      color: "#FF6B9D",
+    },
+    {
+      Icon: RotateCcw,
+      title: "Smart Follow-Ups",
+      description: "Automated sequences that feel genuinely personal.",
+      color: "#C084FC",
+    },
+    {
+      Icon: FileText,
+      title: "Full Report",
+      description: "Complete playbook you own forever—every metric, insight, and strategy.",
+      color: "#FCD34D",
+    },
+  ];
+
+  if (!isLoaded) {
+    return <LoadingScreen />;
+  }
+
+  return (
+    <main className="min-h-screen bg-transparent text-white font-sans antialiased overflow-x-hidden selection:bg-[#FF6B9D]/30 relative">
+      <Navbar />
+      <div className="fixed inset-0 -z-20 bg-[#0A0E1A]" aria-hidden="true" />
+      <AnoAI />
+
+      {/* ================================================================== */}
+      {/* HERO SECTION */}
+      {/* ================================================================== */}
+      <div className="flex flex-col overflow-hidden relative">
+
+        {/* Blooming Logo Component */}
+        <BloomingLogo />
+
+        <ContainerScroll
+          titleComponent={
+            <div className="mb-4 relative z-10">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] text-white drop-shadow-2xl tracking-tight font-sans">
+                Book 10+ Qualified Calls in 7 Days. <br />
+                <span className="bg-gradient-to-r from-[#FF6B9D] via-[#C084FC] to-[#FCD34D] bg-clip-text text-transparent mt-2 block leading-none">
+                  Guaranteed. Or Pay $0.
+                </span>
+              </h1>
+              <p className="mt-4 text-base md:text-lg text-[#9CA3AF] max-w-2xl mx-auto font-light leading-relaxed">
+                A 7-day outbound ecosystem built for founders scaling past
+                $30K/mo.
+                <span className="block mt-4 text-white/40 text-sm tracking-widest uppercase">
+                  No Retainers • Performance Only
+                </span>
+              </p>
+
+              <div className="flex flex-col sm:flex-row justify-center gap-4 mt-6 mb-4">
+                <JellyButton href="https://calendly.com/husnainnsaad7/45min" trackingLabel="hero_primary">
+                  Start Your 7-Day Sprint
+                </JellyButton>
+                <PremiumCTA
+                  href="/steal-our-systems"
+                  variant="secondary"
+                  trackingLabel="hero_secondary"
+                  target="_blank"
+                >
+                  Steal Our Process
+                </PremiumCTA>
+              </div>
+
+              {/* Risk Reversal - Below CTAs */}
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8, duration: 0.6 }}
+                className="mt-2 mb-8 text-base font-bold text-white text-center relative z-20"
+              >
+                If we don&apos;t book real calls in 7 days — you pay nothing.
+              </motion.p>
+
+
+            </div>
+          }
+        >
+          {/* Fixed aspect-ratio container for hero image to eliminate CLS */}
+          <div className="relative w-full aspect-video bg-[#0A0E1A] rounded-2xl overflow-hidden">
+            <Image
+              src="https://images.unsplash.com/photo-1557804506-669a67965ba0"
+              alt="Dashboard Preview"
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+              className="rounded-2xl object-cover object-left-top opacity-80"
+              draggable={false}
+              quality={85}
+              priority
+            />
+            <div
+              className="absolute inset-0 bg-gradient-to-t from-[#0A0E1A] via-transparent to-transparent opacity-70 rounded-2xl"
+              aria-hidden="true"
+            />
+          </div>
+        </ContainerScroll>
+      </div>
+
+      {/* ================================================================== */}
+      {/* TRUST MARQUEE */}
+      {/* ================================================================== */}
+      <section className="relative py-8 md:py-10 bg-[#141824]/50 border-y border-white/5 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-6">
+          <p className="text-center text-xs font-bold tracking-[0.2em] text-white/30 uppercase mb-6">
+            Trusted by High-Performers at
+          </p>
+          <Marquee
+            items={[
+              { src: "/logos/clicklabs.png", alt: "ClickLabs" },
+              { src: "/logos/zooz.png", alt: "Zooz Drinks" },
+              {
+                src: "/logos/addx.jpg",
+                alt: "Addx Studio",
+                style: {
+                  maskImage: "url(/logos/addx.jpg)",
+                  maskMode: "luminance",
+                  maskRepeat: "no-repeat",
+                  maskPosition: "center",
+                  maskSize: "contain",
+                  WebkitMaskImage: "url(/logos/addx.jpg)",
+                  WebkitMaskMode: "luminance",
+                  WebkitMaskRepeat: "no-repeat",
+                  WebkitMaskPosition: "center",
+                  WebkitMaskSize: "contain",
+                } as React.CSSProperties
+              },
+              { src: "/logos/arctix.png", alt: "Arctix Solutions" },
+            ]}
+            speed="slow"
+          />
+        </div>
+      </section>
+
+      {/* ================================================================== */}
+      {/* PROBLEM SECTION */}
+      {/* ================================================================== */}
+      <section className="relative py-16 md:py-24 bg-[#0A0E1A]">
+        <div className="max-w-7xl mx-auto px-6">
+          <SectionHeader
+            badge="THE PROBLEM"
+            title={
+              <>
+                You&apos;re{" "}
+                <span className="text-[#FF6B9D]">Bleeding Revenue</span>
+                <br />
+                Every Single Day.
+              </>
+            }
+            subtitle="While you're waiting for referrals, your competitors are aggressively acquiring your market share."
+          />
+
+          <motion.div
+            className="grid md:grid-cols-3 gap-6 md:gap-8"
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            {[
+              {
+                icon: "📉",
+                title: "Unpredictable Pipeline",
+                desc: "One month you're feasting, the next you're starving. You can't hire or plan.",
+              },
+              {
+                icon: "🥱",
+                title: "Content Fatigue",
+                desc: "Posting 5x a week on LinkedIn for 200 views. Hope is not a strategy.",
+              },
+              {
+                icon: "💸",
+                title: "Ad Burnout",
+                desc: "Spending $3,000/mo on ads that attract low-quality leads who can't afford you.",
+              },
+            ].map((item, idx) => (
+              <motion.div
+                key={idx}
+                variants={staggerItem}
+                className="group relative"
+              >
+                <div
+                  className="absolute -inset-0.5 bg-gradient-to-r from-[#FF6B9D] to-[#C084FC] rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
+                  aria-hidden="true"
+                />
+                <div className="relative h-full rounded-3xl border border-white/10 bg-gradient-to-b from-[#141824] to-[#0A0E1A] p-8 backdrop-blur-xl transition-all duration-300 group-hover:border-white/20 min-h-[250px]">
+                  <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-[#FF6B9D]/20 to-[#C084FC]/20 backdrop-blur-sm">
+                    <span
+                      className="text-4xl"
+                      role="img"
+                      aria-hidden="true"
+                    >
+                      {item.icon}
+                    </span>
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-4 font-sans">
+                    {item.title}
+                  </h3>
+                  <p className="text-[#9CA3AF] leading-relaxed">{item.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ================================================================== */}
+      {/* LAMP REVEAL - HOW IT WORKS */}
+      {/* ================================================================== */}
+      <section id="how-it-works" className="relative bg-[#0A0E1A] pt-10">
+        <LampContainer className="mt-0">
+          <motion.h2
+            initial={{ opacity: 0.5, y: 100 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.2,
+              duration: 0.6,
+              ease: premiumEase,
+            }}
+            viewport={{ once: true, amount: 0.3 }}
+            className="mt-8 bg-gradient-to-br from-white via-[#FF6B9D] to-[#C084FC] py-4 bg-clip-text text-center text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-transparent font-sans"
+          >
+            7 Days. <br /> Real Calls. <br /> Zero Guesswork.
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            viewport={{ once: true, amount: 0.3 }}
+            className="mt-6 text-base md:text-lg text-[#9CA3AF] max-w-xl mx-auto text-center px-4"
+          >
+            We don&apos;t teach you outbound. We DO it for you. In one week,
+            you&apos;ll have conversations with qualified buyers — or it costs
+            you nothing.
+          </motion.p>
+        </LampContainer>
+
+        <div className="relative z-10 max-w-6xl mx-auto px-6 mt-8 pb-16 md:pb-24">
+          <div className="relative">
+            <motion.div
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
+              variants={stagger}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+            >
+              {[
+                {
+                  step: "01",
+                  title: "Deep Strategy",
+                  desc: "ICP research & positioning",
+                },
+                {
+                  step: "02",
+                  title: "Launch Day",
+                  desc: "200+ targeted outreach",
+                },
+                {
+                  step: "03",
+                  title: "Optimization",
+                  desc: "Real-time testing & refinement",
+                },
+                {
+                  step: "04",
+                  title: "Handoff",
+                  desc: "Full playbook & insights",
+                },
+              ].map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  variants={staggerItem}
+                  className="relative group"
+                >
+                  <div className="relative h-full rounded-2xl border border-white/10 bg-[#141824]/80 backdrop-blur-xl p-6 md:p-8 hover:bg-[#141824] transition-all duration-300 hover:border-[#FF6B9D]/30 min-h-[200px]">
+                    <div
+                      className="text-5xl md:text-6xl font-black text-[#FF6B9D]/10 absolute top-4 right-4 z-0 group-hover:text-[#FF6B9D]/20 transition-colors"
+                      aria-hidden="true"
+                    >
+                      {item.step}
+                    </div>
+                    <div className="relative z-10">
+                      <div className="w-12 h-12 rounded-full border border-[#FF6B9D]/30 bg-[#0A0E1A] flex items-center justify-center mb-6 text-[#FF6B9D] font-bold">
+                        {idx + 1}
+                      </div>
+                      <h3 className="text-lg md:text-xl font-bold text-white mb-2 font-sans">
+                        {item.title}
+                      </h3>
+                      <p className="text-sm text-[#9CA3AF]">{item.desc}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================== */}
+      {/* WHAT'S INCLUDED - COMPACT ICON CARDS */}
+      {/* ================================================================== */}
+      <section className="relative py-24 md:py-32 bg-[#141824]">
+        <div className="relative z-10 max-w-5xl mx-auto px-6">
+          <SectionHeader
+            badge="THE ENGINE"
+            title={
+              <>
+                Everything You Need to
+                <br />
+                <span className="text-[#FF6B9D]">Dominate Outbound</span>
+              </>
+            }
+            subtitle="We handle every single step. You just show up to calls."
+          />
+
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, ease: premiumEase }}
+          >
+            {features.map((feature, i) => (
+              <motion.div
+                key={i}
+                className="group relative rounded-2xl border border-white/8 bg-[#141824] hover:bg-[#1a2030] transition-all duration-300 p-5 flex flex-col gap-3 cursor-default"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{
+                  duration: 0.5,
+                  delay: i * 0.07,
+                  ease: premiumEase,
+                }}
+                whileHover={{ y: -3 }}
+              >
+                {/* subtle glow on hover */}
+                <div
+                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
+                  style={{ background: `${feature.color}15` }}
+                />
+
+                {/* icon pill */}
+                <div
+                  className="relative z-10 w-10 h-10 rounded-xl flex items-center justify-center"
+                  style={{
+                    background: `${feature.color}12`,
+                    border: `1px solid ${feature.color}25`,
+                  }}
+                >
+                  <feature.Icon
+                    size={20}
+                    color={feature.color}
+                    strokeWidth={1.8}
+                    aria-label={feature.title}
+                  />
+                </div>
+
+                {/* text */}
+                <div className="relative z-10">
+                  <h3 className="text-sm font-bold text-white leading-snug">
+                    {feature.title}
+                  </h3>
+                  <p className="text-sm text-[#6B7280] mt-0.5 leading-relaxed">
+                    {feature.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ================================================================== */}
+      {/* CASE STUDIES SECTION */}
+      {/* ================================================================== */}
+      <section className="relative py-24 bg-[#141824]">
+        <div className="max-w-7xl mx-auto px-6">
+          <SectionHeader
+            badge="REAL RESULTS"
+            title={
+              <>
+                <span className="text-[#FF6B9D]">Founders</span> Have Run
+                <br />
+                This Sprint. Here Are Two.
+              </>
+            }
+            subtitle="See exactly what happened when we ran our 7-day sprint for these agencies."
+          />
+
+          <motion.div
+            className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto"
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            {/* Addx Studio */}
+            <motion.div
+              variants={staggerItem}
+              className="group relative"
+            >
+              <div
+                className="absolute -inset-0.5 bg-gradient-to-r from-[#FF6B9D] to-[#C084FC] rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
+                aria-hidden="true"
+              />
+              <div className="relative h-full rounded-3xl border border-white/10 bg-gradient-to-b from-[#0A0E1A] to-[#141824] p-8 backdrop-blur-xl transition-all duration-300 group-hover:border-[#FF6B9D]/30">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 rounded-xl bg-white/5 flex items-center justify-center">
+                    <span className="text-2xl font-bold text-white tracking-tight">ADDX</span>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white">Addx Studio</h3>
+                    <p className="text-sm text-[#9CA3AF]">Creative Agency</p>
+                  </div>
+                </div>
+
+                <div className="space-y-4 mb-8">
+                  <div className="flex justify-between items-center">
+                    <span className="text-[#9CA3AF]">Calls Booked</span>
+                    <span className="text-3xl font-bold text-[#FF6B9D]">53+</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[#9CA3AF]">Pipeline Added</span>
+                    <span className="text-3xl font-bold text-[#FF6B9D]">$100k MRR</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[#9CA3AF]">Reply Rate</span>
+                    <span className="text-3xl font-bold text-[#FF6B9D]">30%</span>
+                  </div>
+                </div>
+
+
+                <a
+                  href="https://www.notion.so/outlio/Case-Study-Addx-Studio-2f3ae787791280a2880af4f16e0a0e85"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#FF6B9D]/10 border border-[#FF6B9D]/30 text-sm font-bold text-[#FF6B9D] hover:bg-[#FF6B9D]/20 transition-colors"
+                >
+                  Read Full Case Study
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15,3 21,3 21,9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                  </svg>
+                </a>
+              </div>
+            </motion.div>
+
+            {/* ClickLabs */}
+            <motion.div
+              variants={staggerItem}
+              className="group relative"
+            >
+              <div
+                className="absolute -inset-0.5 bg-gradient-to-r from-[#C084FC] to-[#FF6B9D] rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
+                aria-hidden="true"
+              />
+              <div className="relative h-full rounded-3xl border border-white/10 bg-gradient-to-b from-[#0A0E1A] to-[#141824] p-8 backdrop-blur-xl transition-all duration-300 group-hover:border-[#C084FC]/30">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 rounded-xl bg-[#FFA500]/10 flex items-center justify-center">
+                    <span className="text-2xl">🧪</span>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white">ClickLabs</h3>
+                    <p className="text-sm text-[#9CA3AF]">Design & Content Agency</p>
+                  </div>
+                </div>
+
+                <div className="space-y-4 mb-8">
+                  <div className="flex justify-between items-center">
+                    <span className="text-[#9CA3AF]">Calls Booked</span>
+                    <span className="text-3xl font-bold text-[#C084FC]">27</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[#9CA3AF]">Pipeline Added</span>
+                    <span className="text-3xl font-bold text-[#C084FC]">$28K MRR</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[#9CA3AF]">Reply Rate</span>
+                    <span className="text-3xl font-bold text-[#C084FC]">26%</span>
+                  </div>
+                </div>
+
+
+                <a
+                  href="https://www.notion.so/outlio/Case-Study-ClickLabs-2f3ae787791280e19e09d91ed5329ecd"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#C084FC]/10 border border-[#C084FC]/30 text-sm font-bold text-[#C084FC] hover:bg-[#C084FC]/20 transition-colors"
+                >
+                  Read Full Case Study
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15,3 21,3 21,9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                  </svg>
+                </a>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ================================================================== */}
+      {/* FAQ SECTION */}
+      {/* ================================================================== */}
+      <section className="relative py-24 bg-[#0A0E1A]">
+        <div className="max-w-7xl mx-auto px-6">
+          <SectionHeader
+            badge="QUESTIONS?"
+            title={
+              <>
+                Everything You Need to <br />
+                <span className="text-[#FF6B9D]">Know</span>
+              </>
+            }
+            subtitle="Common questions about the 7-day sprint."
+          />
+          <FAQAccordion />
+        </div>
+      </section>
+
+      {/* ================================================================== */}
+      {/* FOUNDER CREDIBILITY SECTION */}
+      {/* ================================================================== */}
+      <section className="relative py-24 bg-[#141824]">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8 }}
+            className="flex flex-col items-center"
+          >
+            <div className="relative mb-8">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B9D] to-[#C084FC] rounded-full blur opacity-50" />
+              <div className="relative w-36 h-36 rounded-full overflow-hidden border-2 border-white/20 hover:scale-105 transition-transform duration-300">
+                <a
+                  href="https://www.linkedin.com/in/husnain-rafiq-343179290/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full h-full relative"
+                >
+                  <Image
+                    src="/husnain.jpg"
+                    alt="Husnain - Founder of OUTLIO"
+                    fill
+                    className="object-cover"
+                    style={{ objectPosition: '70% 25%' }}
+                  />
+                </a>
+              </div>
+            </div>
+
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+              Husnain
+            </h3>
+            <p className="text-[#FF6B9D] font-medium tracking-wide uppercase text-sm mb-6">
+              Founder, OUTLIO
+            </p>
+
+            <p className="text-lg text-[#9CA3AF] leading-relaxed max-w-2xl italic mb-8">
+              &quot;I&apos;ve helped 6+ agencies scale their outbound without ads or retainers. My goal is simple: get you results or pay you nothing. I take all the risk so you don&apos;t have to.&quot;
+            </p>
+
+            <a
+              href="https://www.linkedin.com/in/husnain-rafiq-343179290/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/60 hover:text-white transition-colors text-sm flex items-center gap-2"
+            >
+              <span className="uppercase tracking-widest text-xs">Connect on LinkedIn</span>
+              →
+            </a>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ================================================================== */}
+      {/* FINAL CTA */}
+      {/* ================================================================== */}
+      <section
+        id="book-call"
+        className="relative py-32 md:py-40 overflow-hidden bg-[#0A0E1A]"
+      >
+        <div
+          className="absolute inset-0 bg-gradient-radial from-[#C084FC]/10 via-transparent to-transparent"
+          aria-hidden="true"
+        />
+
+        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: premiumEase }}
+          >
+            <Badge>
+              <span aria-hidden="true">⚡</span> Strict Capacity: 5 Spots /
+              Month
+            </Badge>
+
+            <h2 className="mt-8 text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] mb-10 font-sans tracking-tight">
+              Ready to <span className="text-[#FF6B9D]">Scale?</span>
+            </h2>
+
+            <p className="text-lg md:text-xl text-[#9CA3AF] max-w-2xl mx-auto mb-12 font-light">
+              Stop guessing. Start closing.
+              <br />
+              Your calendar could be full in 7 days.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-6">
+              <PremiumCTA
+                href="https://calendly.com/your-link"
+                size="lg"
+                trackingLabel="final_cta"
+              >
+                Book Your Strategy Call
+              </PremiumCTA>
+            </div>
+
+            {/* Risk Reversal */}
+            <p className="text-sm text-[#9CA3AF]/70 mb-16">
+              If we don&apos;t book real calls in 7 days — you pay nothing.
+            </p>
+
+            <div className="flex flex-wrap justify-center items-center gap-6 md:gap-8 text-xs md:text-sm text-white/40 uppercase tracking-widest">
+              <span>15-Min Fit Check</span>
+              <span aria-hidden="true">•</span>
+              <span>Founder Led</span>
+              <span aria-hidden="true">•</span>
+              <span>No Hard Pitch</span>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ================================================================== */}
+      {/* FOOTER */}
+      {/* ================================================================== */}
+      <footer className="py-20 bg-[#141824] border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+            <div className="text-center md:text-left">
+              <h2 className="text-2xl md:text-3xl font-black bg-gradient-to-r from-[#FF6B9D] to-[#C084FC] bg-clip-text text-transparent mb-2 font-sans tracking-tighter">
+                OUTLIO.
+              </h2>
+              <p className="text-[#9CA3AF] text-sm">
+                Built for founders who execute.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-6 md:gap-8">
+              {[
+                { name: "Instagram", url: "https://www.instagram.com/outlio.io/?hl=en" },
+                { name: "LinkedIn", url: "https://www.linkedin.com/company/outlio/?viewAsMember=true" },
+                { name: "X", url: "https://x.com/OutlioLeadGen" }
+              ].map((link) => (
+                <motion.a
+                  key={link.name}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#9CA3AF] hover:text-[#FF6B9D] transition-colors text-xs md:text-sm uppercase tracking-widest font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6B9D]"
+                  whileHover={{ y: -2 }}
+                >
+                  {link.name}
+                </motion.a>
+              ))}
+            </div>
+          </div>
+          <div className="mt-16 pt-8 border-t border-white/5 text-center text-white/20 text-xs uppercase tracking-widest">
+            © 2026 OUTLIO Inc. All Rights Reserved.
+          </div>
+        </div>
+      </footer>
+    </main>
+  );
+}
+
+// Type declaration for gtag
+declare global {
+  interface Window {
+    gtag?: (
+      command: string,
+      action: string,
+      params: { event_category: string; event_label: string }
+    ) => void;
+  }
+}

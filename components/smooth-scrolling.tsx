@@ -13,7 +13,6 @@ export default function SmoothScrolling({ children }: SmoothScrollingProps) {
     useEffect(() => {
         // Initialize Lenis
         const lenis = new Lenis({
-            smoothWheel: true,
             lerp: 0.1,
         });
         lenisRef.current = lenis;

@@ -278,7 +278,7 @@ function BloomingLogo() {
   const textSpring = { type: "spring", stiffness: 140, damping: 24, mass: 0.8 } as const;
 
   return (
-    <div className="flex flex-col items-center pt-20 md:pt-24 pb-2 relative z-[200]">
+    <div className="flex flex-col items-center pb-4 md:pb-6 relative z-[200]">
       <motion.div
         className="relative group cursor-pointer"
         initial={{ opacity: 0, y: -20 }}
@@ -438,12 +438,11 @@ export default function Home() {
       {/* ================================================================== */}
       <div className="flex flex-col overflow-hidden relative">
 
-        {/* Blooming Logo Component */}
-        <BloomingLogo />
-
         <ContainerScroll
           titleComponent={
-            <div className="mb-4 relative z-10">
+            <div className="mb-4 relative z-10 pt-20 md:pt-24">
+              {/* Blooming Logo Component */}
+              <BloomingLogo />
               <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] text-white drop-shadow-2xl tracking-tight font-sans">
                 Book 10+ Qualified Calls in 7 Days. <br />
                 <span className="bg-gradient-to-r from-[#FF6B9D] via-[#C084FC] to-[#FCD34D] bg-clip-text text-transparent mt-2 block leading-none">

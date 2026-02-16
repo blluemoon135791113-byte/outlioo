@@ -8,6 +8,7 @@ import { BackgroundBeams } from "@/components/ui/background-beams";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 import AnoAI from "@/components/ui/animated-shader-background";
 import { LampContainer } from "@/components/ui/lamp";
+import { Marquee } from "@/components/ui/marquee";
 
 import { Navbar } from "@/components/ui/navbar";
 import { JellyButton } from "@/components/ui/jelly-button";
@@ -271,25 +272,13 @@ function LoadingScreen() {
 
 function BloomingLogo() {
   const [isHovered, setIsHovered] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const containerRef = useRef(null);
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-
-  // On mobile: no bloom (logo stays static). On desktop: bloom on hover only.
-  const isBlooming = !isMobile && isHovered;
 
   // Premium Fluid Spring Settings - and even smoother "bloom"
   const logoSpring = { type: "spring", stiffness: 100, damping: 22, mass: 1 } as const;
   const textSpring = { type: "spring", stiffness: 140, damping: 24, mass: 0.8 } as const;
 
   return (
-    <div className="flex flex-col items-center pt-0 pb-0 relative" ref={containerRef}>
+    <div className="flex flex-col items-center pt-20 md:pt-24 pb-2 relative z-[200]">
       <motion.div
         className="relative group cursor-pointer"
         initial={{ opacity: 0, y: -20 }}
@@ -303,17 +292,14 @@ function BloomingLogo() {
 
         <motion.div
           className="relative"
-          animate={{ scale: isBlooming ? 1.05 : 1 }}
+          animate={{ scale: isHovered ? 1.05 : 1 }}
           transition={logoSpring}
         >
           <div
-            className="absolute inset-0 bg-[#FF6B9D] rounded-full transition-all duration-700 pointer-events-none"
+            className="absolute inset-0 bg-[#FF6B9D] blur-3xl opacity-30 rounded-full scale-150 transition-all duration-700"
             style={{
-              opacity: isBlooming ? 0.8 : 0.25,
-              transform: `scale(${isBlooming ? 1.8 : 1.2})`,
-              filter: "blur(50px)",
-              maskImage: "linear-gradient(to bottom, black 40%, transparent 100%)",
-              WebkitMaskImage: "linear-gradient(to bottom, black 40%, transparent 100%)",
+              opacity: isHovered ? 0.6 : 0.3,
+              transform: `scale(${isHovered ? 1.8 : 1.5})`
             }}
             aria-hidden="true"
           />
@@ -323,13 +309,13 @@ function BloomingLogo() {
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center justify-center text-center pointer-events-none whitespace-nowrap"
             initial={{ opacity: 0, scale: 0.8, y: 0, filter: "blur(10px)" }}
             animate={
-              isBlooming
-                ? { opacity: 1, scale: 1.1, y: -85, filter: "blur(0px)" }
+              isHovered
+                ? { opacity: 1, scale: 1, y: -95, filter: "blur(0px)" }
                 : { opacity: 0, scale: 0.8, y: 0, filter: "blur(10px)" }
             }
             transition={textSpring}
           >
-            <div className="text-2xl md:text-4xl font-bold text-white drop-shadow-[0_0_15px_rgba(255,107,157,0.5)]">
+            <div className="text-3xl md:text-4xl font-bold text-white drop-shadow-[0_0_15px_rgba(255,107,157,0.5)]">
               $50
             </div>
             <div className="text-[10px] font-bold bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent uppercase tracking-[0.2em] mt-2">
@@ -338,12 +324,12 @@ function BloomingLogo() {
           </motion.div>
 
           {/* Glowing Gradient Ring Wrapper */}
-          <div className="rounded-full p-[2px] bg-gradient-to-r from-[#FF6B9D] via-[#C084FC] to-[#FF6B9D] relative shadow-[0_0_20px_rgba(255,107,157,0.3)] animate-shimmer bg-[length:200%_100%] z-20">
-            <div className="rounded-full overflow-hidden h-16 w-16 border-4 border-[#0A0E1A] relative bg-[#0A0E1A]">
+          <div className="rounded-full p-[3px] bg-gradient-to-r from-[#FF6B9D] via-[#C084FC] to-[#FF6B9D] relative shadow-[0_0_20px_rgba(255,107,157,0.3)] animate-shimmer bg-[length:200%_100%] z-20">
+            <div className="rounded-full overflow-hidden h-20 w-20 md:h-24 md:w-24 border-4 border-[#0A0E1A] relative bg-[#0A0E1A]">
               {/* Left Half */}
               <motion.div
                 className="absolute inset-0 w-full h-full origin-bottom"
-                animate={{ rotate: isBlooming ? -18 : 0 }}
+                animate={{ rotate: isHovered ? -18 : 0 }}
                 transition={logoSpring}
               >
                 <div
@@ -363,7 +349,7 @@ function BloomingLogo() {
               {/* Right Half */}
               <motion.div
                 className="absolute inset-0 w-full h-full origin-bottom"
-                animate={{ rotate: isBlooming ? 18 : 0 }}
+                animate={{ rotate: isHovered ? 18 : 0 }}
                 transition={logoSpring}
               >
                 <div
@@ -452,15 +438,13 @@ export default function Home() {
       {/* ================================================================== */}
       <div className="flex flex-col overflow-hidden relative">
 
-        {/* Blooming Logo Component - Desktop only, positioned left */}
-        <div className="hidden lg:block absolute left-8 xl:left-16 top-20 z-[200]">
-          <BloomingLogo />
-        </div>
+        {/* Blooming Logo Component */}
+        <BloomingLogo />
 
         <ContainerScroll
           titleComponent={
-            <div className="mb-4 relative z-10 pt-20 md:pt-24 lg:pt-0">
-              <h1 className="text-3xl sm:text-4xl md:text-7xl lg:text-8xl font-bold leading-[1.1] text-white drop-shadow-2xl tracking-tight font-sans">
+            <div className="mb-4 relative z-10">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] text-white drop-shadow-2xl tracking-tight font-sans">
                 Book 10+ Qualified Calls in 7 Days. <br />
                 <span className="bg-gradient-to-r from-[#FF6B9D] via-[#C084FC] to-[#FCD34D] bg-clip-text text-transparent mt-2 block leading-none">
                   Guaranteed. Or Pay $0.
@@ -530,43 +514,30 @@ export default function Home() {
           <p className="text-center text-xs font-bold tracking-[0.2em] text-white/30 uppercase mb-6">
             Trusted by High-Performers at
           </p>
-          <motion.div
-            className="flex justify-center items-center gap-8 sm:gap-12 md:gap-16 flex-wrap py-4"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={stagger}
-          >
-            {[
-              { src: "/logos/clicklabs.png", alt: "ClickLabs", glow: "rgba(255, 165, 0, 0.5)" },
-              { src: "/logos/zooz.png", alt: "Zooz Drinks", glow: "rgba(255, 107, 107, 0.5)" },
-              { src: "/logos/addx.jpg", alt: "Addx Studio", glow: "rgba(100, 100, 100, 0.5)" },
-              { src: "/logos/arctix.png", alt: "Arctix Solutions", glow: "rgba(0, 149, 255, 0.5)" },
-            ].map((logo) => (
-              <motion.div
-                key={logo.alt}
-                variants={staggerItem}
-                className="group flex flex-col items-center gap-3 cursor-pointer"
-                whileHover={{ scale: 1.08 }}
-              >
-                <div
-                  className="relative h-14 md:h-20 w-auto px-4 py-3 rounded-xl transition-all duration-300 group-hover:drop-shadow-[0_0_20px_var(--glow)]"
-                  style={{ "--glow": logo.glow } as React.CSSProperties}
-                >
-                  <Image
-                    src={logo.src}
-                    alt={logo.alt}
-                    width={160}
-                    height={80}
-                    className="h-full w-auto object-contain"
-                  />
-                </div>
-                <span className="text-sm md:text-base font-medium text-white/50 transition-colors duration-300 group-hover:text-white whitespace-nowrap">
-                  {logo.alt}
-                </span>
-              </motion.div>
-            ))}
-          </motion.div>
+          <Marquee
+            items={[
+              { src: "/logos/clicklabs.png", alt: "ClickLabs" },
+              { src: "/logos/zooz.png", alt: "Zooz Drinks" },
+              {
+                src: "/logos/addx.jpg",
+                alt: "Addx Studio",
+                style: {
+                  maskImage: "url(/logos/addx.jpg)",
+                  maskMode: "luminance",
+                  maskRepeat: "no-repeat",
+                  maskPosition: "center",
+                  maskSize: "contain",
+                  WebkitMaskImage: "url(/logos/addx.jpg)",
+                  WebkitMaskMode: "luminance",
+                  WebkitMaskRepeat: "no-repeat",
+                  WebkitMaskPosition: "center",
+                  WebkitMaskSize: "contain",
+                } as React.CSSProperties
+              },
+              { src: "/logos/arctix.png", alt: "Arctix Solutions" },
+            ]}
+            speed="slow"
+          />
         </div>
       </section>
 
@@ -970,97 +941,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section Divider: Case Studies → Testimonials */}
+      {/* Section Divider: Case Studies → FAQ */}
       <div className="section-divider section-divider-card-to-dark" aria-hidden="true" />
-
-      {/* ================================================================== */}
-      {/* TESTIMONIALS SECTION */}
-      {/* ================================================================== */}
-      <section className="relative py-28 md:py-36 bg-[#0A0E1A]">
-        <div className="max-w-6xl mx-auto px-6">
-          <SectionHeader
-            badge="WHAT THEY SAY"
-            title={
-              <>
-                Don&apos;t Take Our Word.
-                <br />
-                <span className="text-[#FF6B9D]">Take Theirs.</span>
-              </>
-            }
-          />
-
-          <motion.div
-            className="grid md:grid-cols-3 gap-6 md:gap-8"
-            variants={stagger}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            {[
-              {
-                quote: "Within 5 days we had 12 qualified calls booked. We closed 3 of them within the month. The ROI is insane.",
-                name: "Arnav K.",
-                title: "Founder, Addx Studio",
-                accent: "#FF6B9D",
-              },
-              {
-                quote: "I was skeptical about the 7-day timeline. But they delivered real conversations with decision-makers — not tire-kickers.",
-                name: "Sara M.",
-                title: "CEO, ClickLabs",
-                accent: "#C084FC",
-              },
-              {
-                quote: "Finally an outbound partner that actually takes the risk with you. The pay-for-performance model changed everything.",
-                name: "Daniel R.",
-                title: "Founder, Arctix Solutions",
-                accent: "#FCD34D",
-              },
-            ].map((testimonial, idx) => (
-              <motion.div
-                key={idx}
-                variants={staggerItem}
-                className="group relative"
-                whileHover={{ y: -5 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              >
-                <div
-                  className="absolute -inset-0.5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
-                  style={{ background: `linear-gradient(135deg, ${testimonial.accent}40, transparent)` }}
-                  aria-hidden="true"
-                />
-                <div className="relative h-full rounded-3xl border border-white/10 bg-gradient-to-b from-[#141824] to-[#0A0E1A] p-8 backdrop-blur-xl transition-all duration-300 group-hover:border-white/20">
-                  {/* Decorative quote mark */}
-                  <div
-                    className="text-6xl font-serif leading-none mb-4 opacity-20"
-                    style={{ color: testimonial.accent }}
-                    aria-hidden="true"
-                  >
-                    &ldquo;
-                  </div>
-                  <p className="text-[#D1D5DB] leading-relaxed mb-8 text-base">
-                    {testimonial.quote}
-                  </p>
-                  <div className="flex items-center gap-3 mt-auto">
-                    <div
-                      className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold"
-                      style={{ background: `${testimonial.accent}20`, color: testimonial.accent }}
-                    >
-                      {testimonial.name.charAt(0)}
-                    </div>
-                    <div>
-                      <p className="text-white font-semibold text-sm">{testimonial.name}</p>
-                      <p className="text-[#9CA3AF] text-xs">{testimonial.title}</p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Section Divider: Testimonials → FAQ */}
-      <div className="section-divider" aria-hidden="true" />
 
       {/* ================================================================== */}
       {/* FAQ SECTION */}

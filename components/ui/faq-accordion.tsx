@@ -59,8 +59,12 @@ function FAQAccordionItem({ item, isOpen, onToggle }: {
 }) {
     return (
         <motion.div
-            className="border border-white/10 rounded-2xl overflow-hidden bg-[#141824]/50 backdrop-blur-sm"
+            className={`border rounded-2xl overflow-hidden bg-[#141824]/50 backdrop-blur-sm transition-all duration-300 ${isOpen
+                    ? "border-[#FF6B9D]/30 border-l-2 border-l-[#FF6B9D] shadow-[0_0_20px_rgba(255,107,157,0.08)]"
+                    : "border-white/10 hover:border-white/20"
+                }`}
             initial={false}
+            whileHover={{ scale: isOpen ? 1 : 1.01 }}
         >
             <button
                 onClick={onToggle}

@@ -45,7 +45,7 @@ export const LampContainer = ({
                     style={{
                         backgroundImage: `conic-gradient(var(--conic-position), var(--tw-gradient-stops))`,
                     }}
-                    className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] bg-gradient-conic from-[#FF6B9D]/60 via-transparent to-transparent text-white [--conic-position:from_70deg_at_center_top] top-0"
+                    className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] bg-gradient-conic from-[#FF6B9D]/50 via-[#C084FC]/30 to-transparent text-white [--conic-position:from_70deg_at_center_top] top-0"
                 >
                     <div className="absolute w-[100%] left-0 bg-[#0A0E1A] h-40 bottom-0 [mask-image:linear-gradient(to_top,white,transparent)]" />
                     <div className="absolute w-40 h-[100%] left-0 bg-[#0A0E1A] bottom-0 [mask-image:linear-gradient(to_right,white,transparent)]" />
@@ -60,7 +60,7 @@ export const LampContainer = ({
                     style={{
                         backgroundImage: `conic-gradient(var(--conic-position), var(--tw-gradient-stops))`,
                     }}
-                    className="absolute inset-auto left-1/2 h-56 w-[30rem] bg-gradient-conic from-transparent via-transparent to-[#FF6B9D]/60 text-white [--conic-position:from_290deg_at_center_top] top-0"
+                    className="absolute inset-auto left-1/2 h-56 w-[30rem] bg-gradient-conic from-transparent via-[#FCD34D]/20 to-[#C084FC]/40 text-white [--conic-position:from_290deg_at_center_top] top-0"
                 >
                     <div className="absolute w-40 h-[100%] right-0 bg-[#0A0E1A] bottom-0 [mask-image:linear-gradient(to_left,white,transparent)]" />
                     <div className="absolute w-[100%] right-0 bg-[#0A0E1A] h-40 bottom-0 [mask-image:linear-gradient(to_top,white,transparent)]" />
@@ -70,16 +70,24 @@ export const LampContainer = ({
                 <div className="absolute top-1/2 h-48 w-full translate-y-[-50%] scale-x-150 bg-[#0A0E1A] blur-2xl" />
                 <div className="absolute top-1/2 h-48 w-full bg-transparent opacity-10 backdrop-blur-md translate-y-[-50%]" />
 
-                {/* Center glow orb - reduced opacity for less interference */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 h-36 w-[28rem] rounded-full bg-[#FF6B9D] opacity-30 blur-3xl" />
+                {/* Center glow orb - pulsing for custom feel */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 h-36 w-[28rem] rounded-full bg-gradient-to-r from-[#FF6B9D] via-[#C084FC] to-[#FCD34D] animate-glow-pulse blur-3xl" />
 
-                {/* Accent line */}
+                {/* Primary accent line */}
                 <motion.div
                     initial={{ width: "8rem" }}
                     whileInView={{ width: "16rem" }}
                     transition={{ delay: 0.3, duration: 0.8, ease: "easeInOut" }}
                     viewport={{ once: true }}
-                    className="absolute inset-auto left-1/2 -translate-x-1/2 h-0.5 w-[30rem] top-28 bg-[#FF6B9D]"
+                    className="absolute inset-auto left-1/2 -translate-x-1/2 h-0.5 w-[30rem] top-28 bg-gradient-to-r from-transparent via-[#FF6B9D] to-transparent"
+                />
+                {/* Secondary thinner accent line */}
+                <motion.div
+                    initial={{ width: "4rem" }}
+                    whileInView={{ width: "10rem" }}
+                    transition={{ delay: 0.5, duration: 0.8, ease: "easeInOut" }}
+                    viewport={{ once: true }}
+                    className="absolute inset-auto left-1/2 -translate-x-1/2 h-px w-[10rem] top-32 bg-gradient-to-r from-transparent via-[#C084FC]/60 to-transparent"
                 />
             </div>
 

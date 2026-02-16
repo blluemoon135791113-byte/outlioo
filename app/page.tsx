@@ -8,7 +8,7 @@ import { BackgroundBeams } from "@/components/ui/background-beams";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 import AnoAI from "@/components/ui/animated-shader-background";
 import { LampContainer } from "@/components/ui/lamp";
-import { Marquee } from "@/components/ui/marquee";
+
 import { Navbar } from "@/components/ui/navbar";
 import { JellyButton } from "@/components/ui/jelly-button";
 import { FAQAccordion } from "@/components/ui/faq-accordion";
@@ -271,13 +271,25 @@ function LoadingScreen() {
 
 function BloomingLogo() {
   const [isHovered, setIsHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  // On mobile: no bloom (logo stays static). On desktop: bloom on hover only.
+  const isBlooming = !isMobile && isHovered;
 
   // Premium Fluid Spring Settings - and even smoother "bloom"
   const logoSpring = { type: "spring", stiffness: 100, damping: 22, mass: 1 } as const;
   const textSpring = { type: "spring", stiffness: 140, damping: 24, mass: 0.8 } as const;
 
   return (
-    <div className="flex flex-col items-center pt-20 md:pt-24 pb-2 relative z-[200]">
+    <div className="flex flex-col items-center pt-0 pb-0 relative" ref={containerRef}>
       <motion.div
         className="relative group cursor-pointer"
         initial={{ opacity: 0, y: -20 }}
@@ -291,14 +303,17 @@ function BloomingLogo() {
 
         <motion.div
           className="relative"
-          animate={{ scale: isHovered ? 1.05 : 1 }}
+          animate={{ scale: isBlooming ? 1.05 : 1 }}
           transition={logoSpring}
         >
           <div
-            className="absolute inset-0 bg-[#FF6B9D] blur-3xl opacity-30 rounded-full scale-150 transition-all duration-700"
+            className="absolute inset-0 bg-[#FF6B9D] rounded-full transition-all duration-700 pointer-events-none"
             style={{
-              opacity: isHovered ? 0.6 : 0.3,
-              transform: `scale(${isHovered ? 1.8 : 1.5})`
+              opacity: isBlooming ? 0.8 : 0.25,
+              transform: `scale(${isBlooming ? 1.8 : 1.2})`,
+              filter: "blur(50px)",
+              maskImage: "linear-gradient(to bottom, black 40%, transparent 100%)",
+              WebkitMaskImage: "linear-gradient(to bottom, black 40%, transparent 100%)",
             }}
             aria-hidden="true"
           />
@@ -308,13 +323,13 @@ function BloomingLogo() {
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center justify-center text-center pointer-events-none whitespace-nowrap"
             initial={{ opacity: 0, scale: 0.8, y: 0, filter: "blur(10px)" }}
             animate={
-              isHovered
-                ? { opacity: 1, scale: 1, y: -95, filter: "blur(0px)" }
+              isBlooming
+                ? { opacity: 1, scale: 1.1, y: -85, filter: "blur(0px)" }
                 : { opacity: 0, scale: 0.8, y: 0, filter: "blur(10px)" }
             }
             transition={textSpring}
           >
-            <div className="text-3xl md:text-4xl font-bold text-white drop-shadow-[0_0_15px_rgba(255,107,157,0.5)]">
+            <div className="text-2xl md:text-4xl font-bold text-white drop-shadow-[0_0_15px_rgba(255,107,157,0.5)]">
               $50
             </div>
             <div className="text-[10px] font-bold bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent uppercase tracking-[0.2em] mt-2">
@@ -323,12 +338,12 @@ function BloomingLogo() {
           </motion.div>
 
           {/* Glowing Gradient Ring Wrapper */}
-          <div className="rounded-full p-[3px] bg-gradient-to-r from-[#FF6B9D] via-[#C084FC] to-[#FF6B9D] relative shadow-[0_0_20px_rgba(255,107,157,0.3)] animate-shimmer bg-[length:200%_100%] z-20">
-            <div className="rounded-full overflow-hidden h-20 w-20 md:h-24 md:w-24 border-4 border-[#0A0E1A] relative bg-[#0A0E1A]">
+          <div className="rounded-full p-[2px] bg-gradient-to-r from-[#FF6B9D] via-[#C084FC] to-[#FF6B9D] relative shadow-[0_0_20px_rgba(255,107,157,0.3)] animate-shimmer bg-[length:200%_100%] z-20">
+            <div className="rounded-full overflow-hidden h-16 w-16 border-4 border-[#0A0E1A] relative bg-[#0A0E1A]">
               {/* Left Half */}
               <motion.div
                 className="absolute inset-0 w-full h-full origin-bottom"
-                animate={{ rotate: isHovered ? -18 : 0 }}
+                animate={{ rotate: isBlooming ? -18 : 0 }}
                 transition={logoSpring}
               >
                 <div
@@ -348,7 +363,7 @@ function BloomingLogo() {
               {/* Right Half */}
               <motion.div
                 className="absolute inset-0 w-full h-full origin-bottom"
-                animate={{ rotate: isHovered ? 18 : 0 }}
+                animate={{ rotate: isBlooming ? 18 : 0 }}
                 transition={logoSpring}
               >
                 <div
@@ -427,7 +442,7 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-transparent text-white font-sans antialiased overflow-x-hidden selection:bg-[#FF6B9D]/30 relative">
+    <main className="min-h-screen bg-transparent text-white font-sans antialiased overflow-x-hidden selection:bg-[#FF6B9D]/30 relative noise-overlay">
       <Navbar />
       <div className="fixed inset-0 -z-20 bg-[#0A0E1A]" aria-hidden="true" />
       <AnoAI />
@@ -437,13 +452,15 @@ export default function Home() {
       {/* ================================================================== */}
       <div className="flex flex-col overflow-hidden relative">
 
-        {/* Blooming Logo Component */}
-        <BloomingLogo />
+        {/* Blooming Logo Component - Desktop only, positioned left */}
+        <div className="hidden lg:block absolute left-8 xl:left-16 top-20 z-[200]">
+          <BloomingLogo />
+        </div>
 
         <ContainerScroll
           titleComponent={
-            <div className="mb-4 relative z-10">
-              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] text-white drop-shadow-2xl tracking-tight font-sans">
+            <div className="mb-4 relative z-10 pt-20 md:pt-24 lg:pt-0">
+              <h1 className="text-3xl sm:text-4xl md:text-7xl lg:text-8xl font-bold leading-[1.1] text-white drop-shadow-2xl tracking-tight font-sans">
                 Book 10+ Qualified Calls in 7 Days. <br />
                 <span className="bg-gradient-to-r from-[#FF6B9D] via-[#C084FC] to-[#FCD34D] bg-clip-text text-transparent mt-2 block leading-none">
                   Guaranteed. Or Pay $0.
@@ -513,37 +530,53 @@ export default function Home() {
           <p className="text-center text-xs font-bold tracking-[0.2em] text-white/30 uppercase mb-6">
             Trusted by High-Performers at
           </p>
-          <Marquee
-            items={[
-              { src: "/logos/clicklabs.png", alt: "ClickLabs" },
-              { src: "/logos/zooz.png", alt: "Zooz Drinks" },
-              {
-                src: "/logos/addx.jpg",
-                alt: "Addx Studio",
-                style: {
-                  maskImage: "url(/logos/addx.jpg)",
-                  maskMode: "luminance",
-                  maskRepeat: "no-repeat",
-                  maskPosition: "center",
-                  maskSize: "contain",
-                  WebkitMaskImage: "url(/logos/addx.jpg)",
-                  WebkitMaskMode: "luminance",
-                  WebkitMaskRepeat: "no-repeat",
-                  WebkitMaskPosition: "center",
-                  WebkitMaskSize: "contain",
-                } as React.CSSProperties
-              },
-              { src: "/logos/arctix.png", alt: "Arctix Solutions" },
-            ]}
-            speed="slow"
-          />
+          <motion.div
+            className="flex justify-center items-center gap-8 sm:gap-12 md:gap-16 flex-wrap py-4"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={stagger}
+          >
+            {[
+              { src: "/logos/clicklabs.png", alt: "ClickLabs", glow: "rgba(255, 165, 0, 0.5)" },
+              { src: "/logos/zooz.png", alt: "Zooz Drinks", glow: "rgba(255, 107, 107, 0.5)" },
+              { src: "/logos/addx.jpg", alt: "Addx Studio", glow: "rgba(100, 100, 100, 0.5)" },
+              { src: "/logos/arctix.png", alt: "Arctix Solutions", glow: "rgba(0, 149, 255, 0.5)" },
+            ].map((logo) => (
+              <motion.div
+                key={logo.alt}
+                variants={staggerItem}
+                className="group flex flex-col items-center gap-3 cursor-pointer"
+                whileHover={{ scale: 1.08 }}
+              >
+                <div
+                  className="relative h-14 md:h-20 w-auto px-4 py-3 rounded-xl transition-all duration-300 group-hover:drop-shadow-[0_0_20px_var(--glow)]"
+                  style={{ "--glow": logo.glow } as React.CSSProperties}
+                >
+                  <Image
+                    src={logo.src}
+                    alt={logo.alt}
+                    width={160}
+                    height={80}
+                    className="h-full w-auto object-contain"
+                  />
+                </div>
+                <span className="text-sm md:text-base font-medium text-white/50 transition-colors duration-300 group-hover:text-white whitespace-nowrap">
+                  {logo.alt}
+                </span>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
+
+      {/* Section Divider: Trust → Problem */}
+      <div className="section-divider" aria-hidden="true" />
 
       {/* ================================================================== */}
       {/* PROBLEM SECTION */}
       {/* ================================================================== */}
-      <section className="relative py-16 md:py-24 bg-[#0A0E1A]">
+      <section className="relative py-28 md:py-36 bg-[#0A0E1A]">
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeader
             badge="THE PROBLEM"
@@ -586,15 +619,17 @@ export default function Home() {
                 key={idx}
                 variants={staggerItem}
                 className="group relative"
+                whileHover={{ y: -6, scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
                 <div
                   className="absolute -inset-0.5 bg-gradient-to-r from-[#FF6B9D] to-[#C084FC] rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
                   aria-hidden="true"
                 />
-                <div className="relative h-full rounded-3xl border border-white/10 bg-gradient-to-b from-[#141824] to-[#0A0E1A] p-8 backdrop-blur-xl transition-all duration-300 group-hover:border-white/20 min-h-[250px]">
-                  <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-[#FF6B9D]/20 to-[#C084FC]/20 backdrop-blur-sm">
+                <div className="relative h-full rounded-3xl border border-white/10 bg-gradient-to-b from-[#141824] to-[#0A0E1A] p-6 sm:p-8 backdrop-blur-xl transition-all duration-300 group-hover:border-[#FF6B9D]/30 group-hover:shadow-[0_0_40px_rgba(255,107,157,0.12)] min-h-0 md:min-h-[250px]">
+                  <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-[#FF6B9D]/20 to-[#C084FC]/20 backdrop-blur-sm group-hover:from-[#FF6B9D]/30 group-hover:to-[#C084FC]/30 transition-all duration-300">
                     <span
-                      className="text-4xl"
+                      className="text-4xl transition-transform duration-300 group-hover:scale-110"
                       role="img"
                       aria-hidden="true"
                     >
@@ -611,6 +646,9 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      {/* Section Divider: Problem → How It Works */}
+      <div className="section-divider" aria-hidden="true" />
 
       {/* ================================================================== */}
       {/* LAMP REVEAL - HOW IT WORKS */}
@@ -678,16 +716,22 @@ export default function Home() {
                   key={idx}
                   variants={staggerItem}
                   className="relative group"
+                  whileHover={{ y: -8 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 >
-                  <div className="relative h-full rounded-2xl border border-white/10 bg-[#141824]/80 backdrop-blur-xl p-6 md:p-8 hover:bg-[#141824] transition-all duration-300 hover:border-[#FF6B9D]/30 min-h-[200px]">
+                  <div
+                    className="absolute -inset-0.5 bg-gradient-to-r from-[#FF6B9D]/60 to-[#C084FC]/60 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
+                    aria-hidden="true"
+                  />
+                  <div className="relative h-full rounded-2xl border border-white/10 bg-[#141824]/80 backdrop-blur-xl p-6 md:p-8 transition-all duration-300 group-hover:bg-[#141824] group-hover:border-[#FF6B9D]/30 group-hover:shadow-[0_0_30px_rgba(255,107,157,0.1)] min-h-[200px]">
                     <div
-                      className="text-5xl md:text-6xl font-black text-[#FF6B9D]/10 absolute top-4 right-4 z-0 group-hover:text-[#FF6B9D]/20 transition-colors"
+                      className="text-5xl md:text-6xl font-black text-[#FF6B9D]/10 absolute top-4 right-4 z-0 group-hover:text-[#FF6B9D]/25 transition-all duration-500 group-hover:scale-110"
                       aria-hidden="true"
                     >
                       {item.step}
                     </div>
                     <div className="relative z-10">
-                      <div className="w-12 h-12 rounded-full border border-[#FF6B9D]/30 bg-[#0A0E1A] flex items-center justify-center mb-6 text-[#FF6B9D] font-bold">
+                      <div className="w-12 h-12 rounded-full border border-[#FF6B9D]/30 bg-[#0A0E1A] flex items-center justify-center mb-6 text-[#FF6B9D] font-bold group-hover:border-[#FF6B9D]/60 group-hover:shadow-[0_0_15px_rgba(255,107,157,0.2)] transition-all duration-300">
                         {idx + 1}
                       </div>
                       <h3 className="text-lg md:text-xl font-bold text-white mb-2 font-sans">
@@ -703,10 +747,13 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Section Divider: How It Works → Engine */}
+      <div className="section-divider section-divider-dark-to-card" aria-hidden="true" />
+
       {/* ================================================================== */}
       {/* WHAT'S INCLUDED - COMPACT ICON CARDS */}
       {/* ================================================================== */}
-      <section className="relative py-24 md:py-32 bg-[#141824]">
+      <section className="relative py-28 md:py-36 bg-[#141824]">
         <div className="relative z-10 max-w-5xl mx-auto px-6">
           <SectionHeader
             badge="THE ENGINE"
@@ -739,17 +786,24 @@ export default function Home() {
                   delay: i * 0.07,
                   ease: premiumEase,
                 }}
-                whileHover={{ y: -3 }}
+                whileHover={{ y: -5, scale: 1.02 }}
+                style={{ ["--card-color" as string]: feature.color }}
               >
                 {/* subtle glow on hover */}
                 <div
                   className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
-                  style={{ background: `${feature.color}15` }}
+                  style={{ background: `${feature.color}20` }}
+                />
+                {/* hover border glow */}
+                <div
+                  className="absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{ background: `linear-gradient(135deg, ${feature.color}30, transparent 60%)` }}
+                  aria-hidden="true"
                 />
 
                 {/* icon pill */}
                 <div
-                  className="relative z-10 w-10 h-10 rounded-xl flex items-center justify-center"
+                  className="relative z-10 w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:shadow-[0_0_20px_var(--card-color)]"
                   style={{
                     background: `${feature.color}12`,
                     border: `1px solid ${feature.color}25`,
@@ -778,10 +832,13 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Section Divider: Engine → Case Studies */}
+      <div className="section-divider" style={{ background: '#141824' }} aria-hidden="true" />
+
       {/* ================================================================== */}
       {/* CASE STUDIES SECTION */}
       {/* ================================================================== */}
-      <section className="relative py-24 bg-[#141824]">
+      <section className="relative py-28 md:py-36 bg-[#141824]">
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeader
             badge="REAL RESULTS"
@@ -806,6 +863,8 @@ export default function Home() {
             <motion.div
               variants={staggerItem}
               className="group relative"
+              whileHover={{ y: -5 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
               <div
                 className="absolute -inset-0.5 bg-gradient-to-r from-[#FF6B9D] to-[#C084FC] rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
@@ -822,18 +881,18 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="space-y-4 mb-8">
-                  <div className="flex justify-between items-center">
-                    <span className="text-[#9CA3AF]">Calls Booked</span>
-                    <span className="text-3xl font-bold text-[#FF6B9D]">53+</span>
+                <div className="space-y-5 mb-8">
+                  <div className="flex justify-between items-center p-3 rounded-xl bg-[#FF6B9D]/5">
+                    <span className="text-[#9CA3AF] text-sm uppercase tracking-wider">Calls Booked</span>
+                    <span className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-[#FF6B9D] to-[#C084FC] bg-clip-text text-transparent">53+</span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-[#9CA3AF]">Pipeline Added</span>
-                    <span className="text-3xl font-bold text-[#FF6B9D]">$100k MRR</span>
+                  <div className="flex justify-between items-center p-3 rounded-xl bg-[#FF6B9D]/5">
+                    <span className="text-[#9CA3AF] text-sm uppercase tracking-wider">Pipeline Added</span>
+                    <span className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-[#FF6B9D] to-[#C084FC] bg-clip-text text-transparent">$100k MRR</span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-[#9CA3AF]">Reply Rate</span>
-                    <span className="text-3xl font-bold text-[#FF6B9D]">30%</span>
+                  <div className="flex justify-between items-center p-3 rounded-xl bg-[#FF6B9D]/5">
+                    <span className="text-[#9CA3AF] text-sm uppercase tracking-wider">Reply Rate</span>
+                    <span className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-[#FF6B9D] to-[#C084FC] bg-clip-text text-transparent">30%</span>
                   </div>
                 </div>
 
@@ -858,6 +917,8 @@ export default function Home() {
             <motion.div
               variants={staggerItem}
               className="group relative"
+              whileHover={{ y: -5 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
               <div
                 className="absolute -inset-0.5 bg-gradient-to-r from-[#C084FC] to-[#FF6B9D] rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
@@ -874,18 +935,18 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="space-y-4 mb-8">
-                  <div className="flex justify-between items-center">
-                    <span className="text-[#9CA3AF]">Calls Booked</span>
-                    <span className="text-3xl font-bold text-[#C084FC]">27</span>
+                <div className="space-y-5 mb-8">
+                  <div className="flex justify-between items-center p-3 rounded-xl bg-[#C084FC]/5">
+                    <span className="text-[#9CA3AF] text-sm uppercase tracking-wider">Calls Booked</span>
+                    <span className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-[#C084FC] to-[#FF6B9D] bg-clip-text text-transparent">27</span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-[#9CA3AF]">Pipeline Added</span>
-                    <span className="text-3xl font-bold text-[#C084FC]">$28K MRR</span>
+                  <div className="flex justify-between items-center p-3 rounded-xl bg-[#C084FC]/5">
+                    <span className="text-[#9CA3AF] text-sm uppercase tracking-wider">Pipeline Added</span>
+                    <span className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-[#C084FC] to-[#FF6B9D] bg-clip-text text-transparent">$28K MRR</span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-[#9CA3AF]">Reply Rate</span>
-                    <span className="text-3xl font-bold text-[#C084FC]">26%</span>
+                  <div className="flex justify-between items-center p-3 rounded-xl bg-[#C084FC]/5">
+                    <span className="text-[#9CA3AF] text-sm uppercase tracking-wider">Reply Rate</span>
+                    <span className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-[#C084FC] to-[#FF6B9D] bg-clip-text text-transparent">26%</span>
                   </div>
                 </div>
 
@@ -909,10 +970,102 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Section Divider: Case Studies → Testimonials */}
+      <div className="section-divider section-divider-card-to-dark" aria-hidden="true" />
+
+      {/* ================================================================== */}
+      {/* TESTIMONIALS SECTION */}
+      {/* ================================================================== */}
+      <section className="relative py-28 md:py-36 bg-[#0A0E1A]">
+        <div className="max-w-6xl mx-auto px-6">
+          <SectionHeader
+            badge="WHAT THEY SAY"
+            title={
+              <>
+                Don&apos;t Take Our Word.
+                <br />
+                <span className="text-[#FF6B9D]">Take Theirs.</span>
+              </>
+            }
+          />
+
+          <motion.div
+            className="grid md:grid-cols-3 gap-6 md:gap-8"
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            {[
+              {
+                quote: "Within 5 days we had 12 qualified calls booked. We closed 3 of them within the month. The ROI is insane.",
+                name: "Arnav K.",
+                title: "Founder, Addx Studio",
+                accent: "#FF6B9D",
+              },
+              {
+                quote: "I was skeptical about the 7-day timeline. But they delivered real conversations with decision-makers — not tire-kickers.",
+                name: "Sara M.",
+                title: "CEO, ClickLabs",
+                accent: "#C084FC",
+              },
+              {
+                quote: "Finally an outbound partner that actually takes the risk with you. The pay-for-performance model changed everything.",
+                name: "Daniel R.",
+                title: "Founder, Arctix Solutions",
+                accent: "#FCD34D",
+              },
+            ].map((testimonial, idx) => (
+              <motion.div
+                key={idx}
+                variants={staggerItem}
+                className="group relative"
+                whileHover={{ y: -5 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              >
+                <div
+                  className="absolute -inset-0.5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
+                  style={{ background: `linear-gradient(135deg, ${testimonial.accent}40, transparent)` }}
+                  aria-hidden="true"
+                />
+                <div className="relative h-full rounded-3xl border border-white/10 bg-gradient-to-b from-[#141824] to-[#0A0E1A] p-8 backdrop-blur-xl transition-all duration-300 group-hover:border-white/20">
+                  {/* Decorative quote mark */}
+                  <div
+                    className="text-6xl font-serif leading-none mb-4 opacity-20"
+                    style={{ color: testimonial.accent }}
+                    aria-hidden="true"
+                  >
+                    &ldquo;
+                  </div>
+                  <p className="text-[#D1D5DB] leading-relaxed mb-8 text-base">
+                    {testimonial.quote}
+                  </p>
+                  <div className="flex items-center gap-3 mt-auto">
+                    <div
+                      className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold"
+                      style={{ background: `${testimonial.accent}20`, color: testimonial.accent }}
+                    >
+                      {testimonial.name.charAt(0)}
+                    </div>
+                    <div>
+                      <p className="text-white font-semibold text-sm">{testimonial.name}</p>
+                      <p className="text-[#9CA3AF] text-xs">{testimonial.title}</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Section Divider: Testimonials → FAQ */}
+      <div className="section-divider" aria-hidden="true" />
+
       {/* ================================================================== */}
       {/* FAQ SECTION */}
       {/* ================================================================== */}
-      <section className="relative py-24 bg-[#0A0E1A]">
+      <section className="relative py-28 md:py-36 bg-[#0A0E1A]">
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeader
             badge="QUESTIONS?"
@@ -928,10 +1081,13 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Section Divider: FAQ → Founder */}
+      <div className="section-divider section-divider-dark-to-card" aria-hidden="true" />
+
       {/* ================================================================== */}
       {/* FOUNDER CREDIBILITY SECTION */}
       {/* ================================================================== */}
-      <section className="relative py-24 bg-[#141824]">
+      <section className="relative py-28 md:py-36 bg-[#141824]">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -983,6 +1139,9 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      {/* Section Divider: Founder → CTA */}
+      <div className="section-divider section-divider-card-to-dark" aria-hidden="true" />
 
       {/* ================================================================== */}
       {/* FINAL CTA */}
@@ -1047,39 +1206,84 @@ export default function Home() {
       {/* ================================================================== */}
       {/* FOOTER */}
       {/* ================================================================== */}
-      <footer className="py-20 bg-[#141824] border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+      <footer className="relative py-20 bg-[#141824] border-t border-white/5 overflow-hidden">
+        {/* Mesh gradient background */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          aria-hidden="true"
+        >
+          <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-[#FF6B9D]/5 rounded-full blur-3xl" />
+          <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#C084FC]/5 rounded-full blur-3xl" />
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+            {/* Brand */}
             <div className="text-center md:text-left">
-              <h2 className="text-2xl md:text-3xl font-black bg-gradient-to-r from-[#FF6B9D] to-[#C084FC] bg-clip-text text-transparent mb-2 font-sans tracking-tighter">
+              <h2 className="text-2xl md:text-3xl font-black bg-gradient-to-r from-[#FF6B9D] to-[#C084FC] bg-clip-text text-transparent mb-3 font-sans tracking-tighter">
                 OUTLIO.
               </h2>
-              <p className="text-[#9CA3AF] text-sm">
-                Built for founders who execute.
+              <p className="text-[#9CA3AF] text-sm leading-relaxed max-w-xs">
+                Performance-based outbound for founders scaling past $30K/mo. No retainers. Real results.
               </p>
             </div>
 
-            <div className="flex items-center gap-6 md:gap-8">
-              {[
-                { name: "Instagram", url: "https://www.instagram.com/outlio.io/?hl=en" },
-                { name: "LinkedIn", url: "https://www.linkedin.com/company/outlio/?viewAsMember=true" },
-                { name: "X", url: "https://x.com/OutlioLeadGen" }
-              ].map((link) => (
-                <motion.a
-                  key={link.name}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#9CA3AF] hover:text-[#FF6B9D] transition-colors text-xs md:text-sm uppercase tracking-widest font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6B9D]"
-                  whileHover={{ y: -2 }}
-                >
-                  {link.name}
-                </motion.a>
-              ))}
+            {/* Quick Links */}
+            <div className="text-center">
+              <h3 className="text-xs font-bold tracking-[0.2em] text-white/40 uppercase mb-4">Quick Links</h3>
+              <div className="flex flex-col gap-3">
+                {[
+                  { name: "Our Process", href: "#how-it-works" },
+                  { name: "Book a Call", href: "#book-call" },
+                  { name: "Steal Our Systems", href: "/steal-our-systems" },
+                ].map((link) => (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    className="text-[#9CA3AF] hover:text-white transition-colors text-sm"
+                  >
+                    {link.name}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Social */}
+            <div className="text-center md:text-right">
+              <h3 className="text-xs font-bold tracking-[0.2em] text-white/40 uppercase mb-4">Connect</h3>
+              <div className="flex justify-center md:justify-end items-center gap-4">
+                {[
+                  { name: "Instagram", url: "https://www.instagram.com/outlio.io/?hl=en", icon: "IG" },
+                  { name: "LinkedIn", url: "https://www.linkedin.com/company/outlio/?viewAsMember=true", icon: "Li" },
+                  { name: "X", url: "https://x.com/OutlioLeadGen", icon: "X" }
+                ].map((link) => (
+                  <motion.a
+                    key={link.name}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-[#9CA3AF] hover:text-white hover:border-[#FF6B9D]/40 hover:bg-[#FF6B9D]/10 transition-all duration-300 text-xs font-bold"
+                    whileHover={{ y: -3, scale: 1.1 }}
+                    aria-label={link.name}
+                  >
+                    {link.icon}
+                  </motion.a>
+                ))}
+              </div>
             </div>
           </div>
-          <div className="mt-16 pt-8 border-t border-white/5 text-center text-white/20 text-xs uppercase tracking-widest">
-            © 2026 OUTLIO Inc. All Rights Reserved.
+
+          <div className="mt-16 pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <span className="text-white/20 text-xs uppercase tracking-widest">
+              © 2026 OUTLIO Inc. All Rights Reserved.
+            </span>
+            <motion.button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="text-white/30 hover:text-white text-xs uppercase tracking-widest flex items-center gap-2 transition-colors"
+              whileHover={{ y: -2 }}
+            >
+              Back to Top ↑
+            </motion.button>
           </div>
         </div>
       </footer>

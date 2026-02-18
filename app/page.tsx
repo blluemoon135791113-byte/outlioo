@@ -1,11 +1,9 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useState, useCallback } from "react";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
-import { BackgroundBeams } from "@/components/ui/background-beams";
-import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 import AnoAI from "@/components/ui/animated-shader-background";
 import { LampContainer } from "@/components/ui/lamp";
 import { Marquee } from "@/components/ui/marquee";
@@ -20,9 +18,9 @@ import {
   Send,
   RotateCcw,
   FileText,
+  Star,
+  Quote,
 } from "lucide-react";
-
-// Re-trigger build
 
 // ============================================================================
 // CONSTANTS & TYPES
@@ -249,36 +247,17 @@ function SectionHeader({
 
 
 
-function LoadingScreen() {
-  return (
-    <div className="min-h-screen bg-[#0A0E1A] flex items-center justify-center">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-        className="text-center"
-      >
-        <div
-          className="w-16 h-16 border-4 border-[#FF6B9D] border-t-transparent rounded-full animate-spin mx-auto mb-4"
-          role="status"
-          aria-label="Loading"
-        ></div>
-        <p className="text-[#9CA3AF] text-sm">Loading experience...</p>
-      </motion.div>
-    </div>
-  );
-}
+
 
 
 function BloomingLogo() {
   const [isHovered, setIsHovered] = useState(false);
 
-  // Premium Fluid Spring Settings - and even smoother "bloom"
   const logoSpring = { type: "spring", stiffness: 100, damping: 22, mass: 1 } as const;
   const textSpring = { type: "spring", stiffness: 140, damping: 24, mass: 0.8 } as const;
 
   return (
-    <div className="flex flex-col items-center pb-4 md:pb-6 relative z-[200]">
+    <div className="flex flex-col items-center pt-20 md:pt-24 pb-2 relative z-[200]">
       <motion.div
         className="relative group cursor-pointer"
         initial={{ opacity: 0, y: -20 }}
@@ -287,12 +266,12 @@ function BloomingLogo() {
         onHoverStart={() => setIsHovered(true)}
         onHoverEnd={() => setIsHovered(false)}
       >
-        {/* Transparent Hit Area to prevent flickering during animation */}
+        {/* Transparent Hit Area */}
         <div className="absolute inset-[-40px] z-30 rounded-full" />
 
         <motion.div
           className="relative"
-          animate={{ scale: isHovered ? 1.05 : 1 }}
+          animate={{ scale: isHovered ? 1.08 : 1 }}
           transition={logoSpring}
         >
           <div
@@ -304,7 +283,7 @@ function BloomingLogo() {
             aria-hidden="true"
           />
 
-          {/* Hidden Reveal Text */}
+          {/* Hover Reveal Text */}
           <motion.div
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center justify-center text-center pointer-events-none whitespace-nowrap"
             initial={{ opacity: 0, scale: 0.8, y: 0, filter: "blur(10px)" }}
@@ -323,48 +302,16 @@ function BloomingLogo() {
             </div>
           </motion.div>
 
-          {/* Glowing Gradient Ring Wrapper */}
+          {/* Full Logo — No Clipping */}
           <div className="rounded-full p-[3px] bg-gradient-to-r from-[#FF6B9D] via-[#C084FC] to-[#FF6B9D] relative shadow-[0_0_20px_rgba(255,107,157,0.3)] animate-shimmer bg-[length:200%_100%] z-20">
             <div className="rounded-full overflow-hidden h-20 w-20 md:h-24 md:w-24 border-4 border-[#0A0E1A] relative bg-[#0A0E1A]">
-              {/* Left Half */}
-              <motion.div
-                className="absolute inset-0 w-full h-full origin-bottom"
-                animate={{ rotate: isHovered ? -18 : 0 }}
-                transition={logoSpring}
-              >
-                <div
-                  className="w-full h-full relative"
-                  style={{ clipPath: "inset(0 50% 0 0)" }}
-                >
-                  <Image
-                    src="/logo.jpg"
-                    alt="OUTLIO Logo Left"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                </div>
-              </motion.div>
-
-              {/* Right Half */}
-              <motion.div
-                className="absolute inset-0 w-full h-full origin-bottom"
-                animate={{ rotate: isHovered ? 18 : 0 }}
-                transition={logoSpring}
-              >
-                <div
-                  className="w-full h-full relative"
-                  style={{ clipPath: "inset(0 0 0 50%)" }}
-                >
-                  <Image
-                    src="/logo.jpg"
-                    alt="OUTLIO Logo Right"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                </div>
-              </motion.div>
+              <Image
+                src="/logo.jpg"
+                alt="OUTLIO Logo"
+                fill
+                className="object-cover"
+                priority
+              />
             </div>
           </div>
         </motion.div>
@@ -378,12 +325,6 @@ function BloomingLogo() {
 // ============================================================================
 
 export default function Home() {
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
-
   const features = [
     {
       Icon: Search,
@@ -423,10 +364,6 @@ export default function Home() {
     },
   ];
 
-  if (!isLoaded) {
-    return <LoadingScreen />;
-  }
-
   return (
     <main className="min-h-screen bg-transparent text-white font-sans antialiased overflow-x-hidden selection:bg-[#FF6B9D]/30 relative noise-overlay">
       <Navbar />
@@ -438,11 +375,12 @@ export default function Home() {
       {/* ================================================================== */}
       <div className="flex flex-col overflow-hidden relative">
 
+        {/* Blooming Logo Component */}
+        <BloomingLogo />
+
         <ContainerScroll
           titleComponent={
-            <div className="mb-4 relative z-10 pt-20 md:pt-24">
-              {/* Blooming Logo Component */}
-              <BloomingLogo />
+            <div className="mb-4 relative z-10">
               <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] text-white drop-shadow-2xl tracking-tight font-sans">
                 Book 10+ Qualified Calls in 7 Days. <br />
                 <span className="bg-gradient-to-r from-[#FF6B9D] via-[#C084FC] to-[#FCD34D] bg-clip-text text-transparent mt-2 block leading-none">
@@ -584,9 +522,9 @@ export default function Home() {
                 title: "Ad Burnout",
                 desc: "Spending $3,000/mo on ads that attract low-quality leads who can't afford you.",
               },
-            ].map((item, idx) => (
+            ].map((item) => (
               <motion.div
-                key={idx}
+                key={item.title}
                 variants={staggerItem}
                 className="group relative"
                 whileHover={{ y: -6, scale: 1.02 }}
@@ -683,7 +621,7 @@ export default function Home() {
                 },
               ].map((item, idx) => (
                 <motion.div
-                  key={idx}
+                  key={item.step}
                   variants={staggerItem}
                   className="relative group"
                   whileHover={{ y: -8 }}
@@ -896,8 +834,10 @@ export default function Home() {
               />
               <div className="relative h-full rounded-3xl border border-white/10 bg-gradient-to-b from-[#0A0E1A] to-[#141824] p-8 backdrop-blur-xl transition-all duration-300 group-hover:border-[#C084FC]/30">
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-xl bg-[#FFA500]/10 flex items-center justify-center">
-                    <span className="text-2xl">🧪</span>
+                  <div className="w-16 h-16 rounded-xl bg-white/5 flex items-center justify-center">
+                    <div className="relative w-12 h-12">
+                      <Image src="/logos/clicklabs.png" alt="ClickLabs Logo" fill className="object-contain" />
+                    </div>
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-white">ClickLabs</h3>
@@ -940,8 +880,121 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section Divider: Case Studies → FAQ */}
+      {/* Section Divider: Case Studies → Testimonials */}
       <div className="section-divider section-divider-card-to-dark" aria-hidden="true" />
+
+      {/* ================================================================== */}
+      {/* TESTIMONIALS SECTION */}
+      {/* ================================================================== */}
+      <section className="relative py-28 md:py-36 bg-[#0A0E1A]">
+        <div className="max-w-7xl mx-auto px-6">
+          <SectionHeader
+            badge="WHAT CLIENTS SAY"
+            title={
+              <>
+                Founders Who&apos;ve{" "}
+                <span className="text-[#FF6B9D]">Worked With Us</span>
+              </>
+            }
+            subtitle="Real reviews from real founders who ran the 7-day sprint."
+          />
+
+          <motion.div
+            className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto"
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            {/* ClickLabs Founder Review */}
+            <motion.div
+              variants={staggerItem}
+              className="group relative"
+              whileHover={{ y: -5 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            >
+              <div
+                className="absolute -inset-0.5 bg-gradient-to-r from-[#FF6B9D] to-[#C084FC] rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
+                aria-hidden="true"
+              />
+              <div className="relative h-full rounded-3xl border border-white/10 bg-gradient-to-b from-[#141824] to-[#0A0E1A] p-8 backdrop-blur-xl transition-all duration-300 group-hover:border-[#FF6B9D]/30">
+                {/* Stars */}
+                <div className="flex items-center gap-1 mb-4">
+                  {[1, 2, 3, 4, 5].map((s) => (
+                    <Star key={s} size={18} className="text-[#FCD34D] fill-[#FCD34D]" />
+                  ))}
+                  <span className="ml-2 text-sm text-[#9CA3AF]">5.0</span>
+                </div>
+
+                {/* Quote */}
+                <div className="relative mb-6">
+                  <Quote size={32} className="text-[#FF6B9D]/20 absolute -top-2 -left-1" aria-hidden="true" />
+                  <p className="text-lg text-white/90 leading-relaxed pl-8 italic">
+                    &quot;Husnain is literally one of the best and experienced business development manager on this platform.&quot;
+                  </p>
+                </div>
+
+                {/* Author */}
+                <div className="flex items-center gap-4 pt-4 border-t border-white/5">
+                  <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center">
+                    <div className="relative w-8 h-8">
+                      <Image src="/logos/clicklabs.png" alt="ClickLabs" fill className="object-contain" />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-white font-bold">ClickLabs Founder</p>
+                    <p className="text-sm text-[#9CA3AF]">Design & Content Agency</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Abdullah — Addx Studio */}
+            <motion.div
+              variants={staggerItem}
+              className="group relative"
+              whileHover={{ y: -5 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            >
+              <div
+                className="absolute -inset-0.5 bg-gradient-to-r from-[#C084FC] to-[#FF6B9D] rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
+                aria-hidden="true"
+              />
+              <div className="relative h-full rounded-3xl border border-white/10 bg-gradient-to-b from-[#141824] to-[#0A0E1A] p-8 backdrop-blur-xl transition-all duration-300 group-hover:border-[#C084FC]/30">
+                {/* Stars */}
+                <div className="flex items-center gap-1 mb-4">
+                  {[1, 2, 3, 4, 5].map((s) => (
+                    <Star key={s} size={18} className="text-[#FCD34D] fill-[#FCD34D]" />
+                  ))}
+                  <span className="ml-2 text-sm text-[#9CA3AF]">5.0</span>
+                </div>
+
+                {/* Quote */}
+                <div className="relative mb-6">
+                  <Quote size={32} className="text-[#C084FC]/20 absolute -top-2 -left-1" aria-hidden="true" />
+                  <p className="text-lg text-white/90 leading-relaxed pl-8 italic">
+                    &quot;Liam closed alhamdullilah 🤝 — the outreach system actually works. Real calls, real closures.&quot;
+                  </p>
+                </div>
+
+                {/* Author */}
+                <div className="flex items-center gap-4 pt-4 border-t border-white/5">
+                  <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center">
+                    <span className="text-lg font-bold text-white">A</span>
+                  </div>
+                  <div>
+                    <p className="text-white font-bold">Abdullah A.</p>
+                    <p className="text-sm text-[#9CA3AF]">Founder, Addx Studio</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Section Divider: Testimonials → FAQ */}
+      <div className="section-divider" aria-hidden="true" />
 
       {/* ================================================================== */}
       {/* FAQ SECTION */}
@@ -1060,7 +1113,7 @@ export default function Home() {
 
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-6">
               <PremiumCTA
-                href="https://calendly.com/your-link"
+                href="https://calendly.com/husnainnsaad7/45min"
                 size="lg"
                 trackingLabel="final_cta"
               >
@@ -1172,13 +1225,4 @@ export default function Home() {
   );
 }
 
-// Type declaration for gtag
-declare global {
-  interface Window {
-    gtag?: (
-      command: string,
-      action: string,
-      params: { event_category: string; event_label: string }
-    ) => void;
-  }
-}
+// gtag types are in types/global.d.ts

@@ -1,6 +1,6 @@
 "use client";
 
-import Lenis from "lenis";
+import LocomotiveScroll from "locomotive-scroll";
 import { useEffect, useRef } from "react";
 
 interface SmoothScrollingProps {
@@ -8,27 +8,15 @@ interface SmoothScrollingProps {
 }
 
 export default function SmoothScrolling({ children }: SmoothScrollingProps) {
-    const lenisRef = useRef<Lenis | null>(null);
+    const scrollRef = useRef<LocomotiveScroll | null>(null);
 
     useEffect(() => {
-        // Initialize Lenis
-        const lenis = new Lenis({
-            lerp: 0.1,
-        });
-        lenisRef.current = lenis;
+        const scroll = new LocomotiveScroll();
+        scrollRef.current = scroll;
 
-        // RAF loop
-        const raf = (time: number) => {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        };
-
-        requestAnimationFrame(raf);
-
-        // Cleanup
         return () => {
-            lenis.destroy();
-            lenisRef.current = null;
+            scroll.destroy();
+            scrollRef.current = null;
         };
     }, []);
 

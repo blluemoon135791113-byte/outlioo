@@ -15,7 +15,35 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "OUTLIO | Book Qualified Sales Calls in 7 Days. Guaranteed.",
-  description: "Performance-based outbound sprint for B2B agencies. 200+ DMs in 7 days. Or you pay nothing.",
+  description:
+    "Performance-based outbound sprint for B2B agencies. 200+ personalized DMs in 7 days. Qualified calls or you pay nothing.",
+  metadataBase: new URL("https://outlio.co"),
+  openGraph: {
+    title: "OUTLIO | Book Qualified Sales Calls in 7 Days. Guaranteed.",
+    description:
+      "Performance-based outbound sprint for B2B agencies. 200+ DMs in 7 days. Or you pay nothing.",
+    url: "https://outlio.co",
+    siteName: "OUTLIO",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "OUTLIO | Book Qualified Sales Calls in 7 Days",
+    description:
+      "Performance-based outbound sprint for B2B agencies. 200+ DMs in 7 days. Or you pay nothing.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({
@@ -26,7 +54,15 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap" rel="stylesheet" />
+        <link
+          rel="preconnect"
+          href="https://api.fontshare.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap"
+          rel="stylesheet"
+        />
       </head>
       <body
         suppressHydrationWarning

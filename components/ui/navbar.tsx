@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -177,6 +177,7 @@ function HamburgerIcon({ isOpen, onClick }: { isOpen: boolean; onClick: () => vo
 // ============================================================================
 
 export const Navbar = ({ className }: { className?: string }) => {
+    const prevScrollY = useRef(0);
     const [scrollY, setScrollY] = useState(0);
     const [visible, setVisible] = useState(true);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -184,22 +185,23 @@ export const Navbar = ({ className }: { className?: string }) => {
     useEffect(() => {
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
+            setScrollY(currentScrollY);
             // Don't hide navbar when mobile menu is open
             if (mobileMenuOpen) {
-                setScrollY(currentScrollY);
+                prevScrollY.current = currentScrollY;
                 return;
             }
-            if (currentScrollY > scrollY && currentScrollY > 100) {
+            if (currentScrollY > prevScrollY.current && currentScrollY > 100) {
                 setVisible(false);
             } else {
                 setVisible(true);
             }
-            setScrollY(currentScrollY);
+            prevScrollY.current = currentScrollY;
         };
 
         window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
-    }, [scrollY, mobileMenuOpen]);
+    }, [mobileMenuOpen]);
 
     const handleCTAClick = useCallback(() => {
         if (typeof window !== "undefined" && typeof window.gtag === "function") {
@@ -308,13 +310,4 @@ export const Navbar = ({ className }: { className?: string }) => {
     );
 };
 
-// Add gtag type declaration
-declare global {
-    interface Window {
-        gtag?: (
-            command: string,
-            action: string,
-            params: { event_category: string; event_label: string }
-        ) => void;
-    }
-}
+// gtag types are in types/global.d.ts

@@ -906,85 +906,147 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
           >
-            {/* ClickLabs Founder Review */}
+            {/* ClickLabs Founder Review — 3D Flip */}
             <motion.div
               variants={staggerItem}
-              className="group relative"
-              whileHover={{ y: -5 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="flip-card h-[340px] md:h-[320px]"
             >
-              <div
-                className="absolute -inset-0.5 bg-gradient-to-r from-[#FF6B9D] to-[#C084FC] rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
-                aria-hidden="true"
-              />
-              <div className="relative h-full rounded-3xl border border-white/10 bg-gradient-to-b from-[#141824] to-[#0A0E1A] p-8 backdrop-blur-xl transition-all duration-300 group-hover:border-[#FF6B9D]/30">
-                {/* Stars */}
-                <div className="flex items-center gap-1 mb-4">
-                  {[1, 2, 3, 4, 5].map((s) => (
-                    <Star key={s} size={18} className="text-[#FCD34D] fill-[#FCD34D]" />
-                  ))}
-                  <span className="ml-2 text-sm text-[#9CA3AF]">5.0</span>
-                </div>
-
-                {/* Quote */}
-                <div className="relative mb-6">
-                  <Quote size={32} className="text-[#FF6B9D]/20 absolute -top-2 -left-1" aria-hidden="true" />
-                  <p className="text-lg text-white/90 leading-relaxed pl-8 italic">
-                    &quot;Husnain is literally one of the best and experienced business development manager on this platform.&quot;
-                  </p>
-                </div>
-
-                {/* Author */}
-                <div className="flex items-center gap-4 pt-4 border-t border-white/5">
-                  <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center">
-                    <div className="relative w-8 h-8">
-                      <Image src="/logos/clicklabs.png" alt="ClickLabs" fill className="object-contain" />
+              <div className="flip-card-inner">
+                {/* FRONT — Review Quote */}
+                <div className="flip-card-front">
+                  <div className="h-full rounded-3xl border border-white/10 bg-gradient-to-b from-[#141824] to-[#0A0E1A] p-8 backdrop-blur-xl flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center gap-1 mb-4">
+                        {[1, 2, 3, 4, 5].map((s) => (
+                          <Star key={s} size={18} className="text-[#FCD34D] fill-[#FCD34D]" />
+                        ))}
+                        <span className="ml-2 text-sm text-[#9CA3AF]">5.0</span>
+                      </div>
+                      <div className="relative mb-6">
+                        <Quote size={32} className="text-[#FF6B9D]/20 absolute -top-2 -left-1" aria-hidden="true" />
+                        <p className="text-lg text-white/90 leading-relaxed pl-8 italic">
+                          &quot;Husnain is literally one of the best and experienced business development manager on this platform.&quot;
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4 pt-4 border-t border-white/5">
+                      <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center">
+                        <div className="relative w-8 h-8">
+                          <Image src="/logos/clicklabs.png" alt="ClickLabs" fill className="object-contain" />
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-white font-bold">ClickLabs Founder</p>
+                        <p className="text-sm text-[#9CA3AF]">Design & Content Agency</p>
+                      </div>
+                      <p className="ml-auto text-xs text-white/30 uppercase tracking-wider">Hover to see source →</p>
                     </div>
                   </div>
-                  <div>
-                    <p className="text-white font-bold">ClickLabs Founder</p>
-                    <p className="text-sm text-[#9CA3AF]">Design & Content Agency</p>
+                </div>
+
+                {/* BACK — Upwork Review Screenshot Replica */}
+                <div className="flip-card-back">
+                  <div className="h-full rounded-3xl border border-[#FF6B9D]/30 bg-[#1A1A1A] p-8 flex flex-col justify-center">
+                    {/* Upwork-style header */}
+                    <p className="text-[#14A800] font-semibold text-base md:text-lg mb-3 leading-snug">
+                      Out reacher / Lead Generation Specialist (Commission + Per Call Payment)
+                    </p>
+                    <div className="flex items-center gap-2 mb-4 text-sm text-[#9CA3AF]">
+                      <div className="flex items-center gap-0.5">
+                        {[1, 2, 3, 4, 5].map((s) => (
+                          <Star key={s} size={14} className="text-[#FF8C00] fill-[#FF8C00]" />
+                        ))}
+                      </div>
+                      <span className="font-medium text-white/80">5.0 of 1 reviews</span>
+                      <span className="text-white/20">|</span>
+                      <span>Sep 4, 2025 - Present</span>
+                    </div>
+                    <div className="border-t border-white/10 pt-4">
+                      <div className="flex items-center gap-2 mb-3">
+                        <div className="flex items-center gap-0.5">
+                          {[1, 2, 3, 4, 5].map((s) => (
+                            <Star key={`inner-${s}`} size={14} className="text-[#FF8C00] fill-[#FF8C00]" />
+                          ))}
+                        </div>
+                        <span className="text-white/80 font-medium text-sm">5.0</span>
+                        <span className="text-[#9CA3AF] text-sm">Oct 28, 2025</span>
+                      </div>
+                      <p className="text-white/90 italic text-base leading-relaxed">
+                        &quot;Husnain is literally one of the best and experienced business development manager on this platform&quot;
+                      </p>
+                    </div>
+                    <p className="mt-4 text-xs text-white/20 uppercase tracking-wider text-center">Upwork Verified Review</p>
                   </div>
                 </div>
               </div>
             </motion.div>
 
-            {/* Abdullah — Addx Studio */}
+            {/* Abdullah — Addx Studio — 3D Flip */}
             <motion.div
               variants={staggerItem}
-              className="group relative"
-              whileHover={{ y: -5 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="flip-card h-[340px] md:h-[320px]"
             >
-              <div
-                className="absolute -inset-0.5 bg-gradient-to-r from-[#C084FC] to-[#FF6B9D] rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
-                aria-hidden="true"
-              />
-              <div className="relative h-full rounded-3xl border border-white/10 bg-gradient-to-b from-[#141824] to-[#0A0E1A] p-8 backdrop-blur-xl transition-all duration-300 group-hover:border-[#C084FC]/30">
-                {/* Stars */}
-                <div className="flex items-center gap-1 mb-4">
-                  {[1, 2, 3, 4, 5].map((s) => (
-                    <Star key={s} size={18} className="text-[#FCD34D] fill-[#FCD34D]" />
-                  ))}
-                  <span className="ml-2 text-sm text-[#9CA3AF]">5.0</span>
-                </div>
-
-                {/* Quote */}
-                <div className="relative mb-6">
-                  <Quote size={32} className="text-[#C084FC]/20 absolute -top-2 -left-1" aria-hidden="true" />
-                  <p className="text-lg text-white/90 leading-relaxed pl-8 italic">
-                    &quot;Liam closed alhamdullilah 🤝 — the outreach system actually works. Real calls, real closures.&quot;
-                  </p>
-                </div>
-
-                {/* Author */}
-                <div className="flex items-center gap-4 pt-4 border-t border-white/5">
-                  <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center">
-                    <span className="text-lg font-bold text-white">A</span>
+              <div className="flip-card-inner">
+                {/* FRONT — Review Quote */}
+                <div className="flip-card-front">
+                  <div className="h-full rounded-3xl border border-white/10 bg-gradient-to-b from-[#141824] to-[#0A0E1A] p-8 backdrop-blur-xl flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center gap-1 mb-4">
+                        {[1, 2, 3, 4, 5].map((s) => (
+                          <Star key={s} size={18} className="text-[#FCD34D] fill-[#FCD34D]" />
+                        ))}
+                        <span className="ml-2 text-sm text-[#9CA3AF]">5.0</span>
+                      </div>
+                      <div className="relative mb-6">
+                        <Quote size={32} className="text-[#C084FC]/20 absolute -top-2 -left-1" aria-hidden="true" />
+                        <p className="text-lg text-white/90 leading-relaxed pl-8 italic">
+                          &quot;Liam closed alhamdullilah 🤝 — the outreach system actually works. Real calls, real closures.&quot;
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4 pt-4 border-t border-white/5">
+                      <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center">
+                        <span className="text-lg font-bold text-white">A</span>
+                      </div>
+                      <div>
+                        <p className="text-white font-bold">Abdullah A.</p>
+                        <p className="text-sm text-[#9CA3AF]">Founder, Addx Studio</p>
+                      </div>
+                      <p className="ml-auto text-xs text-white/30 uppercase tracking-wider">Hover to see source →</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-white font-bold">Abdullah A.</p>
-                    <p className="text-sm text-[#9CA3AF]">Founder, Addx Studio</p>
+                </div>
+
+                {/* BACK — Discord Message Replica */}
+                <div className="flip-card-back">
+                  <div className="h-full rounded-3xl border border-[#C084FC]/30 bg-[#2B2D31] p-6 md:p-8 flex flex-col justify-center">
+                    {/* Message header */}
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 rounded-full bg-[#5865F2] flex items-center justify-center text-white font-bold text-sm">A</div>
+                      <div>
+                        <span className="font-semibold text-white">Abdullah.A</span>
+                        <span className="ml-2 text-xs text-[#949BA4]">27/09/2025, 06:59</span>
+                      </div>
+                    </div>
+                    {/* Message content */}
+                    <p className="text-white text-base mb-4 pl-[52px]">
+                      liam closed alhamdullilah 🤝
+                    </p>
+                    {/* Emoji reactions */}
+                    <div className="flex items-center gap-2 pl-[52px] mb-4">
+                      <span className="px-2 py-0.5 rounded-full bg-[#383A40] text-sm">❤️</span>
+                      <span className="px-2 py-0.5 rounded-full bg-[#383A40] text-sm">😭</span>
+                      <span className="px-2 py-0.5 rounded-full bg-[#383A40] text-sm">🥹</span>
+                      <span className="px-2 py-0.5 rounded-full bg-[#383A40] text-sm">😊</span>
+                    </div>
+                    {/* Second message */}
+                    <div className="pl-[52px]">
+                      <p className="text-xs text-[#949BA4] mb-1">07:00</p>
+                      <p className="text-white/80 text-sm leading-relaxed">
+                        btw this notes section is given for a reason - if u can just share a bit of insights what the client replied on regarding the dm you sent so it would help me get a bit of a picture on what this client is all about
+                      </p>
+                    </div>
+                    <p className="mt-4 text-xs text-white/20 uppercase tracking-wider text-center">Internal Client Channel</p>
                   </div>
                 </div>
               </div>

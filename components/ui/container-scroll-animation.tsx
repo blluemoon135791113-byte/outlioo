@@ -18,9 +18,9 @@ export const ContainerScroll = ({
 
     React.useEffect(() => {
         const checkDevice = () => {
-            const w = window.innerWidth;
-            setIsMobile(w <= 640);
-            setIsTablet(w > 640 && w <= 1024);
+            const width = window.innerWidth;
+            setIsMobile(width <= 768);
+            setIsTablet(width > 768 && width <= 1024);
         };
         checkDevice();
         window.addEventListener("resize", checkDevice);
@@ -30,9 +30,9 @@ export const ContainerScroll = ({
     }, []);
 
     const scaleDimensions = () => {
-        if (isMobile) return [0.7, 0.9] as [number, number];
-        if (isTablet) return [0.85, 0.95] as [number, number];
-        return [1.05, 1] as [number, number];
+        if (isMobile) return [0.7, 0.9];
+        if (isTablet) return [0.8, 0.95];
+        return [1.05, 1];
     };
 
     const rotate = useTransform(scrollYProgress, [0, 1], [20, 0]);
@@ -41,7 +41,7 @@ export const ContainerScroll = ({
 
     return (
         <div
-            className="h-[40rem] sm:h-[50rem] md:h-[70rem] flex items-start lg:items-center justify-center relative p-2 sm:p-8 md:p-20"
+            className="h-[60rem] md:h-[70rem] lg:h-[80rem] flex items-center justify-center relative p-2 md:p-10 lg:p-20 w-full overflow-hidden"
             ref={containerRef}
         >
             <div
@@ -91,7 +91,7 @@ export const Card = ({
                 boxShadow:
                     "0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003",
             }}
-            className="max-w-5xl -mt-12 mx-auto h-[20rem] sm:h-[28rem] md:h-[40rem] w-full border-4 border-[#6C6C6C] p-2 sm:p-4 md:p-6 bg-[#222222] rounded-[30px] shadow-2xl"
+            className="max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[35rem] lg:h-[40rem] w-full border-4 border-[#6C6C6C] p-2 md:p-4 lg:p-6 bg-[#222222] rounded-[30px] shadow-2xl"
         >
             <div className=" h-full w-full overflow-hidden rounded-2xl bg-gray-100 dark:bg-zinc-900 md:rounded-2xl md:p-4 ">
                 {children}

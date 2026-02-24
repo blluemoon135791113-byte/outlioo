@@ -8,6 +8,7 @@ interface JellyButtonProps {
     href: string;
     className?: string;
     trackingLabel?: string;
+    size?: "md" | "lg";
 }
 
 export const JellyButton = ({
@@ -15,6 +16,7 @@ export const JellyButton = ({
     href,
     className,
     trackingLabel,
+    size = "lg",
 }: JellyButtonProps) => {
     const [isHovered, setIsHovered] = useState(false);
 
@@ -72,7 +74,7 @@ export const JellyButton = ({
             />
 
             {/* Content */}
-            <span className="relative z-10 px-8 py-4 text-lg font-bold text-white uppercase tracking-wide font-sans flex items-center gap-2">
+            <span className={`relative z-10 ${size === "lg" ? "px-8 py-4 text-lg" : "px-6 py-3 text-base"} font-bold text-white uppercase tracking-wide font-sans flex items-center gap-2`}>
                 {children}
                 <motion.span
                     animate={{ x: isHovered ? 4 : 0 }}

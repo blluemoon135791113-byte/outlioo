@@ -202,7 +202,7 @@ export default function StealOurSystemsPage() {
                             <PremiumCTA href="https://calendly.com/husnainnsaad7/45min">
                                 Run This For Me (7-Day Sprint)
                             </PremiumCTA>
-                            <PremiumCTA href="#the-offer" variant="secondary">
+                            <PremiumCTA href="https://form.jotform.com/260415574837463" variant="secondary">
                                 Just Give Me The Playbook (Free)
                             </PremiumCTA>
                         </div>

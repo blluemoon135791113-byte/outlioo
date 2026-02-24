@@ -253,68 +253,103 @@ function SectionHeader({
 function BloomingLogo() {
   const [isHovered, setIsHovered] = useState(false);
 
-  const logoSpring = { type: "spring", stiffness: 100, damping: 22, mass: 1 } as const;
-  const textSpring = { type: "spring", stiffness: 140, damping: 24, mass: 0.8 } as const;
+  const petalSpring = { type: "spring", stiffness: 120, damping: 14, mass: 0.8 } as const;
+  const textSpring = { type: "spring", stiffness: 100, damping: 16, mass: 0.6 } as const;
 
   return (
-    <div className="flex flex-col items-center pt-20 md:pt-24 pb-2 relative z-[200]">
+    <div className="flex flex-col items-center pb-8 relative z-[200]">
       <motion.div
-        className="relative group cursor-pointer"
+        className="relative cursor-pointer mt-8 md:mt-12"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: premiumEase }}
         onHoverStart={() => setIsHovered(true)}
         onHoverEnd={() => setIsHovered(false)}
       >
-        {/* Transparent Hit Area */}
-        <div className="absolute inset-[-40px] z-30 rounded-full" />
+        {/* Transparent Hit Area — keeps hover active */}
+        <div className="absolute inset-[-50px] z-30" />
 
+        {/* Glow that expands on bloom */}
+        <div
+          className="absolute inset-0 bg-[#FF6B9D] blur-3xl rounded-full pointer-events-none"
+          style={{
+            opacity: isHovered ? 0.45 : 0.15,
+            transform: `scale(${isHovered ? 2.5 : 1.2})`,
+            transition: "opacity 0.8s ease, transform 0.8s ease",
+          }}
+          aria-hidden="true"
+        />
+
+        {/* Hidden Reveal Text — floats UP out of the opening logo */}
         <motion.div
-          className="relative"
-          animate={{ scale: isHovered ? 1.08 : 1 }}
-          transition={logoSpring}
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center justify-center text-center pointer-events-none whitespace-nowrap"
+          initial={{ opacity: 0, scale: 0.6, y: 10 }}
+          animate={
+            isHovered
+              ? { opacity: 1, scale: 1, y: -80 }
+              : { opacity: 0, scale: 0.6, y: 10 }
+          }
+          transition={textSpring}
         >
-          <div
-            className="absolute inset-0 bg-[#FF6B9D] blur-3xl opacity-30 rounded-full scale-150 transition-all duration-700"
-            style={{
-              opacity: isHovered ? 0.6 : 0.3,
-              transform: `scale(${isHovered ? 1.8 : 1.5})`
-            }}
-            aria-hidden="true"
-          />
+          <div className="text-2xl md:text-3xl font-bold text-white drop-shadow-[0_0_20px_rgba(255,107,157,0.6)]">
+            $50
+          </div>
+          <div className="text-[10px] font-bold bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent uppercase tracking-[0.2em] mt-1">
+            If Our Systems Suck
+          </div>
+        </motion.div>
 
-          {/* Hover Reveal Text */}
+        {/* Logo Container — sized but no border/ring here, petals carry it */}
+        <div className="relative h-20 w-20 md:h-24 md:w-24 z-20">
+
+          {/* LEFT PETAL — gradient ring + image, clipped to left half */}
           <motion.div
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center justify-center text-center pointer-events-none whitespace-nowrap"
-            initial={{ opacity: 0, scale: 0.8, y: 0, filter: "blur(10px)" }}
-            animate={
-              isHovered
-                ? { opacity: 1, scale: 1, y: -95, filter: "blur(0px)" }
-                : { opacity: 0, scale: 0.8, y: 0, filter: "blur(10px)" }
-            }
-            transition={textSpring}
+            className="absolute inset-0"
+            style={{
+              clipPath: "inset(0 50% 0 0)",
+              transformOrigin: "bottom center",
+            }}
+            animate={{ rotate: isHovered ? -18 : 0 }}
+            transition={petalSpring}
           >
-            <div className="text-3xl md:text-4xl font-bold text-white drop-shadow-[0_0_15px_rgba(255,107,157,0.5)]">
-              $50
-            </div>
-            <div className="text-[10px] font-bold bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent uppercase tracking-[0.2em] mt-2">
-              If Our Systems Suck
+            <div className="absolute inset-0 rounded-full p-[3px] bg-gradient-to-r from-[#FF6B9D] via-[#C084FC] to-[#FF6B9D] shadow-[0_0_20px_rgba(255,107,157,0.3)] animate-shimmer bg-[length:200%_100%]">
+              <div className="h-full w-full rounded-full border-4 border-[#0A0E1A] bg-[#0A0E1A] overflow-hidden relative">
+                <Image
+                  src="/logo.jpg"
+                  alt="OUTLIO Logo"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
             </div>
           </motion.div>
 
-          {/* Full Logo — No Clipping */}
-          <div className="rounded-full p-[3px] bg-gradient-to-r from-[#FF6B9D] via-[#C084FC] to-[#FF6B9D] relative shadow-[0_0_20px_rgba(255,107,157,0.3)] animate-shimmer bg-[length:200%_100%] z-20">
-            <div className="rounded-full overflow-hidden h-20 w-20 md:h-24 md:w-24 border-4 border-[#0A0E1A] relative bg-[#0A0E1A]">
-              <Image
-                src="/logo.jpg"
-                alt="OUTLIO Logo"
-                fill
-                className="object-cover"
-                priority
-              />
+          {/* RIGHT PETAL — gradient ring + image, clipped to right half */}
+          <motion.div
+            className="absolute inset-0"
+            style={{
+              clipPath: "inset(0 0 0 50%)",
+              transformOrigin: "bottom center",
+            }}
+            animate={{ rotate: isHovered ? 18 : 0 }}
+            transition={petalSpring}
+          >
+            <div className="absolute inset-0 rounded-full p-[3px] bg-gradient-to-r from-[#FF6B9D] via-[#C084FC] to-[#FF6B9D] shadow-[0_0_20px_rgba(255,107,157,0.3)] animate-shimmer bg-[length:200%_100%]">
+              <div className="h-full w-full rounded-full border-4 border-[#0A0E1A] bg-[#0A0E1A] overflow-hidden relative">
+                <Image
+                  src="/logo.jpg"
+                  alt="OUTLIO Logo"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+
+        </div>
+
       </motion.div>
     </div>
   );
@@ -373,21 +408,19 @@ export default function Home() {
       {/* ================================================================== */}
       {/* HERO SECTION */}
       {/* ================================================================== */}
-      <div className="flex flex-col overflow-hidden relative">
-
-        {/* Blooming Logo Component */}
-        <BloomingLogo />
+      <div className="flex flex-col relative">
 
         <ContainerScroll
           titleComponent={
-            <div className="mb-4 relative z-10">
-              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] text-white drop-shadow-2xl tracking-tight font-sans">
+            <div className="mb-4 relative z-[200]">
+              <BloomingLogo />
+              <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-[4.75rem] font-bold leading-[1.05] text-white drop-shadow-2xl tracking-tight font-sans">
                 Book 10+ Qualified Calls in 7 Days. <br />
                 <span className="bg-gradient-to-r from-[#FF6B9D] via-[#C084FC] to-[#FCD34D] bg-clip-text text-transparent mt-2 block leading-none">
                   Guaranteed. Or Pay $0.
                 </span>
               </h1>
-              <p className="mt-4 text-base md:text-lg text-[#9CA3AF] max-w-2xl mx-auto font-light leading-relaxed">
+              <p className="mt-2 text-base md:text-lg text-[#9CA3AF] max-w-2xl mx-auto font-light leading-relaxed">
                 A 7-day outbound ecosystem built for founders scaling past
                 $30K/mo.
                 <span className="block mt-4 text-white/40 text-sm tracking-widest uppercase">
@@ -396,12 +429,13 @@ export default function Home() {
               </p>
 
               <div className="flex flex-col sm:flex-row justify-center gap-4 mt-6 mb-4">
-                <JellyButton href="https://calendly.com/husnainnsaad7/45min" trackingLabel="hero_primary">
+                <JellyButton href="https://calendly.com/husnainnsaad7/45min" trackingLabel="hero_primary" size="md">
                   Start Your 7-Day Sprint
                 </JellyButton>
                 <PremiumCTA
                   href="/steal-our-systems"
                   variant="secondary"
+                  size="md"
                   trackingLabel="hero_secondary"
                   target="_blank"
                 >
@@ -1077,67 +1111,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section Divider: FAQ → Founder */}
+      {/* Section Divider: FAQ → CTA */}
       <div className="section-divider section-divider-dark-to-card" aria-hidden="true" />
-
-      {/* ================================================================== */}
-      {/* FOUNDER CREDIBILITY SECTION */}
-      {/* ================================================================== */}
-      <section className="relative py-28 md:py-36 bg-[#141824]">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.8 }}
-            className="flex flex-col items-center"
-          >
-            <div className="relative mb-8">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B9D] to-[#C084FC] rounded-full blur opacity-50" />
-              <div className="relative w-36 h-36 rounded-full overflow-hidden border-2 border-white/20 hover:scale-105 transition-transform duration-300">
-                <a
-                  href="https://www.linkedin.com/in/husnain-rafiq-343179290/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full h-full relative"
-                >
-                  <Image
-                    src="/husnain.jpg"
-                    alt="Husnain - Founder of OUTLIO"
-                    fill
-                    className="object-cover"
-                    style={{ objectPosition: '70% 25%' }}
-                  />
-                </a>
-              </div>
-            </div>
-
-            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-              Husnain
-            </h3>
-            <p className="text-[#FF6B9D] font-medium tracking-wide uppercase text-sm mb-6">
-              Founder, OUTLIO
-            </p>
-
-            <p className="text-lg text-[#9CA3AF] leading-relaxed max-w-2xl italic mb-8">
-              &quot;I&apos;ve helped 6+ agencies scale their outbound without ads or retainers. My goal is simple: get you results or pay you nothing. I take all the risk so you don&apos;t have to.&quot;
-            </p>
-
-            <a
-              href="https://www.linkedin.com/in/husnain-rafiq-343179290/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white/60 hover:text-white transition-colors text-sm flex items-center gap-2"
-            >
-              <span className="uppercase tracking-widest text-xs">Connect on LinkedIn</span>
-              →
-            </a>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Section Divider: Founder → CTA */}
-      <div className="section-divider section-divider-card-to-dark" aria-hidden="true" />
 
       {/* ================================================================== */}
       {/* FINAL CTA */}
@@ -1198,6 +1173,153 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      {/* Section Divider: CTA → Team */}
+      <div className="section-divider section-divider-dark-to-card" aria-hidden="true" />
+
+      {/* ================================================================== */}
+      {/* MEET OUR TEAM SECTION */}
+      {/* ================================================================== */}
+      <section className="relative py-28 md:py-36 bg-[#141824]">
+        <div className="max-w-5xl mx-auto px-6">
+          <SectionHeader
+            badge="WHO WE ARE"
+            title={
+              <>
+                Meet Our{" "}
+                <span className="text-[#FF6B9D]">Team</span>
+              </>
+            }
+            subtitle="The people behind your next growth sprint."
+          />
+
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-10"
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            {/* --- Husnain --- */}
+            <motion.div variants={staggerItem} className="flex flex-col items-center text-center">
+              <div className="relative mb-6">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B9D] to-[#C084FC] rounded-full blur opacity-50" />
+                <div className="relative w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-2 border-white/20 hover:scale-105 transition-transform duration-300">
+                  <a
+                    href="https://www.linkedin.com/in/husnain-rafiq-343179290/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full h-full relative"
+                  >
+                    <Image
+                      src="/husnain.jpg"
+                      alt="Husnain - Founder of OUTLIO"
+                      fill
+                      className="object-cover"
+                      style={{ objectPosition: '70% 25%' }}
+                    />
+                  </a>
+                </div>
+              </div>
+              <h3 className="text-xl md:text-2xl font-bold text-white mb-2">Husnain</h3>
+              <p className="text-[#FF6B9D] font-medium tracking-wide uppercase text-xs mb-4">
+                Founder &amp; CEO
+              </p>
+              <p className="text-sm text-[#9CA3AF] leading-relaxed italic mb-4 max-w-xs">
+                &quot;Get you results or pay you nothing. I take all the risk so you don&apos;t have to.&quot;
+              </p>
+              <a
+                href="https://www.linkedin.com/in/husnain-rafiq-343179290/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/50 hover:text-white transition-colors text-xs flex items-center gap-1.5 uppercase tracking-widest"
+              >
+                LinkedIn →
+              </a>
+            </motion.div>
+
+            {/* --- Saad --- */}
+            <motion.div variants={staggerItem} className="flex flex-col items-center text-center">
+              <div className="relative mb-6">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B9D] to-[#C084FC] rounded-full blur opacity-50" />
+                <div className="relative w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-2 border-white/20 hover:scale-105 transition-transform duration-300">
+                  <a
+                    href="https://www.linkedin.com/in/muhammad-saad-8883383b3/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full h-full relative"
+                  >
+                    <Image
+                      src="/saad.jpg"
+                      alt="Saad - Sales Strategist"
+                      fill
+                      className="object-cover"
+                      style={{ objectPosition: 'center 30%' }}
+                    />
+                  </a>
+                </div>
+              </div>
+              <h3 className="text-xl md:text-2xl font-bold text-white mb-2">Saad</h3>
+              <p className="text-[#C084FC] font-medium tracking-wide uppercase text-xs mb-4">
+                Sales Strategist
+              </p>
+              <p className="text-sm text-[#9CA3AF] leading-relaxed italic mb-4 max-w-xs">
+                &quot;Outbound done right turns strangers into booked calls.&quot;
+              </p>
+              <a
+                href="https://www.linkedin.com/in/muhammad-saad-8883383b3/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/50 hover:text-white transition-colors text-xs flex items-center gap-1.5 uppercase tracking-widest"
+              >
+                LinkedIn →
+              </a>
+            </motion.div>
+
+            {/* --- Abdul Saboor --- */}
+            <motion.div variants={staggerItem} className="flex flex-col items-center text-center">
+              <div className="relative mb-6">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B9D] to-[#C084FC] rounded-full blur opacity-50" />
+                <div className="relative w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-2 border-white/20 hover:scale-105 transition-transform duration-300">
+                  <a
+                    href="https://www.linkedin.com/in/abdulsaboor2004/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full h-full relative"
+                  >
+                    <Image
+                      src="/saboor.jpg"
+                      alt="Abdul Saboor - Co-Founder"
+                      fill
+                      className="object-cover"
+                      style={{ objectPosition: 'center 20%' }}
+                    />
+                  </a>
+                </div>
+              </div>
+              <h3 className="text-xl md:text-2xl font-bold text-white mb-2">Abdul Saboor</h3>
+              <p className="text-[#FCD34D] font-medium tracking-wide uppercase text-xs mb-4">
+                Co-Founder
+              </p>
+              <p className="text-sm text-[#9CA3AF] leading-relaxed italic mb-4 max-w-xs">
+                &quot;Precision targeting is the difference between noise and revenue.&quot;
+              </p>
+              <a
+                href="https://www.linkedin.com/in/abdulsaboor2004/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/50 hover:text-white transition-colors text-xs flex items-center gap-1.5 uppercase tracking-widest"
+              >
+                LinkedIn →
+              </a>
+            </motion.div>
+
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Section Divider: Team → Footer */}
+      <div className="section-divider section-divider-card-to-dark" aria-hidden="true" />
 
       {/* ================================================================== */}
       {/* FOOTER */}

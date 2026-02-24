@@ -1089,98 +1089,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section Divider: Testimonials → FAQ */}
+      {/* Section Divider: Testimonials → Team */}
       <div className="section-divider" aria-hidden="true" />
-
-      {/* ================================================================== */}
-      {/* FAQ SECTION */}
-      {/* ================================================================== */}
-      <section className="relative py-28 md:py-36 bg-[#0A0E1A]">
-        <div className="max-w-7xl mx-auto px-6">
-          <SectionHeader
-            badge="QUESTIONS?"
-            title={
-              <>
-                Everything You Need to <br />
-                <span className="text-[#FF6B9D]">Know</span>
-              </>
-            }
-            subtitle="Common questions about the 7-day sprint."
-          />
-          <FAQAccordion />
-        </div>
-      </section>
-
-      {/* Section Divider: FAQ → CTA */}
-      <div className="section-divider section-divider-dark-to-card" aria-hidden="true" />
-
-      {/* ================================================================== */}
-      {/* FINAL CTA */}
-      {/* ================================================================== */}
-      <section
-        id="book-call"
-        className="relative py-32 md:py-40 overflow-hidden bg-[#0A0E1A]"
-      >
-        <div
-          className="absolute inset-0 bg-gradient-radial from-[#C084FC]/10 via-transparent to-transparent"
-          aria-hidden="true"
-        />
-
-        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.8, ease: premiumEase }}
-          >
-            <Badge>
-              <span aria-hidden="true">⚡</span> Strict Capacity: 5 Spots /
-              Month
-            </Badge>
-
-            <h2 className="mt-8 text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] mb-10 font-sans tracking-tight">
-              Ready to <span className="text-[#FF6B9D]">Scale?</span>
-            </h2>
-
-            <p className="text-lg md:text-xl text-[#9CA3AF] max-w-2xl mx-auto mb-12 font-light">
-              Stop guessing. Start closing.
-              <br />
-              Your calendar could be full in 7 days.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-6">
-              <PremiumCTA
-                href="https://calendly.com/husnainnsaad7/45min"
-                size="lg"
-                trackingLabel="final_cta"
-              >
-                Book Your Strategy Call
-              </PremiumCTA>
-            </div>
-
-            {/* Risk Reversal */}
-            <p className="text-sm text-[#9CA3AF]/70 mb-16">
-              If we don&apos;t book real calls in 7 days — you pay nothing.
-            </p>
-
-            <div className="flex flex-wrap justify-center items-center gap-6 md:gap-8 text-xs md:text-sm text-white/40 uppercase tracking-widest">
-              <span>15-Min Fit Check</span>
-              <span aria-hidden="true">•</span>
-              <span>Founder Led</span>
-              <span aria-hidden="true">•</span>
-              <span>No Hard Pitch</span>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Section Divider: CTA → Team */}
-      <div className="section-divider section-divider-dark-to-card" aria-hidden="true" />
 
       {/* ================================================================== */}
       {/* MEET OUR TEAM SECTION */}
       {/* ================================================================== */}
-      <section className="relative py-28 md:py-36 bg-[#141824]">
+      <section className="relative py-28 md:py-36 bg-[#0A0E1A]">
         <div className="max-w-5xl mx-auto px-6">
           <SectionHeader
             badge="WHO WE ARE"
@@ -1318,7 +1233,92 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section Divider: Team → Footer */}
+      {/* Section Divider: Team → FAQ */}
+      <div className="section-divider section-divider-dark-to-card" aria-hidden="true" />
+
+      {/* ================================================================== */}
+      {/* FAQ SECTION */}
+      {/* ================================================================== */}
+      <section className="relative py-28 md:py-36 bg-[#0A0E1A]">
+        <div className="max-w-7xl mx-auto px-6">
+          <SectionHeader
+            badge="QUESTIONS?"
+            title={
+              <>
+                Everything You Need to <br />
+                <span className="text-[#FF6B9D]">Know</span>
+              </>
+            }
+            subtitle="Common questions about the 7-day sprint."
+          />
+          <FAQAccordion />
+        </div>
+      </section>
+
+      {/* Section Divider: FAQ → CTA */}
+      <div className="section-divider section-divider-dark-to-card" aria-hidden="true" />
+
+      {/* ================================================================== */}
+      {/* FINAL CTA */}
+      {/* ================================================================== */}
+      <section
+        id="book-call"
+        className="relative py-32 md:py-40 overflow-hidden bg-[#0A0E1A]"
+      >
+        <div
+          className="absolute inset-0 bg-gradient-radial from-[#C084FC]/10 via-transparent to-transparent"
+          aria-hidden="true"
+        />
+
+        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: premiumEase }}
+          >
+            <Badge>
+              <span aria-hidden="true">⚡</span> Strict Capacity: 5 Spots /
+              Month
+            </Badge>
+
+            <h2 className="mt-8 text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] mb-10 font-sans tracking-tight">
+              Ready to <span className="text-[#FF6B9D]">Scale?</span>
+            </h2>
+
+            <p className="text-lg md:text-xl text-[#9CA3AF] max-w-2xl mx-auto mb-12 font-light">
+              Stop guessing. Start closing.
+              <br />
+              Your calendar could be full in 7 days.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-6">
+              <PremiumCTA
+                href="https://calendly.com/husnainnsaad7/45min"
+                size="lg"
+                trackingLabel="final_cta"
+              >
+                Book Your Strategy Call
+              </PremiumCTA>
+            </div>
+
+            {/* Risk Reversal */}
+            <p className="text-sm text-[#9CA3AF]/70 mb-16">
+              If we don&apos;t book real calls in 7 days — you pay nothing.
+            </p>
+
+            <div className="flex flex-wrap justify-center items-center gap-6 md:gap-8 text-xs md:text-sm text-white/40 uppercase tracking-widest">
+              <span>15-Min Fit Check</span>
+              <span aria-hidden="true">•</span>
+              <span>Founder Led</span>
+              <span aria-hidden="true">•</span>
+              <span>No Hard Pitch</span>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Section Divider: CTA → Footer */}
       <div className="section-divider section-divider-card-to-dark" aria-hidden="true" />
 
       {/* ================================================================== */}

@@ -1138,7 +1138,7 @@ export default function Home() {
               </div>
               <h3 className="text-xl md:text-2xl font-bold text-white mb-2">Husnain</h3>
               <p className="text-[#FF6B9D] font-medium tracking-wide uppercase text-xs mb-4">
-                Founder &amp; CEO
+                Founder
               </p>
               <p className="text-sm text-[#9CA3AF] leading-relaxed italic mb-4 max-w-xs">
                 &quot;Get you results or pay you nothing. I take all the risk so you don&apos;t have to.&quot;

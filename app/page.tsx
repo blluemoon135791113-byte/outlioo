@@ -1165,7 +1165,7 @@ export default function Home() {
                     className="block w-full h-full relative"
                   >
                     <Image
-                      src="/saad.jpg"
+                      src="/saboor_profile.jpg"
                       alt="Saad - Sales Strategist"
                       fill
                       className="object-cover"
@@ -1203,7 +1203,7 @@ export default function Home() {
                     className="block w-full h-full relative"
                   >
                     <Image
-                      src="/saboor.jpg"
+                      src="/saad_profile.jpg"
                       alt="Abdul Saboor - Co-Founder"
                       fill
                       className="object-cover"

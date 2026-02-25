@@ -142,7 +142,7 @@ body {
 /* Section Dividers — gradient mesh transitions between sections */
 .section-divider {
   position: relative;
-  height: 120px;
+  height: 40px;
   width: 100%;
   overflow: hidden;
   pointer-events: none;

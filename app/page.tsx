@@ -518,7 +518,7 @@ export default function Home() {
       {/* ================================================================== */}
       {/* PROBLEM SECTION */}
       {/* ================================================================== */}
-      <section className="relative py-28 md:py-36 bg-[#0A0E1A]">
+      <section className="relative py-16 md:py-20 bg-[#0A0E1A]">
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeader
             badge="THE PROBLEM"
@@ -695,7 +695,7 @@ export default function Home() {
       {/* ================================================================== */}
       {/* WHAT'S INCLUDED - COMPACT ICON CARDS */}
       {/* ================================================================== */}
-      <section className="relative py-28 md:py-36 bg-[#141824]">
+      <section className="relative py-16 md:py-20 bg-[#141824]">
         <div className="relative z-10 max-w-5xl mx-auto px-6">
           <SectionHeader
             badge="THE ENGINE"
@@ -780,7 +780,7 @@ export default function Home() {
       {/* ================================================================== */}
       {/* CASE STUDIES SECTION */}
       {/* ================================================================== */}
-      <section className="relative py-28 md:py-36 bg-[#141824]">
+      <section className="relative py-16 md:py-20 bg-[#141824]">
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeader
             badge="REAL RESULTS"
@@ -920,7 +920,7 @@ export default function Home() {
       {/* ================================================================== */}
       {/* TESTIMONIALS SECTION */}
       {/* ================================================================== */}
-      <section className="relative py-28 md:py-36 bg-[#0A0E1A]">
+      <section className="relative py-16 md:py-20 bg-[#0A0E1A]">
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeader
             badge="WHAT CLIENTS SAY"
@@ -1095,7 +1095,7 @@ export default function Home() {
       {/* ================================================================== */}
       {/* MEET OUR TEAM SECTION */}
       {/* ================================================================== */}
-      <section className="relative py-28 md:py-36 bg-[#0A0E1A]">
+      <section className="relative py-16 md:py-20 bg-[#0A0E1A]">
         <div className="max-w-5xl mx-auto px-6">
           <SectionHeader
             badge="WHO WE ARE"
@@ -1239,7 +1239,7 @@ export default function Home() {
       {/* ================================================================== */}
       {/* FAQ SECTION */}
       {/* ================================================================== */}
-      <section className="relative py-28 md:py-36 bg-[#0A0E1A]">
+      <section className="relative py-16 md:py-20 bg-[#0A0E1A]">
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeader
             badge="QUESTIONS?"
@@ -1263,7 +1263,7 @@ export default function Home() {
       {/* ================================================================== */}
       <section
         id="book-call"
-        className="relative py-32 md:py-40 overflow-hidden bg-[#0A0E1A]"
+        className="relative py-20 md:py-24 overflow-hidden bg-[#0A0E1A]"
       >
         <div
           className="absolute inset-0 bg-gradient-radial from-[#C084FC]/10 via-transparent to-transparent"

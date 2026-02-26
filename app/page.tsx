@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import Image from "next/image";
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import AnoAI from "@/components/ui/animated-shader-background";
 import { LampContainer } from "@/components/ui/lamp";
@@ -248,6 +248,49 @@ function SectionHeader({
 
 
 
+// ============================================================================
+// TABLET VIDEO — Auto-plays when fully visible on scroll
+// ============================================================================
+
+function TabletVideo() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { amount: 0.9 });
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (isInView) {
+      video.play().catch(() => { });
+    } else {
+      video.pause();
+    }
+  }, [isInView]);
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative w-full aspect-video bg-[#0A0E1A] rounded-2xl overflow-hidden"
+    >
+      <video
+        ref={videoRef}
+        src="/demo.mp4"
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        className="absolute inset-0 w-full h-full object-cover rounded-2xl"
+        poster=""
+      />
+      {/* Subtle gradient overlay at the bottom */}
+      <div
+        className="absolute inset-0 bg-gradient-to-t from-[#0A0E1A]/30 via-transparent to-transparent rounded-2xl pointer-events-none"
+        aria-hidden="true"
+      />
+    </div>
+  );
+}
 
 
 function BloomingLogo() {
@@ -457,23 +500,8 @@ export default function Home() {
             </div>
           }
         >
-          {/* Fixed aspect-ratio container for hero image to eliminate CLS */}
-          <div className="relative w-full aspect-video bg-[#0A0E1A] rounded-2xl overflow-hidden">
-            <Image
-              src="https://images.unsplash.com/photo-1557804506-669a67965ba0"
-              alt="Dashboard Preview"
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
-              className="rounded-2xl object-cover object-left-top opacity-80"
-              draggable={false}
-              quality={85}
-              priority
-            />
-            <div
-              className="absolute inset-0 bg-gradient-to-t from-[#0A0E1A] via-transparent to-transparent opacity-70 rounded-2xl"
-              aria-hidden="true"
-            />
-          </div>
+          {/* Video container — auto-plays when tablet is fully visible */}
+          <TabletVideo />
         </ContainerScroll>
       </div>
 

@@ -220,10 +220,10 @@ export const Navbar = ({ className }: { className?: string }) => {
                     animate={{ y: visible ? 0 : -100, opacity: visible ? 1 : 0 }}
                     transition={{ duration: 0.3, ease: premiumEase }}
                     className={cn(
-                        "fixed top-0 inset-x-0 z-[500] mx-auto w-full px-4 md:px-6 py-4 transition-all duration-300",
+                        "fixed top-0 inset-x-0 z-[500] mx-auto w-full px-4 md:px-6 py-4 transition-all duration-300 backdrop-blur-xl",
                         scrollY > 20
-                            ? "bg-[#0C0E12]/90 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-black/20"
-                            : "bg-transparent",
+                            ? "bg-[#0C0E12]/90 border-b border-white/5 shadow-lg shadow-black/20"
+                            : "bg-[#0C0E12]/60",
                         className
                     )}
                 >

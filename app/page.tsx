@@ -455,9 +455,9 @@ export default function Home() {
 
         <ContainerScroll
           titleComponent={
-            <div className="mb-4 relative z-[200]">
+            <div className="mb-4 relative z-[200] pt-16 md:pt-20">
               <BloomingLogo />
-              <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-[4.75rem] font-bold leading-[1.05] text-white drop-shadow-2xl tracking-tight font-sans">
+              <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-[4.5rem] font-bold leading-[1.1] text-white drop-shadow-lg tracking-tight font-sans">
                 Book 10+ Qualified Calls in 7 Days. <br />
                 <span className="bg-gradient-to-r from-[#C4956A] via-[#6B8E7B] to-[#D4AF7A] bg-clip-text text-transparent mt-2 block leading-none">
                   Guaranteed. Or Pay $0.

@@ -455,7 +455,7 @@ export default function Home() {
 
         <ContainerScroll
           titleComponent={
-            <div className="mb-4 relative z-[200] pt-16 md:pt-20">
+            <div className="mb-4 relative z-[200]">
               <BloomingLogo />
               <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-[4.5rem] font-bold leading-[1.1] text-white drop-shadow-lg tracking-tight font-sans">
                 Book 10+ Qualified Calls in 7 Days. <br />

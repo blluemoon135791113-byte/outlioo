@@ -326,11 +326,11 @@ function BloomingLogo() {
         {/* Hidden Reveal Text — floats UP out of the opening logo */}
         <motion.div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center justify-center text-center pointer-events-none whitespace-nowrap"
-          initial={{ opacity: 0, scale: 0.6, y: 0 }}
+          initial={{ opacity: 0, scale: 0.6, y: 10 }}
           animate={
             isHovered
-              ? { opacity: 1, scale: 1, y: 90 }
-              : { opacity: 0, scale: 0.6, y: 0 }
+              ? { opacity: 1, scale: 1, y: -90 }
+              : { opacity: 0, scale: 0.6, y: 10 }
           }
           transition={textSpring}
         >

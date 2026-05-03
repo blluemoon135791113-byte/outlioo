@@ -300,9 +300,9 @@ function BloomingLogo() {
   const textSpring = { type: "spring", stiffness: 100, damping: 16, mass: 0.6 } as const;
 
   return (
-    <div className="flex flex-col items-center pb-8 relative z-[200]">
+    <div className="flex flex-col items-center pb-24 md:pb-28 relative z-[200]">
       <motion.div
-        className="relative cursor-pointer mt-8 md:mt-12"
+        className="relative cursor-pointer mt-2 md:mt-4"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: premiumEase }}
@@ -326,11 +326,11 @@ function BloomingLogo() {
         {/* Hidden Reveal Text — floats UP out of the opening logo */}
         <motion.div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center justify-center text-center pointer-events-none whitespace-nowrap"
-          initial={{ opacity: 0, scale: 0.6, y: 10 }}
+          initial={{ opacity: 0, scale: 0.6, y: 0 }}
           animate={
             isHovered
-              ? { opacity: 1, scale: 1, y: -80 }
-              : { opacity: 0, scale: 0.6, y: 10 }
+              ? { opacity: 1, scale: 1, y: 90 }
+              : { opacity: 0, scale: 0.6, y: 0 }
           }
           transition={textSpring}
         >

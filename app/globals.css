@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  /* Premium Color Palette */
-  --primary-bg: #0A0E1A;
-  --secondary-bg: #141824;
-  --accent-primary: #FF6B9D;
-  --accent-secondary: #C084FC;
-  --accent-gold: #FCD34D;
-  --text-primary: #F9FAFB;
-  --text-secondary: #9CA3AF;
-  --background: #0A0E1A;
-  --foreground: #F9FAFB;
+  /* Premium Non-AI Color Palette */
+  --primary-bg: #0C0E12;
+  --secondary-bg: #14161A;
+  --accent-primary: #C4956A;
+  --accent-secondary: #6B8E7B;
+  --accent-gold: #D4AF7A;
+  --text-primary: #F0EDE5;
+  --text-secondary: #8A8D92;
+  --background: #0C0E12;
+  --foreground: #F0EDE5;
 }
 
 @theme inline {
@@ -19,14 +19,29 @@
   --font-sans: 'Clash Display', var(--font-geist-sans), sans-serif;
   --font-mono: var(--font-geist-mono);
   --color-royal-blue: #1E2A5A;
-  --color-soft-blush: #E8A6B8;
-  --color-light-blush: #F5D3DD;
+  --color-soft-blush: #C4956A;
+  --color-light-blush: #D4AF7A;
 }
 
 body {
   background: var(--primary-bg);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Gradient shift animation - lightweight CSS replacement for WebGL shader */
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient-shift {
+  background-size: 200% 200%;
+  animation: gradient-shift 20s ease-in-out infinite;
 }
 
 /* Shimmer Animation for CTA */
@@ -41,7 +56,7 @@ body {
 }
 
 .animate-shimmer {
-  animation: shimmer 3s linear infinite;
+  animation: shimmer 4s linear infinite;
 }
 
 /* Scroll Animation */
@@ -84,7 +99,7 @@ body {
 
 /* Selection Color */
 ::selection {
-  background-color: rgba(255, 107, 157, 0.3);
+  background-color: rgba(196, 149, 106, 0.3);
   color: var(--text-primary);
 }
 
@@ -153,9 +168,9 @@ body {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(255, 107, 157, 0.06) 0%, transparent 70%),
-    radial-gradient(ellipse 60% 40% at 80% 60%, rgba(192, 132, 252, 0.05) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 80% at 50% 50%, rgba(252, 211, 77, 0.03) 0%, transparent 70%);
+    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(196, 149, 106, 0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 80% 60%, rgba(107, 142, 123, 0.03) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 80% at 50% 50%, rgba(212, 175, 122, 0.02) 0%, transparent 70%);
 }
 
 .section-divider::after {
@@ -163,21 +178,21 @@ body {
   position: absolute;
   inset: 0;
   background: linear-gradient(to bottom,
-      var(--divider-from, #0A0E1A),
+      var(--divider-from, #0C0E12),
       transparent 30%,
       transparent 70%,
-      var(--divider-to, #0A0E1A));
+      var(--divider-to, #0C0E12));
 }
 
 /* Divider variant: dark → card bg */
 .section-divider-dark-to-card {
-  --divider-from: #0A0E1A;
-  --divider-to: #141824;
+  --divider-from: #0C0E12;
+  --divider-to: #14161A;
 }
 
 .section-divider-card-to-dark {
-  --divider-from: #141824;
-  --divider-to: #0A0E1A;
+  --divider-from: #14161A;
+  --divider-to: #0C0E12;
 }
 
 /* Noise texture overlay for depth */
@@ -187,7 +202,7 @@ body {
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  opacity: 0.02;
+  opacity: 0.015;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 256px 256px;
@@ -198,18 +213,18 @@ body {
 
   0%,
   100% {
-    opacity: 0.3;
+    opacity: 0.2;
     transform: translateX(-50%) scale(1);
   }
 
   50% {
-    opacity: 0.45;
+    opacity: 0.35;
     transform: translateX(-50%) scale(1.05);
   }
 }
 
 .animate-glow-pulse {
-  animation: glow-pulse 4s ease-in-out infinite;
+  animation: glow-pulse 6s ease-in-out infinite;
 }
 
 /* Reduced Motion */

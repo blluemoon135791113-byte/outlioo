@@ -45,7 +45,7 @@ function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                         animate={{ x: 0 }}
                         exit={{ x: "100%" }}
                         transition={{ duration: 0.35, ease: premiumEase }}
-                        className="fixed top-0 right-0 bottom-0 z-[700] w-[280px] bg-[#0A0E1A]/95 backdrop-blur-xl border-l border-white/10 shadow-2xl shadow-black/50 flex flex-col"
+                        className="fixed top-0 right-0 bottom-0 z-[700] w-[280px] bg-[#0C0E12]/95 backdrop-blur-xl border-l border-white/10 shadow-2xl shadow-black/50 flex flex-col"
                     >
                         {/* Close button */}
                         <div className="flex items-center justify-between px-6 py-5">
@@ -77,7 +77,7 @@ function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                                 transition={{ delay: 0.1, duration: 0.3, ease: premiumEase }}
                                 className="flex items-center gap-3 px-4 py-4 rounded-2xl text-white font-semibold text-base hover:bg-white/5 transition-colors"
                             >
-                                <span className="w-8 h-8 rounded-lg bg-[#FF6B9D]/10 border border-[#FF6B9D]/20 flex items-center justify-center text-sm">
+                                <span className="w-8 h-8 rounded-lg bg-[#C4956A]/10 border border-[#C4956A]/20 flex items-center justify-center text-sm">
                                     📋
                                 </span>
                                 Our Process
@@ -91,7 +91,7 @@ function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                                 transition={{ delay: 0.15, duration: 0.3, ease: premiumEase }}
                                 className="flex items-center gap-3 px-4 py-4 rounded-2xl text-white font-semibold text-base hover:bg-white/5 transition-colors"
                             >
-                                <span className="w-8 h-8 rounded-lg bg-[#C084FC]/10 border border-[#C084FC]/20 flex items-center justify-center text-sm">
+                                <span className="w-8 h-8 rounded-lg bg-[#6B8E7B]/10 border border-[#6B8E7B]/20 flex items-center justify-center text-sm">
                                     ⚡
                                 </span>
                                 How It Works
@@ -105,7 +105,7 @@ function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                                 transition={{ delay: 0.2, duration: 0.3, ease: premiumEase }}
                                 className="flex items-center gap-3 px-4 py-4 rounded-2xl text-white font-semibold text-base hover:bg-white/5 transition-colors"
                             >
-                                <span className="w-8 h-8 rounded-lg bg-[#FCD34D]/10 border border-[#FCD34D]/20 flex items-center justify-center text-sm">
+                                <span className="w-8 h-8 rounded-lg bg-[#D4AF7A]/10 border border-[#D4AF7A]/20 flex items-center justify-center text-sm">
                                     📞
                                 </span>
                                 Book a Call
@@ -124,7 +124,7 @@ function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.3, duration: 0.4, ease: premiumEase }}
-                                className="block w-full py-4 rounded-full bg-gradient-to-r from-[#FF6B9D] to-[#C084FC] text-white text-center font-bold text-sm uppercase tracking-wide shadow-lg shadow-[#FF6B9D]/20"
+                                className="block w-full py-4 rounded-full bg-gradient-to-r from-[#C4956A] to-[#6B8E7B] text-white text-center font-bold text-sm uppercase tracking-wide shadow-lg shadow-[#C4956A]/20"
                             >
                                 Start Your Sprint →
                             </motion.a>
@@ -222,7 +222,7 @@ export const Navbar = ({ className }: { className?: string }) => {
                     className={cn(
                         "fixed top-0 inset-x-0 z-[500] mx-auto w-full px-4 md:px-6 py-4 transition-all duration-300",
                         scrollY > 20
-                            ? "bg-[#0A0E1A]/90 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-black/20"
+                            ? "bg-[#0C0E12]/90 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-black/20"
                             : "bg-transparent",
                         className
                     )}
@@ -235,7 +235,7 @@ export const Navbar = ({ className }: { className?: string }) => {
                             whileHover={{ scale: 1.02 }}
                             transition={{ duration: 0.2 }}
                         >
-                            <div className="relative w-10 h-10 rounded-full overflow-hidden border border-[#FF6B9D]/30">
+                            <div className="relative w-10 h-10 rounded-full overflow-hidden border border-[#C4956A]/30">
                                 <Image
                                     src="/logo.jpg"
                                     alt="OUTLIO Logo"
@@ -245,7 +245,7 @@ export const Navbar = ({ className }: { className?: string }) => {
                                 />
                             </div>
                             <span className="text-lg md:text-xl font-bold tracking-tighter text-white font-sans">
-                                OUTLIO<span className="text-[#FF6B9D]">.</span>
+                                OUTLIO<span className="text-[#C4956A]">.</span>
                             </span>
                         </motion.a>
 
@@ -274,7 +274,7 @@ export const Navbar = ({ className }: { className?: string }) => {
                                 onClick={handleCTAClick}
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                className="hidden md:inline-flex px-4 md:px-6 py-2 md:py-2.5 rounded-full bg-white text-[#0A0E1A] text-xs md:text-sm font-bold uppercase tracking-wide hover:shadow-[0_0_30px_rgba(255,107,157,0.5)] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6B9D] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0E1A]"
+                                className="hidden md:inline-flex px-4 md:px-6 py-2 md:py-2.5 rounded-full bg-white text-[#0C0E12] text-xs md:text-sm font-bold uppercase tracking-wide hover:shadow-[0_0_30px_rgba(196,149,106,0.5)] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4956A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0C0E12]"
                             >
                                 Book a Call
                             </motion.a>
@@ -286,7 +286,7 @@ export const Navbar = ({ className }: { className?: string }) => {
                                 rel="noopener noreferrer"
                                 onClick={handleCTAClick}
                                 whileTap={{ scale: 0.95 }}
-                                className="md:hidden px-4 py-2 rounded-full bg-white text-[#0A0E1A] text-xs font-bold uppercase tracking-wide"
+                                className="md:hidden px-4 py-2 rounded-full bg-white text-[#0C0E12] text-xs font-bold uppercase tracking-wide"
                             >
                                 Book a Call
                             </motion.a>

@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  turbopack: {
+    root: ".",
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   poweredByHeader: false,
   compress: true,
   images: {

@@ -9,7 +9,7 @@ export const ContainerScroll = ({
     titleComponent: string | React.ReactNode;
     children: React.ReactNode;
 }) => {
-    const containerRef = useRef<any>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: containerRef,
     });
@@ -30,18 +30,18 @@ export const ContainerScroll = ({
     }, []);
 
     const scaleDimensions = () => {
-        if (isMobile) return [0.7, 0.9];
-        if (isTablet) return [0.8, 0.95];
-        return [1.05, 1];
+        if (isMobile) return [0.85, 0.95];
+        if (isTablet) return [0.9, 0.98];
+        return [1.02, 1];
     };
 
-    const rotate = useTransform(scrollYProgress, [0, 1], [20, 0]);
+    const rotate = useTransform(scrollYProgress, [0, 1], [12, 0]);
     const scale = useTransform(scrollYProgress, [0, 1], scaleDimensions());
-    const translate = useTransform(scrollYProgress, [0, 1], [0, -100]);
+    const translate = useTransform(scrollYProgress, [0, 1], [0, -60]);
 
     return (
         <div
-            className="h-[60rem] md:h-[70rem] lg:h-[80rem] flex items-center justify-center relative p-2 md:p-10 lg:p-20 w-full overflow-hidden"
+            className="h-[40rem] md:h-[45rem] lg:h-[50rem] flex items-center justify-center relative p-2 md:p-8 lg:p-16 w-full overflow-hidden"
             ref={containerRef}
         >
             <div
@@ -59,13 +59,13 @@ export const ContainerScroll = ({
     );
 };
 
-export const Header = ({ translate, titleComponent }: any) => {
+export const Header = ({ translate, titleComponent }: { translate: MotionValue<number>; titleComponent: string | React.ReactNode }) => {
     return (
         <motion.div
             style={{
                 translateY: translate,
             }}
-            className="div max-w-5xl mx-auto text-center"
+            className="max-w-5xl mx-auto text-center"
         >
             {titleComponent}
         </motion.div>

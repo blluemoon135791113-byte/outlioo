@@ -64,7 +64,7 @@ export const JellyButton = ({
             }}
         >
             {/* Background Gradient with Shimmer */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#FF6B9D] via-[#C084FC] to-[#FF6B9D] bg-[length:200%_100%] animate-shimmer" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#C4956A] via-[#6B8E7B] to-[#C4956A] bg-[length:200%_100%] animate-shimmer" />
 
             {/* Glow */}
             <motion.div

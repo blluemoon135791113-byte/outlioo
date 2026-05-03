@@ -87,16 +87,16 @@ function trackCTA(label: string) {
 function Badge({ children }: { children: React.ReactNode }) {
   return (
     <motion.div
-      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-[#FF6B9D]/30 backdrop-blur-sm"
+      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-[#C4956A]/30 backdrop-blur-sm"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, ease: premiumEase }}
     >
       <span className="relative flex h-2 w-2" aria-label="Live status">
-        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF6B9D] opacity-75"></span>
-        <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FF6B9D]"></span>
+        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#C4956A] opacity-75"></span>
+        <span className="relative inline-flex rounded-full h-2 w-2 bg-[#C4956A]"></span>
       </span>
-      <span className="text-sm font-medium text-[#F9FAFB] tracking-wide uppercase">
+      <span className="text-sm font-medium text-[#F0EDE5] tracking-wide uppercase">
         {children}
       </span>
     </motion.div>
@@ -134,17 +134,17 @@ function PremiumCTA({
         target={target}
         rel={target === "_blank" ? "noopener noreferrer" : undefined}
         onClick={handleClick}
-        className={`group relative ${baseStyles} font-bold rounded-full overflow-hidden inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6B9D] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0E1A]`}
+        className={`group relative ${baseStyles} font-bold rounded-full overflow-hidden inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4956A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0C0E12]`}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         transition={{ duration: 0.2 }}
       >
         {/* Shimmer gradient */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#FF6B9D] via-[#C084FC] to-[#FF6B9D] bg-[length:200%_100%] animate-shimmer" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#C4956A] via-[#6B8E7B] to-[#C4956A] bg-[length:200%_100%] animate-shimmer" />
 
         {/* Glow effect */}
         <div
-          className="absolute -inset-1 bg-gradient-to-r from-[#FF6B9D] to-[#C084FC] opacity-0 group-hover:opacity-70 blur-xl transition-opacity duration-300"
+          className="absolute -inset-1 bg-gradient-to-r from-[#C4956A] to-[#6B8E7B] opacity-0 group-hover:opacity-70 blur-xl transition-opacity duration-300"
           aria-hidden="true"
         />
 
@@ -169,7 +169,7 @@ function PremiumCTA({
       target={target}
       rel={target === "_blank" ? "noopener noreferrer" : undefined}
       onClick={handleClick}
-      className={`group relative ${baseStyles} font-semibold rounded-full border-2 border-white/20 text-white overflow-hidden z-10 inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6B9D] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0E1A]`}
+      className={`group relative ${baseStyles} font-semibold rounded-full border-2 border-white/20 text-white overflow-hidden z-10 inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4956A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0C0E12]`}
       whileHover={{
         borderColor: "rgba(255, 255, 255, 0.4)",
         backgroundColor: "rgba(255, 255, 255, 0.05)",
@@ -214,7 +214,7 @@ function SectionHeader({
           viewport={{ once: true, amount: 0.3 }}
           custom={0}
         >
-          <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase bg-[#FF6B9D]/10 text-[#FF6B9D] border border-[#FF6B9D]/20">
+          <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase bg-[#C4956A]/10 text-[#C4956A] border border-[#C4956A]/20">
             {badge}
           </span>
         </motion.div>
@@ -231,7 +231,7 @@ function SectionHeader({
       </motion.h2>
       {subtitle && (
         <motion.p
-          className="text-lg md:text-xl text-[#9CA3AF] leading-relaxed font-light max-w-2xl mx-auto"
+          className="text-lg md:text-xl text-[#8A8D92] leading-relaxed font-light max-w-2xl mx-auto"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
@@ -271,7 +271,7 @@ function TabletVideo() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full aspect-video bg-[#0A0E1A] rounded-2xl overflow-hidden"
+      className="relative w-full aspect-video bg-[#0C0E12] rounded-2xl overflow-hidden"
     >
       <video
         ref={videoRef}
@@ -285,7 +285,7 @@ function TabletVideo() {
       />
       {/* Subtle gradient overlay at the bottom */}
       <div
-        className="absolute inset-0 bg-gradient-to-t from-[#0A0E1A]/30 via-transparent to-transparent rounded-2xl pointer-events-none"
+        className="absolute inset-0 bg-gradient-to-t from-[#0C0E12]/30 via-transparent to-transparent rounded-2xl pointer-events-none"
         aria-hidden="true"
       />
     </div>
@@ -314,7 +314,7 @@ function BloomingLogo() {
 
         {/* Glow that expands on bloom */}
         <div
-          className="absolute inset-0 bg-[#FF6B9D] blur-3xl rounded-full pointer-events-none"
+          className="absolute inset-0 bg-[#C4956A] blur-3xl rounded-full pointer-events-none"
           style={{
             opacity: isHovered ? 0.45 : 0.15,
             transform: `scale(${isHovered ? 2.5 : 1.2})`,
@@ -334,10 +334,10 @@ function BloomingLogo() {
           }
           transition={textSpring}
         >
-          <div className="text-2xl md:text-3xl font-bold text-white drop-shadow-[0_0_20px_rgba(255,107,157,0.6)]">
+          <div className="text-2xl md:text-3xl font-bold text-white drop-shadow-[0_0_20px_rgba(196,149,106,0.6)]">
             $50
           </div>
-          <div className="text-[10px] font-bold bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent uppercase tracking-[0.2em] mt-1">
+          <div className="text-[10px] font-bold bg-gradient-to-r from-[#C4956A] to-[#6B8E7B] bg-clip-text text-transparent uppercase tracking-[0.2em] mt-1">
             If Our Systems Suck
           </div>
         </motion.div>
@@ -355,8 +355,8 @@ function BloomingLogo() {
             animate={{ rotate: isHovered ? -18 : 0 }}
             transition={petalSpring}
           >
-            <div className="absolute inset-0 rounded-full p-[3px] bg-gradient-to-r from-[#FF6B9D] via-[#C084FC] to-[#FF6B9D] shadow-[0_0_20px_rgba(255,107,157,0.3)] animate-shimmer bg-[length:200%_100%]">
-              <div className="h-full w-full rounded-full border-4 border-[#0A0E1A] bg-[#0A0E1A] overflow-hidden relative">
+            <div className="absolute inset-0 rounded-full p-[3px] bg-gradient-to-r from-[#C4956A] via-[#6B8E7B] to-[#C4956A] shadow-[0_0_20px_rgba(196,149,106,0.3)] animate-shimmer bg-[length:200%_100%]">
+              <div className="h-full w-full rounded-full border-4 border-[#0C0E12] bg-[#0C0E12] overflow-hidden relative">
                 <Image
                   src="/logo.jpg"
                   alt="OUTLIO Logo"
@@ -378,8 +378,8 @@ function BloomingLogo() {
             animate={{ rotate: isHovered ? 18 : 0 }}
             transition={petalSpring}
           >
-            <div className="absolute inset-0 rounded-full p-[3px] bg-gradient-to-r from-[#FF6B9D] via-[#C084FC] to-[#FF6B9D] shadow-[0_0_20px_rgba(255,107,157,0.3)] animate-shimmer bg-[length:200%_100%]">
-              <div className="h-full w-full rounded-full border-4 border-[#0A0E1A] bg-[#0A0E1A] overflow-hidden relative">
+            <div className="absolute inset-0 rounded-full p-[3px] bg-gradient-to-r from-[#C4956A] via-[#6B8E7B] to-[#C4956A] shadow-[0_0_20px_rgba(196,149,106,0.3)] animate-shimmer bg-[length:200%_100%]">
+              <div className="h-full w-full rounded-full border-4 border-[#0C0E12] bg-[#0C0E12] overflow-hidden relative">
                 <Image
                   src="/logo.jpg"
                   alt="OUTLIO Logo"
@@ -408,44 +408,44 @@ export default function Home() {
       Icon: Search,
       title: "ICP Deep Research",
       description: "We identify your ideal customers so you never waste time on unqualified leads.",
-      color: "#FF6B9D",
+      color: "#C4956A",
     },
     {
       Icon: PenLine,
       title: "Custom Copy Creation",
       description: "Your voice, their language—messages that actually convert.",
-      color: "#C084FC",
+      color: "#6B8E7B",
     },
     {
       Icon: BarChart3,
       title: "Multi-Angle Testing",
       description: "5+ approaches tested to find the message that resonates.",
-      color: "#FCD34D",
+      color: "#D4AF7A",
     },
     {
       Icon: Send,
       title: "200+ DMs/Day",
       description: "Maximum reach without the spam feel—targeted, personal outreach.",
-      color: "#FF6B9D",
+      color: "#C4956A",
     },
     {
       Icon: RotateCcw,
       title: "Smart Follow-Ups",
       description: "Automated sequences that feel genuinely personal.",
-      color: "#C084FC",
+      color: "#6B8E7B",
     },
     {
       Icon: FileText,
       title: "Full Report",
       description: "Complete playbook you own forever—every metric, insight, and strategy.",
-      color: "#FCD34D",
+      color: "#D4AF7A",
     },
   ];
 
   return (
-    <main className="min-h-screen bg-transparent text-white font-sans antialiased overflow-x-hidden selection:bg-[#FF6B9D]/30 relative noise-overlay">
+    <main className="min-h-screen bg-transparent text-white font-sans antialiased overflow-x-hidden selection:bg-[#C4956A]/30 relative noise-overlay">
       <Navbar />
-      <div className="fixed inset-0 -z-20 bg-[#0A0E1A]" aria-hidden="true" />
+      <div className="fixed inset-0 -z-20 bg-[#0C0E12]" aria-hidden="true" />
       <AnoAI />
 
       {/* ================================================================== */}
@@ -459,11 +459,11 @@ export default function Home() {
               <BloomingLogo />
               <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-[4.75rem] font-bold leading-[1.05] text-white drop-shadow-2xl tracking-tight font-sans">
                 Book 10+ Qualified Calls in 7 Days. <br />
-                <span className="bg-gradient-to-r from-[#FF6B9D] via-[#C084FC] to-[#FCD34D] bg-clip-text text-transparent mt-2 block leading-none">
+                <span className="bg-gradient-to-r from-[#C4956A] via-[#6B8E7B] to-[#D4AF7A] bg-clip-text text-transparent mt-2 block leading-none">
                   Guaranteed. Or Pay $0.
                 </span>
               </h1>
-              <p className="mt-2 text-base md:text-lg text-[#9CA3AF] max-w-2xl mx-auto font-light leading-relaxed">
+              <p className="mt-2 text-base md:text-lg text-[#8A8D92] max-w-2xl mx-auto font-light leading-relaxed">
                 A 7-day outbound ecosystem built for founders scaling past
                 $30K/mo.
                 <span className="block mt-4 text-white/40 text-sm tracking-widest uppercase">
@@ -508,7 +508,7 @@ export default function Home() {
       {/* ================================================================== */}
       {/* TRUST MARQUEE */}
       {/* ================================================================== */}
-      <section className="relative py-8 md:py-10 bg-[#141824]/50 border-y border-white/5 backdrop-blur-sm">
+      <section className="relative py-8 md:py-10 bg-[#14161A]/50 border-y border-white/5 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-6">
           <p className="text-center text-xs font-bold tracking-[0.2em] text-white/30 uppercase mb-6">
             Trusted by High-Performers at
@@ -546,14 +546,14 @@ export default function Home() {
       {/* ================================================================== */}
       {/* PROBLEM SECTION */}
       {/* ================================================================== */}
-      <section className="relative py-16 md:py-20 bg-[#0A0E1A]">
+      <section className="relative py-16 md:py-20 bg-[#0C0E12]">
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeader
             badge="THE PROBLEM"
             title={
               <>
                 You&apos;re{" "}
-                <span className="text-[#FF6B9D]">Bleeding Revenue</span>
+                <span className="text-[#C4956A]">Bleeding Revenue</span>
                 <br />
                 Every Single Day.
               </>
@@ -593,11 +593,11 @@ export default function Home() {
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
                 <div
-                  className="absolute -inset-0.5 bg-gradient-to-r from-[#FF6B9D] to-[#C084FC] rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
+                  className="absolute -inset-0.5 bg-gradient-to-r from-[#C4956A] to-[#6B8E7B] rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
                   aria-hidden="true"
                 />
-                <div className="relative h-full rounded-3xl border border-white/10 bg-gradient-to-b from-[#141824] to-[#0A0E1A] p-6 sm:p-8 backdrop-blur-xl transition-all duration-300 group-hover:border-[#FF6B9D]/30 group-hover:shadow-[0_0_40px_rgba(255,107,157,0.12)] min-h-0 md:min-h-[250px]">
-                  <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-[#FF6B9D]/20 to-[#C084FC]/20 backdrop-blur-sm group-hover:from-[#FF6B9D]/30 group-hover:to-[#C084FC]/30 transition-all duration-300">
+                <div className="relative h-full rounded-3xl border border-white/10 bg-gradient-to-b from-[#14161A] to-[#0C0E12] p-6 sm:p-8 backdrop-blur-xl transition-all duration-300 group-hover:border-[#C4956A]/30 group-hover:shadow-[0_0_40px_rgba(196,149,106,0.12)] min-h-0 md:min-h-[250px]">
+                  <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-[#C4956A]/20 to-[#6B8E7B]/20 backdrop-blur-sm group-hover:from-[#C4956A]/30 group-hover:to-[#6B8E7B]/30 transition-all duration-300">
                     <span
                       className="text-4xl transition-transform duration-300 group-hover:scale-110"
                       role="img"
@@ -609,7 +609,7 @@ export default function Home() {
                   <h3 className="text-xl md:text-2xl font-bold text-white mb-4 font-sans">
                     {item.title}
                   </h3>
-                  <p className="text-[#9CA3AF] leading-relaxed">{item.desc}</p>
+                  <p className="text-[#8A8D92] leading-relaxed">{item.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -623,7 +623,7 @@ export default function Home() {
       {/* ================================================================== */}
       {/* LAMP REVEAL - HOW IT WORKS */}
       {/* ================================================================== */}
-      <section id="how-it-works" className="relative bg-[#0A0E1A] pt-10">
+      <section id="how-it-works" className="relative bg-[#0C0E12] pt-10">
         <LampContainer className="mt-0">
           <motion.h2
             initial={{ opacity: 0.5, y: 100 }}
@@ -634,7 +634,7 @@ export default function Home() {
               ease: premiumEase,
             }}
             viewport={{ once: true, amount: 0.3 }}
-            className="mt-8 bg-gradient-to-br from-white via-[#FF6B9D] to-[#C084FC] py-4 bg-clip-text text-center text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-transparent font-sans"
+            className="mt-8 bg-gradient-to-br from-white via-[#C4956A] to-[#6B8E7B] py-4 bg-clip-text text-center text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-transparent font-sans"
           >
             7 Days. <br /> Real Calls. <br /> Zero Guesswork.
           </motion.h2>
@@ -643,7 +643,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
             viewport={{ once: true, amount: 0.3 }}
-            className="mt-6 text-base md:text-lg text-[#9CA3AF] max-w-xl mx-auto text-center px-4"
+            className="mt-6 text-base md:text-lg text-[#8A8D92] max-w-xl mx-auto text-center px-4"
           >
             We don&apos;t teach you outbound. We DO it for you. In one week,
             you&apos;ll have conversations with qualified buyers — or it costs
@@ -690,24 +690,24 @@ export default function Home() {
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 >
                   <div
-                    className="absolute -inset-0.5 bg-gradient-to-r from-[#FF6B9D]/60 to-[#C084FC]/60 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
+                    className="absolute -inset-0.5 bg-gradient-to-r from-[#C4956A]/60 to-[#6B8E7B]/60 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
                     aria-hidden="true"
                   />
-                  <div className="relative h-full rounded-2xl border border-white/10 bg-[#141824]/80 backdrop-blur-xl p-6 md:p-8 transition-all duration-300 group-hover:bg-[#141824] group-hover:border-[#FF6B9D]/30 group-hover:shadow-[0_0_30px_rgba(255,107,157,0.1)] min-h-[200px]">
+                  <div className="relative h-full rounded-2xl border border-white/10 bg-[#14161A]/80 backdrop-blur-xl p-6 md:p-8 transition-all duration-300 group-hover:bg-[#14161A] group-hover:border-[#C4956A]/30 group-hover:shadow-[0_0_30px_rgba(196,149,106,0.1)] min-h-[200px]">
                     <div
-                      className="text-5xl md:text-6xl font-black text-[#FF6B9D]/10 absolute top-4 right-4 z-0 group-hover:text-[#FF6B9D]/25 transition-all duration-500 group-hover:scale-110"
+                      className="text-5xl md:text-6xl font-black text-[#C4956A]/10 absolute top-4 right-4 z-0 group-hover:text-[#C4956A]/25 transition-all duration-500 group-hover:scale-110"
                       aria-hidden="true"
                     >
                       {item.step}
                     </div>
                     <div className="relative z-10">
-                      <div className="w-12 h-12 rounded-full border border-[#FF6B9D]/30 bg-[#0A0E1A] flex items-center justify-center mb-6 text-[#FF6B9D] font-bold group-hover:border-[#FF6B9D]/60 group-hover:shadow-[0_0_15px_rgba(255,107,157,0.2)] transition-all duration-300">
+                      <div className="w-12 h-12 rounded-full border border-[#C4956A]/30 bg-[#0C0E12] flex items-center justify-center mb-6 text-[#C4956A] font-bold group-hover:border-[#C4956A]/60 group-hover:shadow-[0_0_15px_rgba(196,149,106,0.2)] transition-all duration-300">
                         {idx + 1}
                       </div>
                       <h3 className="text-lg md:text-xl font-bold text-white mb-2 font-sans">
                         {item.title}
                       </h3>
-                      <p className="text-sm text-[#9CA3AF]">{item.desc}</p>
+                      <p className="text-sm text-[#8A8D92]">{item.desc}</p>
                     </div>
                   </div>
                 </motion.div>
@@ -723,7 +723,7 @@ export default function Home() {
       {/* ================================================================== */}
       {/* WHAT'S INCLUDED - COMPACT ICON CARDS */}
       {/* ================================================================== */}
-      <section className="relative py-16 md:py-20 bg-[#141824]">
+      <section className="relative py-16 md:py-20 bg-[#14161A]">
         <div className="relative z-10 max-w-5xl mx-auto px-6">
           <SectionHeader
             badge="THE ENGINE"
@@ -731,7 +731,7 @@ export default function Home() {
               <>
                 Everything You Need to
                 <br />
-                <span className="text-[#FF6B9D]">Dominate Outbound</span>
+                <span className="text-[#C4956A]">Dominate Outbound</span>
               </>
             }
             subtitle="We handle every single step. You just show up to calls."
@@ -747,7 +747,7 @@ export default function Home() {
             {features.map((feature, i) => (
               <motion.div
                 key={i}
-                className="group relative rounded-2xl border border-white/8 bg-[#141824] hover:bg-[#1a2030] transition-all duration-300 p-5 flex flex-col gap-3 cursor-default"
+                className="group relative rounded-2xl border border-white/8 bg-[#14161A] hover:bg-[#1A1C20] transition-all duration-300 p-5 flex flex-col gap-3 cursor-default"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
@@ -792,7 +792,7 @@ export default function Home() {
                   <h3 className="text-sm font-bold text-white leading-snug">
                     {feature.title}
                   </h3>
-                  <p className="text-sm text-[#6B7280] mt-0.5 leading-relaxed">
+                  <p className="text-sm text-[#8A8D92] mt-0.5 leading-relaxed">
                     {feature.description}
                   </p>
                 </div>
@@ -803,18 +803,18 @@ export default function Home() {
       </section>
 
       {/* Section Divider: Engine → Case Studies */}
-      <div className="section-divider" style={{ background: '#141824' }} aria-hidden="true" />
+      <div className="section-divider" style={{ background: '#14161A' }} aria-hidden="true" />
 
       {/* ================================================================== */}
       {/* CASE STUDIES SECTION */}
       {/* ================================================================== */}
-      <section className="relative py-16 md:py-20 bg-[#141824]">
+      <section className="relative py-16 md:py-20 bg-[#14161A]">
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeader
             badge="REAL RESULTS"
             title={
               <>
-                <span className="text-[#FF6B9D]">Founders</span> Have Run
+                <span className="text-[#C4956A]">Founders</span> Have Run
                 <br />
                 This Sprint. Here Are Two.
               </>
@@ -837,32 +837,32 @@ export default function Home() {
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
               <div
-                className="absolute -inset-0.5 bg-gradient-to-r from-[#FF6B9D] to-[#C084FC] rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
+                className="absolute -inset-0.5 bg-gradient-to-r from-[#C4956A] to-[#6B8E7B] rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
                 aria-hidden="true"
               />
-              <div className="relative h-full rounded-3xl border border-white/10 bg-gradient-to-b from-[#0A0E1A] to-[#141824] p-8 backdrop-blur-xl transition-all duration-300 group-hover:border-[#FF6B9D]/30">
+              <div className="relative h-full rounded-3xl border border-white/10 bg-gradient-to-b from-[#0C0E12] to-[#14161A] p-8 backdrop-blur-xl transition-all duration-300 group-hover:border-[#C4956A]/30">
                 <div className="flex items-center gap-4 mb-6">
                   <div className="w-16 h-16 rounded-xl bg-white/5 flex items-center justify-center">
                     <span className="text-2xl font-bold text-white tracking-tight">ADDX</span>
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-white">Addx Studio</h3>
-                    <p className="text-sm text-[#9CA3AF]">Creative Agency</p>
+                    <p className="text-sm text-[#8A8D92]">Creative Agency</p>
                   </div>
                 </div>
 
                 <div className="space-y-5 mb-8">
-                  <div className="flex justify-between items-center p-3 rounded-xl bg-[#FF6B9D]/5">
-                    <span className="text-[#9CA3AF] text-sm uppercase tracking-wider">Calls Booked</span>
-                    <span className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-[#FF6B9D] to-[#C084FC] bg-clip-text text-transparent">53+</span>
+                  <div className="flex justify-between items-center p-3 rounded-xl bg-[#C4956A]/5">
+                    <span className="text-[#8A8D92] text-sm uppercase tracking-wider">Calls Booked</span>
+                    <span className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-[#C4956A] to-[#6B8E7B] bg-clip-text text-transparent">53+</span>
                   </div>
-                  <div className="flex justify-between items-center p-3 rounded-xl bg-[#FF6B9D]/5">
-                    <span className="text-[#9CA3AF] text-sm uppercase tracking-wider">Pipeline Added</span>
-                    <span className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-[#FF6B9D] to-[#C084FC] bg-clip-text text-transparent">$100k MRR</span>
+                  <div className="flex justify-between items-center p-3 rounded-xl bg-[#C4956A]/5">
+                    <span className="text-[#8A8D92] text-sm uppercase tracking-wider">Pipeline Added</span>
+                    <span className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-[#C4956A] to-[#6B8E7B] bg-clip-text text-transparent">$100k MRR</span>
                   </div>
-                  <div className="flex justify-between items-center p-3 rounded-xl bg-[#FF6B9D]/5">
-                    <span className="text-[#9CA3AF] text-sm uppercase tracking-wider">Reply Rate</span>
-                    <span className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-[#FF6B9D] to-[#C084FC] bg-clip-text text-transparent">30%</span>
+                  <div className="flex justify-between items-center p-3 rounded-xl bg-[#C4956A]/5">
+                    <span className="text-[#8A8D92] text-sm uppercase tracking-wider">Reply Rate</span>
+                    <span className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-[#C4956A] to-[#6B8E7B] bg-clip-text text-transparent">30%</span>
                   </div>
                 </div>
 
@@ -871,7 +871,7 @@ export default function Home() {
                   href="https://www.notion.so/outlio/Case-Study-Addx-Studio-2f3ae787791280a2880af4f16e0a0e85"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#FF6B9D]/10 border border-[#FF6B9D]/30 text-sm font-bold text-[#FF6B9D] hover:bg-[#FF6B9D]/20 transition-colors"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#C4956A]/10 border border-[#C4956A]/30 text-sm font-bold text-[#C4956A] hover:bg-[#C4956A]/20 transition-colors"
                 >
                   Read Full Case Study
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -891,10 +891,10 @@ export default function Home() {
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
               <div
-                className="absolute -inset-0.5 bg-gradient-to-r from-[#C084FC] to-[#FF6B9D] rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
+                className="absolute -inset-0.5 bg-gradient-to-r from-[#6B8E7B] to-[#C4956A] rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
                 aria-hidden="true"
               />
-              <div className="relative h-full rounded-3xl border border-white/10 bg-gradient-to-b from-[#0A0E1A] to-[#141824] p-8 backdrop-blur-xl transition-all duration-300 group-hover:border-[#C084FC]/30">
+              <div className="relative h-full rounded-3xl border border-white/10 bg-gradient-to-b from-[#0C0E12] to-[#14161A] p-8 backdrop-blur-xl transition-all duration-300 group-hover:border-[#6B8E7B]/30">
                 <div className="flex items-center gap-4 mb-6">
                   <div className="w-16 h-16 rounded-xl bg-white/5 flex items-center justify-center">
                     <div className="relative w-12 h-12">
@@ -903,22 +903,22 @@ export default function Home() {
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-white">ClickLabs</h3>
-                    <p className="text-sm text-[#9CA3AF]">Design & Content Agency</p>
+                    <p className="text-sm text-[#8A8D92]">Design & Content Agency</p>
                   </div>
                 </div>
 
                 <div className="space-y-5 mb-8">
-                  <div className="flex justify-between items-center p-3 rounded-xl bg-[#C084FC]/5">
-                    <span className="text-[#9CA3AF] text-sm uppercase tracking-wider">Calls Booked</span>
-                    <span className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-[#C084FC] to-[#FF6B9D] bg-clip-text text-transparent">27</span>
+                  <div className="flex justify-between items-center p-3 rounded-xl bg-[#6B8E7B]/5">
+                    <span className="text-[#8A8D92] text-sm uppercase tracking-wider">Calls Booked</span>
+                    <span className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-[#6B8E7B] to-[#C4956A] bg-clip-text text-transparent">27</span>
                   </div>
-                  <div className="flex justify-between items-center p-3 rounded-xl bg-[#C084FC]/5">
-                    <span className="text-[#9CA3AF] text-sm uppercase tracking-wider">Pipeline Added</span>
-                    <span className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-[#C084FC] to-[#FF6B9D] bg-clip-text text-transparent">$28K MRR</span>
+                  <div className="flex justify-between items-center p-3 rounded-xl bg-[#6B8E7B]/5">
+                    <span className="text-[#8A8D92] text-sm uppercase tracking-wider">Pipeline Added</span>
+                    <span className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-[#6B8E7B] to-[#C4956A] bg-clip-text text-transparent">$28K MRR</span>
                   </div>
-                  <div className="flex justify-between items-center p-3 rounded-xl bg-[#C084FC]/5">
-                    <span className="text-[#9CA3AF] text-sm uppercase tracking-wider">Reply Rate</span>
-                    <span className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-[#C084FC] to-[#FF6B9D] bg-clip-text text-transparent">26%</span>
+                  <div className="flex justify-between items-center p-3 rounded-xl bg-[#6B8E7B]/5">
+                    <span className="text-[#8A8D92] text-sm uppercase tracking-wider">Reply Rate</span>
+                    <span className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-[#6B8E7B] to-[#C4956A] bg-clip-text text-transparent">26%</span>
                   </div>
                 </div>
 
@@ -927,7 +927,7 @@ export default function Home() {
                   href="https://www.notion.so/outlio/Case-Study-ClickLabs-2f3ae787791280e19e09d91ed5329ecd"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#C084FC]/10 border border-[#C084FC]/30 text-sm font-bold text-[#C084FC] hover:bg-[#C084FC]/20 transition-colors"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#6B8E7B]/10 border border-[#6B8E7B]/30 text-sm font-bold text-[#6B8E7B] hover:bg-[#6B8E7B]/20 transition-colors"
                 >
                   Read Full Case Study
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -948,14 +948,14 @@ export default function Home() {
       {/* ================================================================== */}
       {/* TESTIMONIALS SECTION */}
       {/* ================================================================== */}
-      <section className="relative py-16 md:py-20 bg-[#0A0E1A]">
+      <section className="relative py-16 md:py-20 bg-[#0C0E12]">
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeader
             badge="WHAT CLIENTS SAY"
             title={
               <>
                 Founders Who&apos;ve{" "}
-                <span className="text-[#FF6B9D]">Worked With Us</span>
+                <span className="text-[#C4956A]">Worked With Us</span>
               </>
             }
             subtitle="Real reviews from real founders who ran the 7-day sprint."
@@ -976,16 +976,16 @@ export default function Home() {
               <div className="flip-card-inner">
                 {/* FRONT — Review Quote */}
                 <div className="flip-card-front">
-                  <div className="h-full rounded-3xl border border-white/10 bg-gradient-to-b from-[#141824] to-[#0A0E1A] p-8 backdrop-blur-xl flex flex-col justify-between">
+                  <div className="h-full rounded-3xl border border-white/10 bg-gradient-to-b from-[#14161A] to-[#0C0E12] p-8 backdrop-blur-xl flex flex-col justify-between">
                     <div>
                       <div className="flex items-center gap-1 mb-4">
                         {[1, 2, 3, 4, 5].map((s) => (
-                          <Star key={s} size={18} className="text-[#FCD34D] fill-[#FCD34D]" />
+                          <Star key={s} size={18} className="text-[#D4AF7A] fill-[#D4AF7A]" />
                         ))}
-                        <span className="ml-2 text-sm text-[#9CA3AF]">5.0</span>
+                        <span className="ml-2 text-sm text-[#8A8D92]">5.0</span>
                       </div>
                       <div className="relative mb-6">
-                        <Quote size={32} className="text-[#FF6B9D]/20 absolute -top-2 -left-1" aria-hidden="true" />
+                        <Quote size={32} className="text-[#C4956A]/20 absolute -top-2 -left-1" aria-hidden="true" />
                         <p className="text-lg text-white/90 leading-relaxed pl-8 italic">
                           &quot;Husnain is literally one of the best and experienced business development manager on this platform.&quot;
                         </p>
@@ -999,7 +999,7 @@ export default function Home() {
                       </div>
                       <div>
                         <p className="text-white font-bold">ClickLabs Founder</p>
-                        <p className="text-sm text-[#9CA3AF]">Design & Content Agency</p>
+                        <p className="text-sm text-[#8A8D92]">Design & Content Agency</p>
                       </div>
                       <p className="ml-auto text-xs text-white/30 uppercase tracking-wider">Hover to see source →</p>
                     </div>
@@ -1008,12 +1008,12 @@ export default function Home() {
 
                 {/* BACK — Upwork Review Screenshot Replica */}
                 <div className="flip-card-back">
-                  <div className="h-full rounded-3xl border border-[#FF6B9D]/30 bg-[#1A1A1A] p-8 flex flex-col justify-center">
+                  <div className="h-full rounded-3xl border border-[#C4956A]/30 bg-[#1A1A1A] p-8 flex flex-col justify-center">
                     {/* Upwork-style header */}
                     <p className="text-[#14A800] font-semibold text-base md:text-lg mb-3 leading-snug">
                       Out reacher / Lead Generation Specialist (Commission + Per Call Payment)
                     </p>
-                    <div className="flex items-center gap-2 mb-4 text-sm text-[#9CA3AF]">
+                    <div className="flex items-center gap-2 mb-4 text-sm text-[#8A8D92]">
                       <div className="flex items-center gap-0.5">
                         {[1, 2, 3, 4, 5].map((s) => (
                           <Star key={s} size={14} className="text-[#FF8C00] fill-[#FF8C00]" />
@@ -1031,7 +1031,7 @@ export default function Home() {
                           ))}
                         </div>
                         <span className="text-white/80 font-medium text-sm">5.0</span>
-                        <span className="text-[#9CA3AF] text-sm">Oct 28, 2025</span>
+                        <span className="text-[#8A8D92] text-sm">Oct 28, 2025</span>
                       </div>
                       <p className="text-white/90 italic text-base leading-relaxed">
                         &quot;Husnain is literally one of the best and experienced business development manager on this platform&quot;
@@ -1051,16 +1051,16 @@ export default function Home() {
               <div className="flip-card-inner">
                 {/* FRONT — Review Quote */}
                 <div className="flip-card-front">
-                  <div className="h-full rounded-3xl border border-white/10 bg-gradient-to-b from-[#141824] to-[#0A0E1A] p-8 backdrop-blur-xl flex flex-col justify-between">
+                  <div className="h-full rounded-3xl border border-white/10 bg-gradient-to-b from-[#14161A] to-[#0C0E12] p-8 backdrop-blur-xl flex flex-col justify-between">
                     <div>
                       <div className="flex items-center gap-1 mb-4">
                         {[1, 2, 3, 4, 5].map((s) => (
-                          <Star key={s} size={18} className="text-[#FCD34D] fill-[#FCD34D]" />
+                          <Star key={s} size={18} className="text-[#D4AF7A] fill-[#D4AF7A]" />
                         ))}
-                        <span className="ml-2 text-sm text-[#9CA3AF]">5.0</span>
+                        <span className="ml-2 text-sm text-[#8A8D92]">5.0</span>
                       </div>
                       <div className="relative mb-6">
-                        <Quote size={32} className="text-[#C084FC]/20 absolute -top-2 -left-1" aria-hidden="true" />
+                        <Quote size={32} className="text-[#6B8E7B]/20 absolute -top-2 -left-1" aria-hidden="true" />
                         <p className="text-lg text-white/90 leading-relaxed pl-8 italic">
                           &quot;Liam closed alhamdullilah 🤝 — the outreach system actually works. Real calls, real closures.&quot;
                         </p>
@@ -1072,7 +1072,7 @@ export default function Home() {
                       </div>
                       <div>
                         <p className="text-white font-bold">Abdullah A.</p>
-                        <p className="text-sm text-[#9CA3AF]">Founder, Addx Studio</p>
+                        <p className="text-sm text-[#8A8D92]">Founder, Addx Studio</p>
                       </div>
                       <p className="ml-auto text-xs text-white/30 uppercase tracking-wider">Hover to see source →</p>
                     </div>
@@ -1081,7 +1081,7 @@ export default function Home() {
 
                 {/* BACK — Discord Message Replica */}
                 <div className="flip-card-back">
-                  <div className="h-full rounded-3xl border border-[#C084FC]/30 bg-[#2B2D31] p-6 md:p-8 flex flex-col justify-center">
+                  <div className="h-full rounded-3xl border border-[#6B8E7B]/30 bg-[#2B2D31] p-6 md:p-8 flex flex-col justify-center">
                     {/* Message header */}
                     <div className="flex items-center gap-3 mb-3">
                       <div className="w-10 h-10 rounded-full bg-[#5865F2] flex items-center justify-center text-white font-bold text-sm">A</div>
@@ -1123,14 +1123,14 @@ export default function Home() {
       {/* ================================================================== */}
       {/* MEET OUR TEAM SECTION */}
       {/* ================================================================== */}
-      <section className="relative py-16 md:py-20 bg-[#0A0E1A]">
+      <section className="relative py-16 md:py-20 bg-[#0C0E12]">
         <div className="max-w-5xl mx-auto px-6">
           <SectionHeader
             badge="WHO WE ARE"
             title={
               <>
                 Meet Our{" "}
-                <span className="text-[#FF6B9D]">Team</span>
+                <span className="text-[#C4956A]">Team</span>
               </>
             }
             subtitle="The people behind your next growth sprint."
@@ -1146,7 +1146,7 @@ export default function Home() {
             {/* --- Husnain --- */}
             <motion.div variants={staggerItem} className="flex flex-col items-center text-center">
               <div className="relative mb-6">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B9D] to-[#C084FC] rounded-full blur opacity-50" />
+                <div className="absolute inset-0 bg-gradient-to-br from-[#C4956A] to-[#6B8E7B] rounded-full blur opacity-50" />
                 <div className="relative w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-2 border-white/20 hover:scale-105 transition-transform duration-300">
                   <a
                     href="https://www.linkedin.com/in/husnain-rafiq-343179290/"
@@ -1165,10 +1165,10 @@ export default function Home() {
                 </div>
               </div>
               <h3 className="text-xl md:text-2xl font-bold text-white mb-2">Husnain</h3>
-              <p className="text-[#FF6B9D] font-medium tracking-wide uppercase text-xs mb-4">
+              <p className="text-[#C4956A] font-medium tracking-wide uppercase text-xs mb-4">
                 Founder
               </p>
-              <p className="text-sm text-[#9CA3AF] leading-relaxed italic mb-4 max-w-xs">
+              <p className="text-sm text-[#8A8D92] leading-relaxed italic mb-4 max-w-xs">
                 &quot;Get you results or pay you nothing. I take all the risk so you don&apos;t have to.&quot;
               </p>
               <a
@@ -1184,7 +1184,7 @@ export default function Home() {
             {/* --- Saad --- */}
             <motion.div variants={staggerItem} className="flex flex-col items-center text-center">
               <div className="relative mb-6">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B9D] to-[#C084FC] rounded-full blur opacity-50" />
+                <div className="absolute inset-0 bg-gradient-to-br from-[#C4956A] to-[#6B8E7B] rounded-full blur opacity-50" />
                 <div className="relative w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-2 border-white/20 hover:scale-105 transition-transform duration-300">
                   <a
                     href="https://www.linkedin.com/in/muhammad-saad-8883383b3/"
@@ -1203,10 +1203,10 @@ export default function Home() {
                 </div>
               </div>
               <h3 className="text-xl md:text-2xl font-bold text-white mb-2">Saad</h3>
-              <p className="text-[#C084FC] font-medium tracking-wide uppercase text-xs mb-4">
+              <p className="text-[#6B8E7B] font-medium tracking-wide uppercase text-xs mb-4">
                 Sales Strategist
               </p>
-              <p className="text-sm text-[#9CA3AF] leading-relaxed italic mb-4 max-w-xs">
+              <p className="text-sm text-[#8A8D92] leading-relaxed italic mb-4 max-w-xs">
                 &quot;Outbound done right turns strangers into booked calls.&quot;
               </p>
               <a
@@ -1222,7 +1222,7 @@ export default function Home() {
             {/* --- Abdul Saboor --- */}
             <motion.div variants={staggerItem} className="flex flex-col items-center text-center">
               <div className="relative mb-6">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B9D] to-[#C084FC] rounded-full blur opacity-50" />
+                <div className="absolute inset-0 bg-gradient-to-br from-[#C4956A] to-[#6B8E7B] rounded-full blur opacity-50" />
                 <div className="relative w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-2 border-white/20 hover:scale-105 transition-transform duration-300">
                   <a
                     href="https://www.linkedin.com/in/abdulsaboor2004/"
@@ -1241,10 +1241,10 @@ export default function Home() {
                 </div>
               </div>
               <h3 className="text-xl md:text-2xl font-bold text-white mb-2">Abdul Saboor</h3>
-              <p className="text-[#FCD34D] font-medium tracking-wide uppercase text-xs mb-4">
+              <p className="text-[#D4AF7A] font-medium tracking-wide uppercase text-xs mb-4">
                 Co-Founder
               </p>
-              <p className="text-sm text-[#9CA3AF] leading-relaxed italic mb-4 max-w-xs">
+              <p className="text-sm text-[#8A8D92] leading-relaxed italic mb-4 max-w-xs">
                 &quot;Precision targeting is the difference between noise and revenue.&quot;
               </p>
               <a
@@ -1267,14 +1267,14 @@ export default function Home() {
       {/* ================================================================== */}
       {/* FAQ SECTION */}
       {/* ================================================================== */}
-      <section className="relative py-16 md:py-20 bg-[#0A0E1A]">
+      <section className="relative py-16 md:py-20 bg-[#0C0E12]">
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeader
             badge="QUESTIONS?"
             title={
               <>
                 Everything You Need to <br />
-                <span className="text-[#FF6B9D]">Know</span>
+                <span className="text-[#C4956A]">Know</span>
               </>
             }
             subtitle="Common questions about the 7-day sprint."
@@ -1291,10 +1291,10 @@ export default function Home() {
       {/* ================================================================== */}
       <section
         id="book-call"
-        className="relative py-20 md:py-24 overflow-hidden bg-[#0A0E1A]"
+        className="relative py-20 md:py-24 overflow-hidden bg-[#0C0E12]"
       >
         <div
-          className="absolute inset-0 bg-gradient-radial from-[#C084FC]/10 via-transparent to-transparent"
+          className="absolute inset-0 bg-gradient-radial from-[#6B8E7B]/10 via-transparent to-transparent"
           aria-hidden="true"
         />
 
@@ -1311,10 +1311,10 @@ export default function Home() {
             </Badge>
 
             <h2 className="mt-8 text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] mb-10 font-sans tracking-tight">
-              Ready to <span className="text-[#FF6B9D]">Scale?</span>
+              Ready to <span className="text-[#C4956A]">Scale?</span>
             </h2>
 
-            <p className="text-lg md:text-xl text-[#9CA3AF] max-w-2xl mx-auto mb-12 font-light">
+            <p className="text-lg md:text-xl text-[#8A8D92] max-w-2xl mx-auto mb-12 font-light">
               Stop guessing. Start closing.
               <br />
               Your calendar could be full in 7 days.
@@ -1331,7 +1331,7 @@ export default function Home() {
             </div>
 
             {/* Risk Reversal */}
-            <p className="text-sm text-[#9CA3AF]/70 mb-16">
+            <p className="text-sm text-[#8A8D92]/70 mb-16">
               If we don&apos;t book real calls in 7 days — you pay nothing.
             </p>
 
@@ -1352,24 +1352,24 @@ export default function Home() {
       {/* ================================================================== */}
       {/* FOOTER */}
       {/* ================================================================== */}
-      <footer className="relative py-20 bg-[#141824] border-t border-white/5 overflow-hidden">
+      <footer className="relative py-20 bg-[#14161A] border-t border-white/5 overflow-hidden">
         {/* Mesh gradient background */}
         <div
           className="absolute inset-0 pointer-events-none"
           aria-hidden="true"
         >
-          <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-[#FF6B9D]/5 rounded-full blur-3xl" />
-          <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#C084FC]/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-[#C4956A]/5 rounded-full blur-3xl" />
+          <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#6B8E7B]/5 rounded-full blur-3xl" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
             {/* Brand */}
             <div className="text-center md:text-left">
-              <h2 className="text-2xl md:text-3xl font-black bg-gradient-to-r from-[#FF6B9D] to-[#C084FC] bg-clip-text text-transparent mb-3 font-sans tracking-tighter">
+              <h2 className="text-2xl md:text-3xl font-black bg-gradient-to-r from-[#C4956A] to-[#6B8E7B] bg-clip-text text-transparent mb-3 font-sans tracking-tighter">
                 OUTLIO.
               </h2>
-              <p className="text-[#9CA3AF] text-sm leading-relaxed max-w-xs">
+              <p className="text-[#8A8D92] text-sm leading-relaxed max-w-xs">
                 Performance-based outbound for founders scaling past $30K/mo. No retainers. Real results.
               </p>
             </div>
@@ -1386,7 +1386,7 @@ export default function Home() {
                   <a
                     key={link.name}
                     href={link.href}
-                    className="text-[#9CA3AF] hover:text-white transition-colors text-sm"
+                    className="text-[#8A8D92] hover:text-white transition-colors text-sm"
                   >
                     {link.name}
                   </a>
@@ -1408,7 +1408,7 @@ export default function Home() {
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-[#9CA3AF] hover:text-white hover:border-[#FF6B9D]/40 hover:bg-[#FF6B9D]/10 transition-all duration-300 text-xs font-bold"
+                    className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-[#8A8D92] hover:text-white hover:border-[#C4956A]/40 hover:bg-[#C4956A]/10 transition-all duration-300 text-xs font-bold"
                     whileHover={{ y: -3, scale: 1.1 }}
                     aria-label={link.name}
                   >

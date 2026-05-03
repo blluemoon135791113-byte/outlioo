@@ -158,7 +158,7 @@ const GlowingEffect = memo(
                         style={{
                             "--gradient": variant === "white"
                                 ? `conic-gradient(from 0deg at 50% 50%, rgba(255,255,255,0) 0deg, rgba(255,255,255,0) 60deg, rgba(255,255,255,0) 120deg, rgba(255,255,255,0) 180deg, rgba(255,255,255,0) 240deg, rgba(255,255,255,0) 300deg, rgba(255,255,255,0) 360deg)`
-                                : `conic-gradient(from 0deg at 50% 50%, rgba(232,166,184,0) 0deg, rgba(232,166,184,0) 60deg, rgba(232,166,184,0) 120deg, rgba(232,166,184,0) 180deg, rgba(232,166,184,0.5) 240deg, rgba(232,166,184,1) 300deg, rgba(232,166,184,0) 360deg)`
+                                : `conic-gradient(from 0deg at 50% 50%, rgba(196,149,106,0) 0deg, rgba(196,149,106,0) 60deg, rgba(196,149,106,0) 120deg, rgba(196,149,106,0) 180deg, rgba(196,149,106,0.5) 240deg, rgba(196,149,106,1) 300deg, rgba(196,149,106,0) 360deg)`
                         } as React.CSSProperties}
                     />
                 </div>

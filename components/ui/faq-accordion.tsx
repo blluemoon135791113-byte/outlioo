@@ -59,8 +59,8 @@ function FAQAccordionItem({ item, isOpen, onToggle }: {
 }) {
     return (
         <motion.div
-            className={`border rounded-2xl overflow-hidden bg-[#141824]/50 backdrop-blur-sm transition-all duration-300 ${isOpen
-                    ? "border-[#FF6B9D]/30 border-l-2 border-l-[#FF6B9D] shadow-[0_0_20px_rgba(255,107,157,0.08)]"
+            className={`border rounded-2xl overflow-hidden bg-[#14161A]/50 backdrop-blur-sm transition-all duration-300 ${isOpen
+                    ? "border-[#C4956A]/30 border-l-2 border-l-[#C4956A] shadow-[0_0_20px_rgba(196,149,106,0.08)]"
                     : "border-white/10 hover:border-white/20"
                 }`}
             initial={false}
@@ -68,7 +68,7 @@ function FAQAccordionItem({ item, isOpen, onToggle }: {
         >
             <button
                 onClick={onToggle}
-                className="w-full flex items-center justify-between p-6 text-left hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6B9D] focus-visible:ring-inset"
+                className="w-full flex items-center justify-between p-6 text-left hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4956A] focus-visible:ring-inset"
                 aria-expanded={isOpen}
             >
                 <span className="text-base md:text-lg font-semibold text-white pr-4">
@@ -81,7 +81,7 @@ function FAQAccordionItem({ item, isOpen, onToggle }: {
                 >
                     <ChevronDown
                         size={20}
-                        className="text-[#FF6B9D]"
+                        className="text-[#C4956A]"
                         aria-hidden="true"
                     />
                 </motion.div>

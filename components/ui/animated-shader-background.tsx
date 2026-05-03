@@ -1,39 +1,12 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
-
-// Lazy load the shader component - no SSR
-const AnoAIShader = dynamic(
-  () => import("./animated-shader-background-core"),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-);
+import AnoAIShader from "./animated-shader-background-core";
 
 /**
- * Wrapper component that only renders the GPU-heavy shader on desktop screens.
- * Disables on mobile (< 1024px) for battery and performance.
+ * Lightweight CSS gradient background - renders on all devices.
+ * Previously used a heavy WebGL shader, now replaced with performant CSS.
  */
 const AnoAI = () => {
-  const [shouldRender, setShouldRender] = useState(false);
-
-  useEffect(() => {
-    // Only render shader on desktop screens
-    const checkScreenSize = () => {
-      setShouldRender(window.innerWidth >= 1024);
-    };
-
-    checkScreenSize();
-    window.addEventListener("resize", checkScreenSize);
-    return () => window.removeEventListener("resize", checkScreenSize);
-  }, []);
-
-  if (!shouldRender) {
-    return null;
-  }
-
   return <AnoAIShader />;
 };
 

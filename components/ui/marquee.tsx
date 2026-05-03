@@ -4,12 +4,12 @@ import { cn } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
-// Brand colors for neon glow effects
+// Brand colors for subtle glow effects
 const brandGlowColors: Record<string, string> = {
-    "ClickLabs": "rgba(255, 165, 0, 0.6)",
-    "Zooz Drinks": "rgba(255, 107, 107, 0.6)",
-    "Addx Studio": "rgba(100, 100, 100, 0.6)",
-    "Arctix Solutions": "rgba(0, 149, 255, 0.6)",
+    "ClickLabs": "rgba(196, 149, 106, 0.4)",
+    "Zooz Drinks": "rgba(107, 142, 123, 0.4)",
+    "Addx Studio": "rgba(138, 141, 146, 0.4)",
+    "Arctix Solutions": "rgba(212, 175, 122, 0.4)",
 };
 
 export const Marquee = ({
@@ -31,55 +31,28 @@ export const Marquee = ({
     className?: string;
 }) => {
     const containerRef = React.useRef<HTMLDivElement>(null);
-    const scrollerRef = React.useRef<HTMLUListElement>(null);
     const [start, setStart] = useState(false);
 
     useEffect(() => {
-        addAnimation();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    function addAnimation() {
-        if (containerRef.current && scrollerRef.current) {
-            const scrollerContent = Array.from(scrollerRef.current.children);
-
-            // Duplicate items multiple times for seamless infinite loop
-            for (let i = 0; i < 3; i++) {
-                scrollerContent.forEach((item) => {
-                    const duplicatedItem = item.cloneNode(true);
-                    if (scrollerRef.current) {
-                        scrollerRef.current.appendChild(duplicatedItem);
-                    }
-                });
-            }
-
-            getDirection();
-            getSpeed();
-            setStart(true);
-        }
-    }
-
-    const getDirection = () => {
         if (containerRef.current) {
+            const durations = { fast: "60s", normal: "100s", slow: "150s" };
             containerRef.current.style.setProperty(
                 "--animation-direction",
                 direction === "left" ? "forwards" : "reverse"
             );
-        }
-    };
-
-    const getSpeed = () => {
-        if (containerRef.current) {
-            const durations = { fast: "60s", normal: "100s", slow: "150s" };
             containerRef.current.style.setProperty(
                 "--animation-duration",
                 durations[speed]
             );
+            setStart(true);
         }
-    };
+    }, [direction, speed]);
 
     // Filter out items with empty alt
     const validItems = items.filter((item) => item.alt);
+
+    // Duplicate items 4x for seamless loop (done in React, not DOM)
+    const duplicatedItems = Array.from({ length: 4 }, () => validItems).flat();
 
     return (
         <div
@@ -90,22 +63,21 @@ export const Marquee = ({
             )}
         >
             <ul
-                ref={scrollerRef}
                 className={cn(
                     "flex min-w-full shrink-0 gap-20 md:gap-24 py-8 w-max flex-nowrap items-center",
                     start && "animate-scroll",
                     pauseOnHover && "hover:[animation-play-state:paused]"
                 )}
             >
-                {validItems.map((item, idx) => (
+                {duplicatedItems.map((item, idx) => (
                     <li
-                        className="group flex-shrink-0 cursor-pointer transition-all duration-300 ease-in-out hover:scale-105"
-                        key={item.alt + idx}
+                        className="group flex-shrink-0 cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105"
+                        key={item.alt + "-" + idx}
                         style={{
-                            ["--glow-color" as string]: brandGlowColors[item.alt] || "rgba(255, 107, 157, 0.5)",
+                            ["--glow-color" as string]: brandGlowColors[item.alt] || "rgba(196, 149, 106, 0.3)",
                         }}
                     >
-                        <div className="flex flex-col items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 group-hover:shadow-[0_0_30px_var(--glow-color)] group-hover:drop-shadow-[0_0_20px_var(--glow-color)]">
+                        <div className="flex flex-col items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 group-hover:shadow-[0_0_20px_var(--glow-color)]">
                             {item.src ? (
                                 <div className="relative h-14 md:h-20 w-auto">
                                     <Image

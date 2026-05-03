@@ -1155,7 +1155,7 @@ export default function Home() {
                     className="block w-full h-full relative"
                   >
                     <Image
-                      src="/husnain.jpg"
+                      src="/husnainrafiq.png"
                       alt="Husnain - Founder of OUTLIO"
                       fill
                       className="object-cover"

@@ -302,7 +302,7 @@ function BloomingLogo() {
   return (
     <div className="flex flex-col items-center pb-8 relative z-[200]">
       <motion.div
-        className="relative cursor-pointer mt-12 md:mt-20 lg:mt-24"
+        className="relative cursor-pointer mt-8 md:mt-10 lg:mt-12"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: premiumEase }}
